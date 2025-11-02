@@ -17,7 +17,7 @@ export function InitSection() {
     ]
 
     return (
-        <div className="w-full flex flex-row items-center">
+        <div className="w-full flex flex-row items-center px-20">
             <div className="w-1/2">
                 <h1 className="text-primary font-bold text-6xl leading-20">Agua limpia, <br /><span className="text-secondary">futuro brillante</span></h1>
                 <h3 className="text-foreground text-2xl font-medium mt-2">Invirtamos en calidad para un mundo radiante</h3>

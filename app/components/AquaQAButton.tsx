@@ -32,7 +32,7 @@ export function AquaQAButton({
     }
 
     return (
-        <button className={`flex flex-row items-center justify-center font-medium gap-2 rounded-4xl border-2 ${width} ${height} ${className} ${fontSize}`}>
+        <button className={`flex flex-row items-center justify-center font-medium gap-2 rounded-4xl border-2 cursor-pointer hover:scale-105 transition-all duration-300 ${width} ${height} ${className} ${fontSize}`}>
             {text}
             {icon && <Image src={icon} alt="Logo" width={iconSize} height={iconSize} />}
         </button>
