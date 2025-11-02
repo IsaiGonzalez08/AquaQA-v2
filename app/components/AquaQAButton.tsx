@@ -1,7 +1,40 @@
-export function AquaQAButton({ text }: { text: string }) {
+import Image from "next/image";
+
+export function AquaQAButton({
+    variant = "primary",
+    width = "",
+    height = "",
+    text,
+    icon = "",
+    iconSize = 40,
+    fontSize = "text-base",
+}: {
+    variant: string;
+    text: string;
+    width?: string;
+    height?: string;
+    icon?: string;
+    iconSize?: number;
+    fontSize?: string;
+}) {
+    let className = "";
+
+    switch (variant) {
+        case "primary":
+            className = "border-primary bg-primary text-background";
+            break;
+        case "secondary":
+            className = "border-primary bg-background text-primary";
+            break;
+        default:
+            className = "border-primary bg-primary text-background";
+            break;
+    }
+
     return (
-        <button className="bg-background text-primary border-2 border-primary rounded-4xl px-6 py-1">
+        <button className={`flex flex-row items-center justify-center font-medium gap-2 rounded-4xl border-2 ${width} ${height} ${className} ${fontSize}`}>
             {text}
+            {icon && <Image src={icon} alt="Logo" width={iconSize} height={iconSize} />}
         </button>
-    )
+    );
 }

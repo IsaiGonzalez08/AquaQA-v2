@@ -6,6 +6,7 @@
   --primary: #3CC0C9;
   --secondary: #A8E3E7;
   --text: #A5A5A5;
+  --grayLight: #BABEBE;
 }
 
 @theme inline {
@@ -14,6 +15,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-text: var(--text);
+  --color-grayLight: var(--grayLight);
 }
 
 body {
