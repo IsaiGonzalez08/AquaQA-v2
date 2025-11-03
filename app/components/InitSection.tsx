@@ -39,7 +39,7 @@ export function InitSection() {
                     ))}
                 </div>
             </div>
-            <div className="w-1/2 flex flex-row justify-center items-center gap-5 relative">
+            <div className="w-1/2 flex flex-row justify-between items-center relative">
                 <div 
                     className="absolute inset-0 flex items-center justify-center pointer-events-none"
                     style={{
