@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function Header() {
     return (
-        <header className="flex justify-between items-center h-32 w-full px-20">
+        <header className="flex justify-between items-center h-32 w-full px-20 max-w-[2000px] mx-auto">
             <Image src="/aquaQA.svg" alt="Logo" width={40} height={40} />
             <div className="flex flex-row gap-10 font-medium text-text">
                 <Link href="/">Inicio</Link>
