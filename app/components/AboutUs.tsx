@@ -9,13 +9,12 @@ export function AboutUs() {
     ];
 
     return (
-        <div className="w-full flex flex-row items-start py-32 mt-10 relative px-20 gap-16">
-
-            <div className="w-1/2">
+        <div className="w-full flex flex-row justify-between items-start py-32 mt-10 relative px-20 gap-16">
+            <img src="/Images/box-background.png" alt="box" className="absolute bottom-0 left-0 z-0" />
+            <div className="w-1/2 z-50">
                 <img
                     src="/Images/about-us.png"
                     alt="about-us"
-                    className="rounded-3xl w-full h-[570px] object-cover shadow-2xl"
                 />
             </div>
 

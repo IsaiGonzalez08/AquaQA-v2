@@ -2,6 +2,7 @@ import { InitSection } from "./components/InitSection";
 import { InitCard } from "./components/InitCard";
 import { AboutUs } from "./components/AboutUs";
 import { Services } from "./components/Services";
+import { Mission } from "./components/Mission";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <InitCard />
       <AboutUs />
       <Services />
+      <Mission />
     </div>
   );
 }
