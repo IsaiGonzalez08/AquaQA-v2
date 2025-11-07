@@ -33,18 +33,14 @@ export function InitSection() {
               text="Iniciar"
               icon="/start.svg"
               iconSize={25}
-              width="w-48"
-              height="h-14"
-              fontSize="text-xl"
+              className="w-48 h-14 text-xl"
             />
             <AquaQAButton
               variant="secondary"
               text="Saber más"
               icon="/add.svg"
               iconSize={25}
-              width="w-48"
-              height="h-14"
-              fontSize="text-xl"
+              className="w-48 h-14 text-xl"
             />
           </div>
           <div className="mt-10 ml-4 flex w-fit flex-row">

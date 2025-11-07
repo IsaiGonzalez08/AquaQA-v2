@@ -15,6 +15,10 @@ export function Header() {
     }
   };
 
+  if (pathName === "/login") {
+    return null;
+  }
+
   return (
     <header className="mx-auto flex h-32 w-full max-w-[2000px] items-center justify-between px-20">
       <Image src="/aquaQA.svg" alt="Logo" width={40} height={40} />
@@ -26,8 +30,7 @@ export function Header() {
       <AquaQAButton
         variant="secondary"
         text="Comenzar"
-        width="w-32"
-        height="h-9"
+        className="w-32 h-9"
         onClick={() => handleClick("/login")}
       />
     </header>
