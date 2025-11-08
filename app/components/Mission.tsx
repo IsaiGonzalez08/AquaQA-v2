@@ -8,7 +8,7 @@ export function Mission() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
         viewport={{ once: true }}
         className="z-50 w-1/2"
       >

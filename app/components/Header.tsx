@@ -9,6 +9,10 @@ export function Header() {
   const router = useRouter();
   const pathName = usePathname();
 
+  if (pathName === "/login") {
+    return null;
+  }
+
   const handleClick = (href: string) => {
     if (pathName !== href) {
       animatePageOut(router, href);
@@ -26,8 +30,8 @@ export function Header() {
       <AquaQAButton
         variant="secondary"
         text="Comenzar"
-        width="w-32"
-        height="h-9"
+        iconSize={40}
+        className="w-36 h-9 text-base"
         onClick={() => handleClick("/login")}
       />
     </header>

@@ -8,6 +8,7 @@
   --text: #A5A5A5;
   --grayLight: #BABEBE;
   --grayDark: #1E1E1E;
+  --gray-200: #959595;
 }
 
 @theme inline {
@@ -18,6 +19,7 @@
   --color-text: var(--text);
   --color-grayLight: var(--grayLight);
   --color-grayDark: var(--grayDark);
+  --color-gray-200: var(--gray-200);
 }
 
 body {

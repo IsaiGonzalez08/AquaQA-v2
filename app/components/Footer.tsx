@@ -1,4 +1,15 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export function Footer() {
+
+  const pathName = usePathname();
+
+  if (pathName === "/login") {
+    return null;
+  }
+
   return (
     <footer className="mx-auto w-full max-w-[2000px]">
       <div className="bg-primary flex h-64 flex-row items-center justify-center gap-10 px-20 text-white">
