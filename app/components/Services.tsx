@@ -33,7 +33,7 @@ export function Services() {
   ];
 
   return (
-    <div className="bg-[#F1FCFC] px-20 py-28">
+    <div id="services" className="bg-[#F1FCFC] px-20 py-28">
       <div className="flex flex-col gap-3 text-center">
         <h2 className="text-primary text-3xl font-medium">Nuestros Servicios</h2>
         <h1 className="text-grayDark text-4xl font-bold">Cuida tu agua, Inicia con nosotros</h1>
