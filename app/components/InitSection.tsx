@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import AquaQAButton from "./AquaQAButton";
 
 export function InitSection() {
@@ -18,7 +21,13 @@ export function InitSection() {
 
   return (
     <div className="flex w-full flex-row items-center px-20">
-      <div className="flex w-1/2 justify-start 2xl:justify-center">
+      <motion.div
+        initial={{ opacity: 0, x: -100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="flex w-1/2 justify-start 2xl:justify-center"
+      >
         <div>
           <h1 className="text-primary w-fit text-6xl leading-20 font-bold">
             Agua limpia, <br />
@@ -33,14 +42,14 @@ export function InitSection() {
               text="Iniciar"
               icon="/start.svg"
               iconSize={25}
-              className="w-48 h-14 text-xl"
+              className="h-14 w-48 text-xl"
             />
             <AquaQAButton
               variant="secondary"
               text="Saber más"
               icon="/add.svg"
               iconSize={25}
-              className="w-48 h-14 text-xl"
+              className="h-14 w-48 text-xl"
             />
           </div>
           <div className="mt-10 ml-4 flex w-fit flex-row">
@@ -55,18 +64,24 @@ export function InitSection() {
             ))}
           </div>
         </div>
-      </div>
-      <div className="relative flex w-1/2 flex-row items-center justify-start gap-4 2xl:justify-center">
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="relative flex w-1/2 flex-row items-center justify-start gap-4 2xl:justify-center"
+      >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
           style={{
             background: "radial-gradient(circle at center 80%, #3CC0C933 0%, transparent 50%)",
           }}
         />
-        <img src="/Images/init1.png" alt="Logo" className="relative z-10 max-h-[550px] rounded-3xl" />
-        <img src="/Images/init2.png" alt="Logo" className="relative z-10 mt-26 max-h-[550px] rounded-3xl" />
-        <img src="/Images/init3.png" alt="Logo" className="relative z-10 max-h-[550px] rounded-3xl" />
-      </div>
+        <img src="/Images/init1.png" alt="Logo" className="hover:scale-105 transition-all duration-300 relative z-10 max-h-[550px] rounded-3xl" />
+        <img src="/Images/init2.png" alt="Logo" className="hover:scale-105 transition-all duration-300 relative z-10 mt-26 max-h-[550px] rounded-3xl" />
+        <img src="/Images/init3.png" alt="Logo" className="hover:scale-105 transition-all duration-300 relative z-10 max-h-[550px] rounded-3xl" />
+      </motion.div>
     </div>
   );
 }

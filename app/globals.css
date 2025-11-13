@@ -22,6 +22,10 @@
   --color-gray-200: var(--gray-200);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

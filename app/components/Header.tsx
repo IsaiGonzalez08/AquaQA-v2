@@ -19,13 +19,22 @@ export function Header() {
     }
   };
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <header className="mx-auto flex h-32 w-full max-w-[2000px] items-center justify-between px-20">
       <Image src="/aquaQA.svg" alt="Logo" width={40} height={40} />
       <div className="text-text flex flex-row gap-10 font-medium">
         <Link href="/">Inicio</Link>
-        <Link href="/contact">Servicios</Link>
-        <Link href="/about">Nosotros</Link>
+        <Link href="#about-us" onClick={(e) => handleSmoothScroll(e, 'about-us')}>Nosotros</Link>
+        <Link href="#services" onClick={(e) => handleSmoothScroll(e, 'services')}>Servicios</Link>
+        <Link href="#mission" onClick={(e) => handleSmoothScroll(e, 'mission')}>Misión</Link>
       </div>
       <AquaQAButton
         variant="secondary"

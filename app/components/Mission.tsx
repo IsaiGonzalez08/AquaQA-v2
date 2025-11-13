@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export function Mission() {
   return (
-    <div className="relative flex flex-row gap-5 bg-white px-20 py-28">
+    <div id="mission" className="relative flex flex-row gap-5 bg-white px-20 py-28">
       <img src="/Images/box-background-2.png" alt="box" className="absolute top-0 right-0 z-0" />
       <motion.div
         initial={{ opacity: 0 }}
@@ -48,7 +48,7 @@ export function Mission() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
         viewport={{ once: true }}
         className="z-50 flex w-1/2 justify-end"
       >
