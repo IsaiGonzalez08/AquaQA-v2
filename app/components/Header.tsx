@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { animatePageOut } from "../utils/animation";
-import AquaQAButton from "./AquaQAButton";
+import { Button } from "../../components/ui/button";
 
 export function Header() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export function Header() {
     e.preventDefault();
     const element = document.getElementById(targetId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -32,17 +32,24 @@ export function Header() {
       <Image src="/aquaQA.svg" alt="Logo" width={40} height={40} />
       <nav className="text-text flex flex-row gap-10 font-medium">
         <Link href="/">Inicio</Link>
-        <Link href="#about-us" onClick={(e) => handleSmoothScroll(e, 'about-us')}>Nosotros</Link>
-        <Link href="#services" onClick={(e) => handleSmoothScroll(e, 'services')}>Servicios</Link>
-        <Link href="#mission" onClick={(e) => handleSmoothScroll(e, 'mission')}>Misión</Link>
+        <Link href="#about-us" onClick={(e) => handleSmoothScroll(e, "about-us")}>
+          Nosotros
+        </Link>
+        <Link href="#services" onClick={(e) => handleSmoothScroll(e, "services")}>
+          Servicios
+        </Link>
+        <Link href="#mission" onClick={(e) => handleSmoothScroll(e, "mission")}>
+          Misión
+        </Link>
       </nav>
-      <AquaQAButton
+      <Button
         variant="secondary"
-        text="Comenzar"
         iconSize={40}
-        className="w-36 h-9 text-base"
+        className="h-9 w-36 text-base"
         onClick={() => handleClick("/auth/login")}
-      />
+      >
+        Comenzar
+      </Button>
     </header>
   );
 }

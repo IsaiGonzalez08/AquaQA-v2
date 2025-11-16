@@ -1,13 +1,14 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
-  --background: #F8FDFD;
+  --background: #f8fdfd;
   --foreground: #464646;
-  --primary: #3CC0C9;
-  --secondary: #A8E3E7;
-  --text: #A5A5A5;
-  --grayLight: #BABEBE;
-  --grayDark: #1E1E1E;
+  --primary: #3cc0c9;
+  --secondary: #a8e3e7;
+  --text: #a5a5a5;
+  --grayLight: #babebe;
+  --grayDark: #1e1e1e;
   --gray-200: #959595;
 }
 
