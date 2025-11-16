@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AquaQAButton from "./AquaQAButton";
+import AquaQAButton from "../../components/AquaQAButton";
 
 export function InitSection() {
   let dividerInfo = [

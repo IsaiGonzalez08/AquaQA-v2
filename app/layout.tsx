@@ -2,7 +2,7 @@ import { Poppins } from "next/font/google";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -12,9 +12,20 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "AquaQA",
   description: "Agencia de calidad del agua",
+  openGraph: {
+    title: "AquaQA",
+    description: "Agencia de calidad del agua",
+  },
   icons: {
     icon: "/aquaQA.svg",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -24,9 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body className={`${poppins.className} flex min-h-screen flex-col`}>
         <Header />
-        <main className="mx-auto max-w-[2000px]">{children}</main>
+        <main className="mx-auto w-full max-w-[2000px] grow">{children}</main>
         <Footer />
       </body>
     </html>
