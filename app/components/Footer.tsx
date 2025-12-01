@@ -6,7 +6,7 @@ export function Footer() {
 
   const pathName = usePathname();
 
-  if (pathName === "/login") {
+  if (pathName === "/auth/login") {
     return null;
   }
 

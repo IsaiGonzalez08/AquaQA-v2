@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AquaQAButton from "./AquaQAButton";
+import { Button } from "../../../components/ui/button";
 
 export function InitSection() {
   let dividerInfo = [
@@ -37,20 +37,12 @@ export function InitSection() {
             Invirtamos en calidad para un mundo radiante
           </h3>
           <div className="mt-10 ml-4 flex w-fit gap-5">
-            <AquaQAButton
-              variant="primary"
-              text="Iniciar"
-              icon="/start.svg"
-              iconSize={25}
-              className="h-14 w-48 text-xl"
-            />
-            <AquaQAButton
-              variant="secondary"
-              text="Saber más"
-              icon="/add.svg"
-              iconSize={25}
-              className="h-14 w-48 text-xl"
-            />
+            <Button variant="primary" icon="/start.svg" iconSize={25} className="h-14 w-48 text-xl">
+              Iniciar
+            </Button>
+            <Button variant="secondary" icon="/add.svg" iconSize={25} className="h-14 w-48 text-xl">
+              Saber más
+            </Button>
           </div>
           <div className="mt-10 ml-4 flex w-fit flex-row">
             {dividerInfo.map((item, index) => (
@@ -78,9 +70,21 @@ export function InitSection() {
             background: "radial-gradient(circle at center 80%, #3CC0C933 0%, transparent 50%)",
           }}
         />
-        <img src="/Images/init1.png" alt="Logo" className="hover:scale-105 transition-all duration-300 relative z-10 max-h-[550px] rounded-3xl" />
-        <img src="/Images/init2.png" alt="Logo" className="hover:scale-105 transition-all duration-300 relative z-10 mt-26 max-h-[550px] rounded-3xl" />
-        <img src="/Images/init3.png" alt="Logo" className="hover:scale-105 transition-all duration-300 relative z-10 max-h-[550px] rounded-3xl" />
+        <img
+          src="/Images/init1.png"
+          alt="Logo"
+          className="relative z-10 max-h-[550px] rounded-3xl transition-all duration-300 hover:scale-105"
+        />
+        <img
+          src="/Images/init2.png"
+          alt="Logo"
+          className="relative z-10 mt-26 max-h-[550px] rounded-3xl transition-all duration-300 hover:scale-105"
+        />
+        <img
+          src="/Images/init3.png"
+          alt="Logo"
+          className="relative z-10 max-h-[550px] rounded-3xl transition-all duration-300 hover:scale-105"
+        />
       </motion.div>
     </div>
   );

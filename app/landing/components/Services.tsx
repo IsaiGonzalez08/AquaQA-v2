@@ -1,5 +1,5 @@
 "use client";
-import { ServicesCard } from "./ServicesCard";
+import { ServicesCard } from "../../components/ServicesCard";
 
 import { motion } from "framer-motion";
 
