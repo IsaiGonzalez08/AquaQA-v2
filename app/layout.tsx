@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
+import { Header } from "./landing/components/Header";
+import { Footer } from "./landing/components/Footer";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 
@@ -36,9 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} flex min-h-screen flex-col overflow-x-hidden`}>
-        <Header />
         <main className="mx-auto w-full max-w-[2000px] grow">{children}</main>
-        <Footer />
       </body>
     </html>
   );

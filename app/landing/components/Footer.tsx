@@ -1,14 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 export function Footer() {
-
-  const pathName = usePathname();
-
-  if (pathName === "/auth/login") {
-    return null;
-  }
 
   return (
     <footer className="mx-auto w-full max-w-[2000px]">

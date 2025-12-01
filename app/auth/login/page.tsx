@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -10,6 +11,7 @@ import { formSchema } from "../../utils/schemas";
 import Image from "next/image";
 
 export default function Login() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -20,6 +22,7 @@ export default function Login() {
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
+    router.push("/dashboard/user");
   }
 
   return (
@@ -29,7 +32,7 @@ export default function Login() {
       <h1 className="text-primary text-center text-5xl font-bold">Iniciar sesión</h1>
       <h3 className="text-center text-xl font-semibold text-gray-200">Bienvenido, por favor ingrese sus datos</h3>
 
-      <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="flex w-full lg:w-1/4 flex-col gap-4">
+      <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-4 lg:w-1/4">
         <FieldGroup>
           <Controller
             name="email"

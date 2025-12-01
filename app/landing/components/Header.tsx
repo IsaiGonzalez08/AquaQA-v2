@@ -2,16 +2,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { animatePageOut } from "../utils/animation";
-import { Button } from "../../components/ui/button";
+import { animatePageOut } from "../../utils/animation";
+import { Button } from "../../../components/ui/button";
 
 export function Header() {
   const router = useRouter();
   const pathName = usePathname();
-
-  if (pathName === "/auth/login") {
-    return null;
-  }
 
   const handleClick = (href: string) => {
     if (pathName !== href) {
