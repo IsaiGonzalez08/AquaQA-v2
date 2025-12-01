@@ -1,23 +1,13 @@
 "use client";
 
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(5, "El correo electrónico debe tener al menos 5 caracteres.")
-    .max(32, "El correo electrónico debe tener al menos 32 caracteres."),
-  password: z
-    .string()
-    .min(20, "La contraseña debe tener al menos 20 caracteres.")
-    .max(100, "La contraseña debe tener al menos 100 caracteres."),
-});
+import { formSchema } from "../../../lib/schemas";
+import Image from "next/image";
 
 export default function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,18 +19,17 @@ export default function Login() {
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    // Do something with the form values.
     console.log(data);
   }
 
   return (
-    <div className="flex h-dvh w-full flex-col items-center justify-center gap-4">
+    <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
       <Image width={50} height={50} src="/aquaQA.svg" alt="Logo" />
 
       <h1 className="text-primary text-center text-5xl font-bold">Iniciar sesión</h1>
       <h3 className="text-center text-xl font-semibold text-gray-200">Bienvenido, por favor ingrese sus datos</h3>
 
-      <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="flex w-full max-w-2/4 flex-col gap-4">
+      <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="flex w-full lg:w-1/4 flex-col gap-4">
         <FieldGroup>
           <Controller
             name="email"
@@ -74,6 +63,7 @@ export default function Login() {
                   aria-invalid={fieldState.invalid}
                   placeholder="Contraseña"
                   autoComplete="off"
+                  type="password"
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -82,7 +72,7 @@ export default function Login() {
         </FieldGroup>
       </form>
 
-      <Button variant="primary" size="lg" className="mt-4 w-72 text-2xl" type="submit" form="form-rhf-demo">
+      <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo">
         Iniciar sesión
       </Button>
     </div>

@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} flex min-h-screen flex-col`}>
+      <body className={`${poppins.className} flex min-h-screen flex-col overflow-x-hidden`}>
         <Header />
         <main className="mx-auto w-full max-w-[2000px] grow">{children}</main>
         <Footer />
