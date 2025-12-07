@@ -9,10 +9,6 @@ export function Header() {
   const router = useRouter();
   const pathName = usePathname();
 
-  if (pathName === "/auth/login") {
-    return null;
-  }
-
   const handleClick = (href: string) => {
     if (pathName !== href) {
       animatePageOut(router, href);
