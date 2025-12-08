@@ -9,17 +9,16 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+
       <div>
         <h1 className="text-4xl font-bold">Configuración</h1>
         <p className="mt-2 text-gray-400">Personaliza tu experiencia en AquaQA</p>
       </div>
 
-      {/* Notifications */}
-      <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-6">
+      <div className="rounded-lg border p-6">
         <h2 className="mb-4 text-2xl font-semibold">Notificaciones</h2>
         <div className="space-y-4">
-          <div className="flex items-center justify-between rounded-lg bg-gray-800/50 p-4">
+          <div className="flex items-center justify-between rounded-lg p-4">
             <div>
               <p className="font-medium">Notificaciones Push</p>
               <p className="text-sm text-gray-400">Recibe notificaciones en tiempo real</p>
@@ -38,7 +37,7 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          <div className="flex items-center justify-between rounded-lg bg-gray-800/50 p-4">
+          <div className="flex items-center justify-between rounded-lg p-4">
             <div>
               <p className="font-medium">Actualizaciones por Email</p>
               <p className="text-sm text-gray-400">Recibe resúmenes semanales por correo</p>
@@ -59,11 +58,10 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Appearance */}
-      <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-6">
+      <div className="rounded-lg border p-6">
         <h2 className="mb-4 text-2xl font-semibold">Apariencia</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between rounded-lg bg-gray-800/50 p-4">
+          <div className="flex items-center justify-between rounded-lg p-4">
             <div>
               <p className="font-medium">Tema</p>
               <p className="text-sm text-gray-400">Modo oscuro activado</p>
@@ -73,7 +71,6 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Danger Zone */}
       <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-6">
         <h2 className="mb-4 text-2xl font-semibold text-red-500">Zona de Peligro</h2>
         <div className="space-y-3">

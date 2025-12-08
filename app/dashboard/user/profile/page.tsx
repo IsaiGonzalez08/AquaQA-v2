@@ -12,7 +12,6 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">Mi Perfil</h1>
@@ -23,8 +22,7 @@ export default function ProfilePage() {
         </Button>
       </div>
 
-      {/* Profile Card */}
-      <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-8">
+      <div className="rounded-lg border p-8">
         <div className="mb-6 flex items-center gap-6">
           <div className="bg-primary flex h-24 w-24 items-center justify-center rounded-full text-4xl font-bold">
             {user?.name?.[0]?.toUpperCase()}
@@ -81,11 +79,10 @@ export default function ProfilePage() {
         </form>
       </div>
 
-      {/* Security Section */}
-      <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-6">
+      <div className="rounded-lg border p-6">
         <h2 className="mb-4 text-2xl font-semibold">Seguridad</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between rounded-lg bg-gray-800/50 p-4">
+          <div className="flex items-center justify-between rounded-lg p-4">
             <div>
               <p className="font-medium">Cambiar Contraseña</p>
               <p className="text-sm text-gray-400">Actualiza tu contraseña regularmente</p>
