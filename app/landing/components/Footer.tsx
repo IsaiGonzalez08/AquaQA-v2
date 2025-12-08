@@ -1,7 +1,6 @@
 "use client";
 
 export function Footer() {
-
   return (
     <footer className="mx-auto w-full max-w-[2000px]">
       <div className="bg-primary flex h-64 flex-row items-center justify-center gap-10 px-20 text-white">
