@@ -3,13 +3,13 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { formSchema } from "../../../lib/schemas";
+import { formSchema } from "../../utils/schemas";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Login() {

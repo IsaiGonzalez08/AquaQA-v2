@@ -3,8 +3,8 @@ import { InitSection } from "./components/InitSection";
 import { Mission } from "./components/Mission";
 import { Services } from "./components/Services";
 import { InitCard } from "./components/InitCard";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 export default function LandingPage() {
   return (

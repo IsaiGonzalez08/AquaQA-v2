@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
+import { Header } from "./landing/components/Header";
+import { Footer } from "./landing/components/Footer";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 
