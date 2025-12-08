@@ -1,6 +1,5 @@
 import { Poppins } from "next/font/google";
-import { Header } from "./landing/components/Header";
-import { Footer } from "./landing/components/Footer";
+import Providers from './providers';
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 
@@ -36,7 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} flex min-h-screen flex-col overflow-x-hidden`}>
-        <main className="mx-auto w-full max-w-[2000px] grow">{children}</main>
+        <Providers>
+          <main className="mx-auto w-full max-w-[2000px] grow">{children}</main>
+        </Providers>
       </body>
     </html>
   );

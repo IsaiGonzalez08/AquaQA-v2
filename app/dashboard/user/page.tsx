@@ -1,15 +1,10 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 export default function UserDashboard() {
-  const { user } = useAuth();
-  const [stats, setStats] = useState({
-    testsCompleted: 0,
-    testsInProgress: 0,
-    lastActivity: new Date().toLocaleDateString(),
-  });
+  const { user } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className="space-y-6">

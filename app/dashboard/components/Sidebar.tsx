@@ -1,5 +1,8 @@
 "use client";
 
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/authSlice";
+import type { AppDispatch } from "@/store/store";
 import Link from "next/link";
 import Image from "next/image";
 import { Home, BarChart3, ChartLine, User, Settings, LogOut, ChevronUp } from "lucide-react";
@@ -23,8 +26,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export function AppSidebar() {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
   const menuItems = [
     {
       title: "Inicio",
@@ -42,6 +49,11 @@ export function AppSidebar() {
       icon: ChartLine,
     },
   ];
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.replace("/");
+  };
 
   return (
     <Sidebar className="border-sidebar-border border-r">
@@ -103,8 +115,10 @@ export function AppSidebar() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer text-red-600">
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Cerrar sesión</span>
+              <button onClick={handleLogout} className="flex cursor-pointer items-center">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Cerrar sesión</span>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

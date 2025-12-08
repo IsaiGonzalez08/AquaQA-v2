@@ -9,13 +9,15 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { formSchema } from "../../utils/schemas";
+import { loginUser } from "@/store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 import Image from "next/image";
-import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch<any>();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -26,38 +28,13 @@ export default function Login() {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Error al iniciar sesión");
-      }
-
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("user", JSON.stringify(result.user));
-
+      await dispatch(loginUser(data)).unwrap();
       router.push("/dashboard/user");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error desconocido");
-    } finally {
-      setIsLoading(false);
-    }
   }
 
-  return isLoading ? (
+  return loading ? (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
-      <Spinner className="size-10 text-primary" />
+      <Spinner className="text-primary size-10" />
     </div>
   ) : (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
@@ -79,14 +56,16 @@ export default function Login() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-email" className="text-gray-200">Correo electrónico</FieldLabel>
+                <FieldLabel htmlFor="form-rhf-demo-email" className="text-gray-200">
+                  Correo electrónico
+                </FieldLabel>
                 <Input
                   {...field}
                   id="form-rhf-demo-email"
                   aria-invalid={fieldState.invalid}
                   placeholder="Correo electrónico"
                   autoComplete="off"
-                  disabled={isLoading}
+                  disabled={loading}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -100,7 +79,9 @@ export default function Login() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">Contraseña</FieldLabel>
+                <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
+                  Contraseña
+                </FieldLabel>
                 <Input
                   {...field}
                   id="form-rhf-demo-password"
@@ -108,7 +89,7 @@ export default function Login() {
                   placeholder="Contraseña"
                   autoComplete="off"
                   type="password"
-                  disabled={isLoading}
+                  disabled={loading}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -117,8 +98,8 @@ export default function Login() {
         </FieldGroup>
       </form>
 
-      <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={isLoading}>
-        {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
+      <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={loading}>
+        {loading ? "Iniciando sesión..." : "Iniciar sesión"}
       </Button>
     </div>
   );
