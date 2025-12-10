@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
-import { signToken } from "@/lib/jwt";
+import { signToken } from "@/app/utils/auth";
 
 export async function POST(req: Request) {
   try {
@@ -25,9 +26,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    const token = signToken({
+    const cookieStore = await cookies();
+
+    const token = await signToken({
       userId: user.id,
       email: user.email,
+      name: user.name,
+    });
+
+    cookieStore.set("session", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return NextResponse.json(

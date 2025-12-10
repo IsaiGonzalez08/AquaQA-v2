@@ -9,15 +9,13 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { formSchema } from "../../utils/schemas";
-import { loginUser } from "@/store/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
+import { useState } from "react";
 import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
-  const dispatch = useDispatch<any>();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -28,11 +26,32 @@ export default function Login() {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-      await dispatch(loginUser(data)).unwrap();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setError(result.error || "Error inesperado");
+        return;
+      }
+
       router.push("/dashboard/user");
+    } catch (e) {
+      setError("Error de conexión");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  return loading ? (
+  return isLoading ? (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
       <Spinner className="text-primary size-10" />
     </div>
@@ -65,7 +84,7 @@ export default function Login() {
                   aria-invalid={fieldState.invalid}
                   placeholder="Correo electrónico"
                   autoComplete="off"
-                  disabled={loading}
+                  disabled={isLoading}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -89,7 +108,7 @@ export default function Login() {
                   placeholder="Contraseña"
                   autoComplete="off"
                   type="password"
-                  disabled={loading}
+                  disabled={isLoading}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -98,8 +117,8 @@ export default function Login() {
         </FieldGroup>
       </form>
 
-      <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={loading}>
-        {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+      <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={isLoading}>
+        {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
       </Button>
     </div>
   );

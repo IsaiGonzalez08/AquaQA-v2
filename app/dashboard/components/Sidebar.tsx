@@ -1,7 +1,6 @@
 "use client";
 
 import { useDispatch } from "react-redux";
-import { logout } from "@/store/authSlice";
 import type { AppDispatch } from "@/store/store";
 import Link from "next/link";
 import Image from "next/image";
@@ -51,7 +50,6 @@ export function AppSidebar() {
   ];
 
   const handleLogout = () => {
-    dispatch(logout());
     router.replace("/");
   };
 
