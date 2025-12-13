@@ -32,6 +32,7 @@ export async function POST(req: Request) {
       userId: user.id,
       email: user.email,
       name: user.name,
+      username: user.username,
     });
 
     cookieStore.set("session", token, {

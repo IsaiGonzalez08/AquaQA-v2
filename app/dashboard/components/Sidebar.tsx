@@ -1,7 +1,6 @@
 "use client";
 
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "@/store/store";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Home, BarChart3, ChartLine, User, Settings, LogOut, ChevronUp } from "lucide-react";
@@ -27,9 +26,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
+interface UserData {
+  userId: string;
+  email: string;
+  name: string;
+}
+
 export function AppSidebar() {
-  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/user/me");
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const menuItems = [
     {
@@ -49,7 +70,8 @@ export function AppSidebar() {
     },
   ];
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
     router.replace("/");
   };
 
@@ -90,8 +112,8 @@ export function AppSidebar() {
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-1 flex-col text-left">
-                <span className="text-sidebar-foreground text-sm font-semibold">Usuario</span>
-                <span className="text-sidebar-foreground/60 text-xs">usuario@aquaqa.com</span>
+                <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
+                <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
               </div>
               <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
             </button>
