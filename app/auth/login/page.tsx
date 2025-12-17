@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { formSchema } from "../../utils/schemas";
 import { useState } from "react";
@@ -16,6 +17,7 @@ export default function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,7 +34,7 @@ export default function Login() {
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, rememberMe }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -115,6 +117,13 @@ export default function Login() {
             )}
           />
         </FieldGroup>
+
+        <div className="flex w-full items-center gap-2">
+          <Switch id="remember-me" checked={rememberMe} onCheckedChange={setRememberMe} disabled={isLoading} />
+          <label htmlFor="remember-me" className="text-sm font-medium text-gray-200">
+            Recordar sesión
+          </label>
+        </div>
       </form>
 
       <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={isLoading}>

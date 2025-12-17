@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
-import { signToken } from "@/app/utils/auth";
+import { signAccessToken, signRefreshToken } from "@/app/utils/auth";
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { email, password, rememberMe } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
@@ -28,25 +28,37 @@ export async function POST(req: Request) {
 
     const cookieStore = await cookies();
 
-    const token = await signToken({
+    const payload = {
       userId: user.id,
       email: user.email,
       name: user.name,
       username: user.username,
-    });
+    };
 
-    cookieStore.set("session", token, {
+    const accessToken = await signAccessToken(payload);
+    const refreshToken = await signRefreshToken(payload);
+
+    cookieStore.set("access_token", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 15,
     });
+
+    if (rememberMe) {
+      cookieStore.set("refresh_token", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30,
+      });
+    }
 
     return NextResponse.json(
       {
         message: "Login successful",
-        token,
         user: {
           id: user.id,
           email: user.email,
