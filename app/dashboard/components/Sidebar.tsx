@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Home, BarChart3, ChartLine, User, Settings, LogOut, ChevronUp } from "lucide-react";
@@ -23,8 +24,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+
+interface UserData {
+  userId: string;
+  email: string;
+  name: string;
+}
 
 export function AppSidebar() {
+  const router = useRouter();
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/user/me");
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const menuItems = [
     {
       title: "Inicio",
@@ -42,6 +69,11 @@ export function AppSidebar() {
       icon: ChartLine,
     },
   ];
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.replace("/");
+  };
 
   return (
     <Sidebar className="border-sidebar-border border-r">
@@ -80,8 +112,8 @@ export function AppSidebar() {
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-1 flex-col text-left">
-                <span className="text-sidebar-foreground text-sm font-semibold">Usuario</span>
-                <span className="text-sidebar-foreground/60 text-xs">usuario@aquaqa.com</span>
+                <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
+                <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
               </div>
               <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
             </button>
@@ -103,8 +135,10 @@ export function AppSidebar() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer text-red-600">
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Cerrar sesión</span>
+              <button onClick={handleLogout} className="flex cursor-pointer items-center">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Cerrar sesión</span>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

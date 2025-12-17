@@ -1,30 +1,53 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "./components/Sidebar";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { user, isLoading } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/auth/login");
-    }
-  }, [user, isLoading, router]);
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/user/me");
 
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="text-xl">Cargando...</div>
-      </div>
+        if (response.status === 401) {
+          const refreshResponse = await fetch("/api/auth/refresh", {
+            method: "POST",
+          });
+
+          if (!refreshResponse.ok) {
+            router.replace("/auth/login");
+          }
+        }
+      } catch (error) {
+        console.error("Auth check error:", error);
+      }
+    };
+
+    checkAuth();
+
+    const interval = setInterval(
+      () => {
+        checkAuth();
+      },
+      14 * 60 * 1000
     );
-  }
 
-  if (!user) {
-    return null;
-  }
+    return () => clearInterval(interval);
+  }, [router]);
 
-  return <>{children}</>;
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
+        <AppSidebar />
+        <SidebarInset className="flex-1 p-10">
+          <SidebarTrigger />
+          <div>{children}</div>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
+  );
 }

@@ -1,18 +1,18 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel, FieldGroup } from "@/components/ui/field";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 import { useState } from "react";
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">Mi Perfil</h1>
@@ -23,17 +23,16 @@ export default function ProfilePage() {
         </Button>
       </div>
 
-      {/* Profile Card */}
-      <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-8">
+      <div className="rounded-lg border p-8">
         <div className="mb-6 flex items-center gap-6">
           <div className="bg-primary flex h-24 w-24 items-center justify-center rounded-full text-4xl font-bold">
             {user?.name?.[0]?.toUpperCase()}
           </div>
           <div>
             <h2 className="text-2xl font-bold">
-              {user?.name} {user?.lastname}
+              {user?.name} {user?.name}
             </h2>
-            <p className="text-gray-400">@{user?.username}</p>
+            <p className="text-gray-400">@{user?.name}</p>
           </div>
         </div>
 
@@ -49,14 +48,14 @@ export default function ProfilePage() {
             <FieldGroup>
               <Field>
                 <FieldLabel className="text-gray-200">Apellido</FieldLabel>
-                <Input defaultValue={user?.lastname} disabled={!isEditing} placeholder="Tu apellido" />
+                <Input defaultValue={user?.name} disabled={!isEditing} placeholder="Tu apellido" />
               </Field>
             </FieldGroup>
 
             <FieldGroup>
               <Field>
                 <FieldLabel className="text-gray-200">Username</FieldLabel>
-                <Input defaultValue={user?.username} disabled={!isEditing} placeholder="Tu username" />
+                <Input defaultValue={user?.name} disabled={!isEditing} placeholder="Tu username" />
               </Field>
             </FieldGroup>
 
@@ -81,11 +80,10 @@ export default function ProfilePage() {
         </form>
       </div>
 
-      {/* Security Section */}
-      <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-6">
+      <div className="rounded-lg border p-6">
         <h2 className="mb-4 text-2xl font-semibold">Seguridad</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between rounded-lg bg-gray-800/50 p-4">
+          <div className="flex items-center justify-between rounded-lg p-4">
             <div>
               <p className="font-medium">Cambiar Contraseña</p>
               <p className="text-sm text-gray-400">Actualiza tu contraseña regularmente</p>

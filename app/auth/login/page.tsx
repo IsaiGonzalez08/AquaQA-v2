@@ -7,15 +7,17 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { formSchema } from "../../utils/schemas";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -27,29 +29,25 @@ export default function Login() {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setError(null);
+    setError("");
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, rememberMe }),
+        headers: { "Content-Type": "application/json" },
       });
 
-      const result = await response.json();
+      const result = await res.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || "Error al iniciar sesión");
+      if (!res.ok) {
+        setError(result.error || "Error inesperado");
+        return;
       }
 
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("user", JSON.stringify(result.user));
-
       router.push("/dashboard/user");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error desconocido");
+    } catch (e) {
+      setError("Error de conexión");
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +55,7 @@ export default function Login() {
 
   return isLoading ? (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
-      <Spinner className="size-10 text-primary" />
+      <Spinner className="text-primary size-10" />
     </div>
   ) : (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
@@ -79,7 +77,9 @@ export default function Login() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-email" className="text-gray-200">Correo electrónico</FieldLabel>
+                <FieldLabel htmlFor="form-rhf-demo-email" className="text-gray-200">
+                  Correo electrónico
+                </FieldLabel>
                 <Input
                   {...field}
                   id="form-rhf-demo-email"
@@ -100,7 +100,9 @@ export default function Login() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">Contraseña</FieldLabel>
+                <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
+                  Contraseña
+                </FieldLabel>
                 <Input
                   {...field}
                   id="form-rhf-demo-password"
@@ -115,6 +117,13 @@ export default function Login() {
             )}
           />
         </FieldGroup>
+
+        <div className="flex w-full items-center gap-2">
+          <Switch id="remember-me" checked={rememberMe} onCheckedChange={setRememberMe} disabled={isLoading} />
+          <label htmlFor="remember-me" className="text-sm font-medium text-gray-200">
+            Recordar sesión
+          </label>
+        </div>
       </form>
 
       <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={isLoading}>

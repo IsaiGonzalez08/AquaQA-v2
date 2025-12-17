@@ -8,7 +8,7 @@ import { Footer } from "./components/Footer";
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col">
+    <>
       <Header />
       <InitSection />
       <InitCard />
@@ -16,6 +16,6 @@ export default function LandingPage() {
       <Services />
       <Mission />
       <Footer />
-    </div>
+    </>
   );
 }

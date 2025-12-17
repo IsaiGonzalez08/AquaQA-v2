@@ -2,6 +2,7 @@
 
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export function AboutUs() {
   const features = [
@@ -32,7 +33,7 @@ export function AboutUs() {
 
   return (
     <div id="about-us" className="relative mt-10 flex w-full flex-row items-start justify-between gap-16 px-20 py-32">
-      <img src="/Images/box-background.png" alt="box" className="absolute bottom-0 left-0 z-0" />
+      <Image width={550} height={550} src="/Images/box-background.png" alt="box" className="absolute bottom-0 left-0 z-0" />
       <motion.div
         className="z-50 w-1/2"
         initial={{ opacity: 0, x: -100 }}
@@ -40,7 +41,7 @@ export function AboutUs() {
         transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        <img src="/Images/about-us.png" alt="about-us" />
+        <Image width={550} height={550} src="/Images/about-us.png" alt="about-us" />
       </motion.div>
 
       <motion.div
@@ -63,7 +64,7 @@ export function AboutUs() {
           <div className="flex flex-col gap-4">
             {features.map((feature, index) => (
               <div key={index} className="flex flex-row items-center gap-3">
-                <img src="/check.svg" alt="check" />
+                <Image width={30} height={30} src="/check.svg" alt="check" />
                 <span className="text-foreground text-base font-bold">{feature}</span>
               </div>
             ))}
