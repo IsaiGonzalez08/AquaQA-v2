@@ -1,10 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function Mission() {
   return (
     <div id="mission" className="relative flex flex-row gap-5 bg-white px-20 py-28">
-      <img src="/Images/box-background-2.png" alt="box" className="absolute top-0 right-0 z-0" />
+      <Image width={430} height={450} src="/Images/box-background-2.png" alt="box" className="absolute top-0 right-0 z-0" />
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -52,7 +53,7 @@ export function Mission() {
         viewport={{ once: true }}
         className="z-50 flex w-1/2 justify-end"
       >
-        <img src="/Images/mission.png" alt="mission" className="rounded-2xl" />
+        <Image width={550} height={550} src="/Images/mission.png" alt="mission" className="rounded-2xl" />
       </motion.div>
     </div>
   );

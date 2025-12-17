@@ -1,3 +1,7 @@
+"use client";
+
+import Image from "next/image";
+
 export function InitCard() {
   let infoCard = [
     {
@@ -22,7 +26,7 @@ export function InitCard() {
       <div className="flex flex-row gap-20">
         {infoCard.map((item, index) => (
           <div className="flex flex-row items-center gap-4" key={index}>
-            <img src={item.icon} alt="Logo" className="relative z-10 max-h-[550px] rounded-3xl" />
+            <Image src={item.icon} alt="Logo" width={64} height={64} className="relative z-10 rounded-3xl" />
             <div>
               <h1 className="text-foreground text-3xl font-bold">{item.title}</h1>
               <h3 className="text-foreground text-base font-medium">{item.subtitle}</h3>

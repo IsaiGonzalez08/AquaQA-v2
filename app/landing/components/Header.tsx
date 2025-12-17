@@ -1,20 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation";
-import { animatePageOut } from "../../utils/animation";
 import { Button } from "../../../components/ui/button";
 
 export function Header() {
-  const router = useRouter();
-  const pathName = usePathname();
-
-  const handleClick = (href: string) => {
-    if (pathName !== href) {
-      animatePageOut(router, href);
-    }
-  };
-
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     const element = document.getElementById(targetId);
@@ -38,14 +27,15 @@ export function Header() {
           Misión
         </Link>
       </nav>
-      <Button
-        variant="secondary"
-        iconSize={40}
-        className="h-9 w-36 text-base"
-        onClick={() => handleClick("/auth/login")}
-      >
-        Comenzar
-      </Button>
+      <Link href="/auth/login">
+        <Button
+          variant="secondary"
+          iconSize={40}
+          className="h-9 w-36 text-base"
+        >
+          Comenzar
+        </Button>
+      </Link>
     </header>
   );
 }

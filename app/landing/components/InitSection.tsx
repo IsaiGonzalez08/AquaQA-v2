@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "../../../components/ui/button";
+import Image from "next/image";
 
 export function InitSection() {
   let dividerInfo = [
@@ -70,20 +71,26 @@ export function InitSection() {
             background: "radial-gradient(circle at center 80%, #3CC0C933 0%, transparent 50%)",
           }}
         />
-        <img
+        <Image
           src="/Images/init1.png"
           alt="Logo"
-          className="relative z-10 max-h-[550px] rounded-3xl transition-all duration-300 hover:scale-105"
+          width={190}
+          height={550}
+          className="relative z-10 rounded-3xl transition-all duration-300 hover:scale-105"
         />
-        <img
+        <Image
           src="/Images/init2.png"
           alt="Logo"
-          className="relative z-10 mt-26 max-h-[550px] rounded-3xl transition-all duration-300 hover:scale-105"
+          width={190}
+          height={550}
+          className="relative z-10 mt-26 rounded-3xl transition-all duration-300 hover:scale-105"
         />
-        <img
+        <Image
           src="/Images/init3.png"
           alt="Logo"
-          className="relative z-10 max-h-[550px] rounded-3xl transition-all duration-300 hover:scale-105"
+          width={190}
+          height={550}
+          className="relative z-10 rounded-3xl transition-all duration-300 hover:scale-105"
         />
       </motion.div>
     </div>
