@@ -6,12 +6,12 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { formSchema } from "../../utils/schemas";
 import { useState } from "react";
 import Image from "next/image";
+import Loading from "@/components/ui/loading";
 
 export default function Login() {
   const router = useRouter();
@@ -42,23 +42,23 @@ export default function Login() {
 
       if (!res.ok) {
         setError(result.error || "Error inesperado");
+        setIsLoading(false);
         return;
       }
 
-      router.push("/dashboard/user");
+      router.replace("/dashboard/user");
     } catch (e) {
       setError("Error de conexión");
-    } finally {
       setIsLoading(false);
     }
   }
 
-  return isLoading ? (
+  return (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
-      <Spinner className="text-primary size-10" />
-    </div>
-  ) : (
-    <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
+      {isLoading && (
+        <Loading /> 
+      )}
+
       <Image width={50} height={50} src="/aquaQA.svg" alt="Logo" />
 
       <h1 className="text-primary text-center text-5xl font-bold">Iniciar sesión</h1>
