@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="mx-auto w-full max-w-[2000px]">
+    <footer className="bg-footer mx-auto w-full max-w-[2000px]">
       <div className="bg-primary flex h-64 flex-row items-center justify-center gap-10 px-20 text-white">
         <div className="text-4xl font-normal">
           AQUA<span className="font-bold">QA</span>
@@ -34,7 +34,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="flex h-52 flex-row items-center justify-between bg-[#F5F5F5] px-20">
+      <div className="flex h-52 flex-row items-center justify-between px-20">
         <div className="flex flex-row items-center gap-3">
           <Image width={40} height={40} src="/vji.svg" alt="VJI Corporation" />
           <span className="text-primary text-2xl font-extrabold">VJI Corporation</span>

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function Mission() {
   return (
-    <div id="mission" className="relative flex flex-row gap-5 bg-white px-20 py-28">
+    <div id="mission" className="relative flex flex-row gap-5 px-20 py-28">
       <Image width={430} height={450} src="/Images/box-background-2.png" alt="box" className="absolute top-0 right-0 z-0" />
       <motion.div
         initial={{ opacity: 0 }}

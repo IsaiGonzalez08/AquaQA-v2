@@ -63,7 +63,7 @@ export function InitSection() {
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="relative flex w-1/2 flex-row items-center justify-start gap-4 2xl:justify-center pb-10"
+        className="relative flex w-1/2 flex-row items-center justify-start gap-4 2xl:justify-center pb-20"
       >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
