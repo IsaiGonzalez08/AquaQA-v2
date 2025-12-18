@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { formSchema } from "../../utils/schemas";
+import { loginFormSchema } from "../../utils/schemas";
 import { useState } from "react";
 import Image from "next/image";
 import Loading from "@/components/ui/loading";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -19,15 +20,15 @@ export default function Login() {
   const [error, setError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof loginFormSchema>) {
     setIsLoading(true);
     setError("");
 
@@ -55,9 +56,7 @@ export default function Login() {
 
   return (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
-      {isLoading && (
-        <Loading /> 
-      )}
+      {isLoading && <Loading />}
 
       <Image width={50} height={50} src="/aquaQA.svg" alt="Logo" />
 
@@ -118,17 +117,30 @@ export default function Login() {
           />
         </FieldGroup>
 
+        <span className="my-2 text-sm text-gray-200">
+          ¿Aún no tienes una cuenta?{" "}
+          <Link className="text-primary font-medium" href="/auth/register">
+            Solicita una cuenta.
+          </Link>
+        </span>
+
         <div className="flex w-full items-center gap-2">
           <Switch id="remember-me" checked={rememberMe} onCheckedChange={setRememberMe} disabled={isLoading} />
           <label htmlFor="remember-me" className="text-sm font-medium text-gray-200">
             Recordar sesión
           </label>
         </div>
-      </form>
 
-      <Button variant="primary" className="mt-4 text-lg" type="submit" form="form-rhf-demo" disabled={isLoading}>
-        {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
-      </Button>
+        <Button
+          variant="primary"
+          className="mt-4 w-full text-lg"
+          type="submit"
+          form="form-rhf-demo"
+          disabled={isLoading}
+        >
+          {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
+        </Button>
+      </form>
     </div>
   );
 }
