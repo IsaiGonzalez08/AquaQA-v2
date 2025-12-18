@@ -1,15 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function SettingsPage() {
   const [notifications, setNotifications] = useState(true);
   const [emailUpdates, setEmailUpdates] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="space-y-6">
-
       <div>
         <h1 className="text-4xl font-bold">Configuración</h1>
         <p className="mt-2 text-gray-400">Personaliza tu experiencia en AquaQA</p>
@@ -63,10 +65,10 @@ export default function SettingsPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between rounded-lg p-4">
             <div>
-              <p className="font-medium">Tema</p>
-              <p className="text-sm text-gray-400">Modo oscuro activado</p>
+              <p className="font-medium">Modo Oscuro</p>
+              <p className="text-sm text-gray-400">{theme === "dark" ? "Activado" : "Desactivado"}</p>
             </div>
-            <Button variant="secondary">Cambiar Tema</Button>
+            <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
           </div>
         </div>
       </div>
