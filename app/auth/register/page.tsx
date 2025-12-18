@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Loading from "@/components/ui/loading";
 
 export default function Register() {
   const router = useRouter();
@@ -22,14 +23,16 @@ export default function Register() {
     defaultValues: {
       email: "",
       password: "",
+      name: "",
+      lastname: "",
       username: "",
-      phone: "",
       confirmPassword: "",
     },
   });
 
   async function onSubmit(data: z.infer<typeof registerFormSchema>) {
     setIsLoading(true);
+    setError("");
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -45,7 +48,13 @@ export default function Register() {
         return;
       }
 
-      router.replace("/dashboard/user");
+      const { role } = result.user;
+
+      if (role === "admin") {
+        router.replace("/dashboard/admin");
+      } else {
+        router.replace("/dashboard/user");
+      }
     } catch (e) {
       setError("Error de conexión");
       setIsLoading(false);
@@ -54,6 +63,8 @@ export default function Register() {
 
   return (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
+      {isLoading && <Loading />}
+
       <Image width={50} height={50} src="/aquaQA.svg" alt="Logo" />
 
       <h1 className="text-primary text-center text-5xl font-bold">Solicita una cuenta</h1>
@@ -92,18 +103,18 @@ export default function Register() {
         <div className="flex flex-row gap-5">
           <FieldGroup>
             <Controller
-              name="username"
+              name="name"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
-                    Usuario
+                  <FieldLabel htmlFor="form-rhf-demo-name" className="text-gray-200">
+                    Nombre
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-password"
+                    id="form-rhf-demo-name"
                     aria-invalid={fieldState.invalid}
-                    placeholder="Usuario"
+                    placeholder="Nombre"
                     autoComplete="off"
                     type="text"
                     disabled={isLoading}
@@ -115,20 +126,20 @@ export default function Register() {
           </FieldGroup>
           <FieldGroup>
             <Controller
-              name="phone"
+              name="lastname"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
-                    Telefono
+                  <FieldLabel htmlFor="form-rhf-demo-lastname" className="text-gray-200">
+                    Apellido
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-password"
+                    id="form-rhf-demo-lastname"
                     aria-invalid={fieldState.invalid}
-                    placeholder="Telefono"
+                    placeholder="Apellido"
                     autoComplete="off"
-                    type="tel"
+                    type="text"
                     disabled={isLoading}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -137,6 +148,30 @@ export default function Register() {
             />
           </FieldGroup>
         </div>
+
+        <FieldGroup>
+          <Controller
+            name="username"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="form-rhf-demo-username" className="text-gray-200">
+                  Usuario
+                </FieldLabel>
+                <Input
+                  {...field}
+                  id="form-rhf-demo-username"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="Usuario"
+                  autoComplete="off"
+                  type="text"
+                  disabled={isLoading}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+        </FieldGroup>
 
         <FieldGroup>
           <Controller

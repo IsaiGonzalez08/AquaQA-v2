@@ -47,7 +47,13 @@ export default function Login() {
         return;
       }
 
-      router.replace("/dashboard/user");
+      const { role } = result.user;
+
+      if (role === "admin") {
+        router.replace("/dashboard/admin");
+      } else {
+        router.replace("/dashboard/user");
+      }
     } catch (e) {
       setError("Error de conexión");
       setIsLoading(false);

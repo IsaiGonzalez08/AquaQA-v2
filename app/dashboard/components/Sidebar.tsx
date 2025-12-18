@@ -30,13 +30,17 @@ interface UserData {
   userId: string;
   email: string;
   name: string;
+  role: string;
 }
 
 export function AppSidebar() {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+
     const fetchUserData = async () => {
       try {
         const response = await fetch("/api/user/me");
@@ -70,6 +74,21 @@ export function AppSidebar() {
     },
   ];
 
+  const adminMenuItems = [
+    {
+      title: "Dashboard",
+      url: "/dashboard/admin",
+      icon: Home,
+    },
+    {
+      title: "Solicitudes",
+      url: "/dashboard/admin/request",
+      icon: User,
+    },
+  ];
+
+  const currentMenuItems = userData?.role === "admin" ? adminMenuItems : menuItems;
+
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
     router.replace("/");
@@ -86,7 +105,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {menuItems.map((item) => (
+              {currentMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="hover:bg-sidebar-accent transition-colors">
                     <Link href={item.url} className="flex items-center gap-3 px-3 py-2.5">
@@ -102,46 +121,60 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="hover:bg-sidebar-accent flex w-full items-center gap-3 rounded-lg p-2 transition-colors">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src="/placeholder-avatar.jpg" alt="Usuario" />
-                <AvatarFallback className="bg-primary text-primary-foreground">
-                  <User className="h-5 w-5" />
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-1 flex-col text-left">
-                <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
-                <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
-              </div>
-              <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/user/profile" className="flex cursor-pointer items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>Perfil</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/user/settings" className="flex cursor-pointer items-center">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Configuración</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer text-red-600">
-              <button onClick={handleLogout} className="flex cursor-pointer items-center">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Cerrar sesión</span>
+        {!isMounted ? (
+          <div className="flex w-full items-center gap-3 rounded-lg p-2">
+            <Avatar className="h-10 w-10">
+              <AvatarFallback className="bg-primary text-primary-foreground">
+                <User className="h-5 w-5" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex flex-1 flex-col text-left">
+              <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
+              <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
+            </div>
+          </div>
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="hover:bg-sidebar-accent flex w-full items-center gap-3 rounded-lg p-2 transition-colors">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src="/placeholder-avatar.jpg" alt="Usuario" />
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    <User className="h-5 w-5" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-1 flex-col text-left">
+                  <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
+                  <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
+                </div>
+                <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
               </button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user/profile" className="flex cursor-pointer items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Perfil</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user/settings" className="flex cursor-pointer items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Configuración</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer text-red-600">
+                <button onClick={handleLogout} className="flex cursor-pointer items-center">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Cerrar sesión</span>
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
