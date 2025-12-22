@@ -22,7 +22,7 @@ export function InitCard() {
   ];
 
   return (
-    <div className="bg-background mx-20 mt-10 flex h-64 flex-row justify-center rounded-xl px-20 shadow-2xl">
+    <div className="bg-background mx-20 flex h-64 flex-row justify-center rounded-xl px-20 shadow-2xl">
       <div className="flex flex-row gap-20">
         {infoCard.map((item, index) => (
           <div className="flex flex-row items-center gap-4" key={index}>

@@ -33,6 +33,7 @@ export async function POST(req: Request) {
       email: user.email,
       name: user.name,
       username: user.username,
+      role: user.role,
     };
 
     const accessToken = await signAccessToken(payload);
@@ -65,6 +66,7 @@ export async function POST(req: Request) {
           name: user.name,
           lastname: user.lastname,
           username: user.username,
+          role: user.role,
         },
       },
       { status: 200 }

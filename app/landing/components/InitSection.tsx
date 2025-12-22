@@ -24,9 +24,8 @@ export function InitSection() {
     <div className="flex w-full flex-row items-center px-20">
       <motion.div
         initial={{ opacity: 0, x: -100 }}
-        whileInView={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
-        viewport={{ once: true }}
         className="flex w-1/2 justify-start 2xl:justify-center"
       >
         <div>
@@ -60,15 +59,14 @@ export function InitSection() {
       </motion.div>
       <motion.div
         initial={{ opacity: 0, x: 100 }}
-        whileInView={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="relative flex w-1/2 flex-row items-center justify-start gap-4 2xl:justify-center"
+        className="relative flex w-1/2 flex-row items-center justify-start gap-4 pb-20 2xl:justify-center"
       >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
           style={{
-            background: "radial-gradient(circle at center 80%, #3CC0C933 0%, transparent 50%)",
+            background: "radial-gradient(circle at center 52%, #3CC0C933 0%, transparent 60%)",
           }}
         />
         <Image

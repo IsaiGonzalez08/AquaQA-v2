@@ -44,7 +44,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <SidebarInset className="flex-1 p-10">
-          <SidebarTrigger />
+          <SidebarTrigger className="mb-10" />
           <div>{children}</div>
         </SidebarInset>
       </div>

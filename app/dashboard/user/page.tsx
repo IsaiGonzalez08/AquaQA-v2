@@ -29,7 +29,7 @@ export default function UserDashboard() {
 
   return (
     <div>
-      <h1 className="mt-10 text-4xl font-bold">Bienvenido, {userData?.name} 👋</h1>
+      <h1 className="text-4xl font-bold">Bienvenido, {userData?.name} 👋</h1>
       <p className="mt-2 text-gray-400">Aquí está tu resumen de actividad</p>
     </div>
   );
