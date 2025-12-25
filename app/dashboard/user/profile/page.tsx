@@ -1,97 +1,113 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field, FieldLabel, FieldGroup } from "@/components/ui/field";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
-import { useState } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { User, Mail, Phone, Calendar, MapPin, Edit3 } from "lucide-react";
+
+interface UserData {
+  userId: string;
+  email: string;
+  name: string;
+  role: string;
+}
 
 export default function ProfilePage() {
-  const { user } = useSelector((state: RootState) => state.auth);
   const [isEditing, setIsEditing] = useState(false);
 
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/user/me");
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold">Mi Perfil</h1>
-          <p className="mt-2 text-gray-400">Gestiona tu información personal</p>
+          <h1 className="text-foreground text-3xl font-bold">Mi Perfil</h1>
+          <p className="text-muted-foreground mt-1">Gestiona tu información personal y preferencias</p>
         </div>
-        <Button onClick={() => setIsEditing(!isEditing)} variant={isEditing ? "secondary" : "primary"}>
-          {isEditing ? "Cancelar" : "Editar Perfil"}
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)} className="gap-2">
+            <Edit3 className="h-4 w-4" />
+            {isEditing ? "Cancelar" : "Editar"}
+          </Button>
+        </div>
       </div>
 
-      <div className="rounded-lg border p-8">
-        <div className="mb-6 flex items-center gap-6">
-          <div className="bg-primary flex h-24 w-24 items-center justify-center rounded-full text-4xl font-bold">
-            {user?.name?.[0]?.toUpperCase()}
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold">
-              {user?.name} {user?.name}
-            </h2>
-            <p className="text-gray-400">@{user?.name}</p>
-          </div>
-        </div>
-
-        <form className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <FieldGroup>
-              <Field>
-                <FieldLabel className="text-gray-200">Nombre</FieldLabel>
-                <Input defaultValue={user?.name} disabled={!isEditing} placeholder="Tu nombre" />
-              </Field>
-            </FieldGroup>
-
-            <FieldGroup>
-              <Field>
-                <FieldLabel className="text-gray-200">Apellido</FieldLabel>
-                <Input defaultValue={user?.name} disabled={!isEditing} placeholder="Tu apellido" />
-              </Field>
-            </FieldGroup>
-
-            <FieldGroup>
-              <Field>
-                <FieldLabel className="text-gray-200">Username</FieldLabel>
-                <Input defaultValue={user?.name} disabled={!isEditing} placeholder="Tu username" />
-              </Field>
-            </FieldGroup>
-
-            <FieldGroup>
-              <Field>
-                <FieldLabel className="text-gray-200">Email</FieldLabel>
-                <Input defaultValue={user?.email} disabled={!isEditing} type="email" placeholder="tu@email.com" />
-              </Field>
-            </FieldGroup>
-          </div>
-
-          {isEditing && (
-            <div className="flex gap-3 pt-4">
-              <Button type="submit" variant="primary">
-                Guardar Cambios
-              </Button>
-              <Button type="button" variant="secondary" onClick={() => setIsEditing(false)}>
-                Cancelar
-              </Button>
+      <Card className="overflow-hidden">
+        <div className="from-primary to-secondary h-32 bg-gradient-to-r"></div>
+        <CardContent className="relative pb-6">
+          <div className="-mt-16 flex flex-col items-center gap-4 sm:-mt-12 sm:flex-row sm:items-end">
+            <Avatar className="border-background h-32 w-32 border-4 shadow-lg">
+              <AvatarFallback className="bg-primary text-background text-2xl">
+                {userData?.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </AvatarFallback>
+            </Avatar>
+            <div className="mb-4 flex-1 text-center sm:mb-0 sm:text-left">
+              <h2 className="text-foreground text-2xl font-bold">{userData?.name}</h2>
+              <p className="text-muted-foreground">{userData?.role}</p>
             </div>
-          )}
-        </form>
-      </div>
-
-      <div className="rounded-lg border p-6">
-        <h2 className="mb-4 text-2xl font-semibold">Seguridad</h2>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between rounded-lg p-4">
-            <div>
-              <p className="font-medium">Cambiar Contraseña</p>
-              <p className="text-sm text-gray-400">Actualiza tu contraseña regularmente</p>
-            </div>
-            <Button variant="secondary">Cambiar</Button>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <User className="text-primary h-5 w-5" />
+            Información Personal
+          </CardTitle>
+          <CardDescription>Tus datos personales básicos</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="border-border flex items-center justify-between border-b py-2">
+            <div className="flex items-center gap-3">
+              <Mail className="text-muted-foreground h-4 w-4" />
+              <span className="text-muted-foreground text-sm">Email</span>
+            </div>
+            <span className="text-sm font-medium">{userData?.email}</span>
+          </div>
+          <div className="border-border flex items-center justify-between border-b py-2">
+            <div className="flex items-center gap-3">
+              <Phone className="text-muted-foreground h-4 w-4" />
+              <span className="text-muted-foreground text-sm">Teléfono</span>
+            </div>
+          </div>
+          <div className="border-border flex items-center justify-between border-b py-2">
+            <div className="flex items-center gap-3">
+              <MapPin className="text-muted-foreground h-4 w-4" />
+              <span className="text-muted-foreground text-sm">Ubicación</span>
+            </div>
+          </div>
+          <div className="flex items-center justify-between py-2">
+            <div className="flex items-center gap-3">
+              <Calendar className="text-muted-foreground h-4 w-4" />
+              <span className="text-muted-foreground text-sm">Miembro desde</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
