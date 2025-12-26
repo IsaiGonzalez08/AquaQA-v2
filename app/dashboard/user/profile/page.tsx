@@ -17,11 +17,8 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-
     const fetchUserData = async () => {
       try {
         const response = await fetch("/api/user/me");
