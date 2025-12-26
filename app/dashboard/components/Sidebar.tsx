@@ -15,7 +15,7 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,11 +36,8 @@ interface UserData {
 export function AppSidebar() {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-
     const fetchUserData = async () => {
       try {
         const response = await fetch("/api/user/me");
@@ -121,20 +118,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        {!isMounted ? (
-          <div className="flex w-full items-center gap-3 rounded-lg p-2">
-            <Avatar className="h-10 w-10">
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                <User className="h-5 w-5" />
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-1 flex-col text-left">
-              <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
-              <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
-            </div>
-          </div>
-        ) : (
-          <DropdownMenu>
+        <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="hover:bg-sidebar-accent flex w-full items-center gap-3 rounded-lg p-2 transition-colors">
                 <Avatar className="h-10 w-10">
@@ -173,7 +157,6 @@ export function AppSidebar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )}
       </SidebarFooter>
     </Sidebar>
   );

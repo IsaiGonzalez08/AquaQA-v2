@@ -56,7 +56,7 @@ export default function Register() {
         router.replace("/dashboard/user");
       }
     } catch (e) {
-      setError("Error de conexión");
+      setError(`Error de conexión: ${e}`);
       setIsLoading(false);
     }
   }

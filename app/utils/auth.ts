@@ -31,6 +31,7 @@ export async function verifyAccessToken(token: string): Promise<SessionPayload |
     const { payload } = await jwtVerify(token, secretKey);
     return payload as unknown as SessionPayload;
   } catch (err) {
+    console.log(err);
     return null;
   }
 }
@@ -40,6 +41,7 @@ export async function verifyRefreshToken(token: string): Promise<SessionPayload 
     const { payload } = await jwtVerify(token, refreshSecretKey);
     return payload as unknown as SessionPayload;
   } catch (err) {
+    console.log(err);
     return null;
   }
 }

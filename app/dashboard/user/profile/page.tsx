@@ -53,7 +53,7 @@ export default function ProfilePage() {
       </div>
 
       <Card className="overflow-hidden">
-        <div className="from-primary to-secondary h-32 bg-gradient-to-r"></div>
+        <div className="from-primary to-secondary h-32"></div>
         <CardContent className="relative pb-6">
           <div className="-mt-16 flex flex-col items-center gap-4 sm:-mt-12 sm:flex-row sm:items-end">
             <Avatar className="border-background h-32 w-32 border-4 shadow-lg">

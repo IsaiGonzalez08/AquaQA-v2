@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 export function InitCard() {
-  let infoCard = [
+  const infoCard = [
     {
       title: "Certificación",
       subtitle: "Lorem ipsum dolor sit amet consectetur.",

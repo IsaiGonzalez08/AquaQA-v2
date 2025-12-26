@@ -241,11 +241,6 @@ export default function ChartsPage() {
   const alertEvents = useMemo(() => generateAlertEvents(), []);
   const historicalRecords = useMemo(() => generateHistoricalRecords(timeSeriesData, alertEvents), [timeSeriesData, alertEvents]);
 
-  const histogramData = useMemo(() => {
-    if (selectedSensors.length === 0) return [];
-    return generateHistogramData(selectedSensors[0], timeSeriesData);
-  }, [selectedSensors, timeSeriesData]);
-
   const toggleSensor = (sensorId: string) => {
     setSelectedSensors(prev =>
       prev.includes(sensorId)

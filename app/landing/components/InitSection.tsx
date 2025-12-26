@@ -5,7 +5,7 @@ import { Button } from "../../../components/ui/button";
 import Image from "next/image";
 
 export function InitSection() {
-  let dividerInfo = [
+  const dividerInfo = [
     {
       quantity: "80+",
       text: "Zonas",
