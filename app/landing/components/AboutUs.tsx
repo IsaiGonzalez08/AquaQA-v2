@@ -33,7 +33,13 @@ export function AboutUs() {
 
   return (
     <div id="about-us" className="relative mt-10 flex w-full flex-row items-start justify-between gap-16 px-20 py-32">
-      <Image width={550} height={550} src="/Images/box-background.png" alt="box" className="absolute bottom-0 left-0 z-0" />
+      <Image
+        width={550}
+        height={550}
+        src="/Images/box-background.png"
+        alt="box"
+        className="absolute bottom-0 left-0 z-0"
+      />
       <motion.div
         className="z-50 w-1/2"
         initial={{ opacity: 0, x: -100 }}
@@ -83,16 +89,18 @@ export function AboutUs() {
                   fill="none"
                   strokeLinecap="round"
                   initial={{ strokeDasharray: `0 ${2 * Math.PI * 48}` }}
-                  animate={isInView ? {
-                    strokeDasharray: `${2 * Math.PI * 48 * 0.9} ${2 * Math.PI * 48}`
-                  } : {}}
+                  animate={
+                    isInView
+                      ? {
+                          strokeDasharray: `${2 * Math.PI * 48 * 0.9} ${2 * Math.PI * 48}`,
+                        }
+                      : {}
+                  }
                   transition={{ duration: 2, ease: "easeOut" }}
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-primary text-2xl font-bold">
-                  {displayPercentage}%
-                </span>
+                <span className="text-primary text-2xl font-bold">{displayPercentage}%</span>
               </div>
             </div>
             <span className="text-foreground text-base font-bold">

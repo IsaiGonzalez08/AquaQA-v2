@@ -1,17 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import {
   Thermometer,
   Droplets,
@@ -66,7 +56,15 @@ interface SensorAnalysis {
 }
 
 const SENSORS: SensorConfig[] = [
-  { id: "temperature", name: "Temperatura", unit: "°C", icon: Thermometer, color: "#3b82f6", minOptimal: 18, maxOptimal: 28 },
+  {
+    id: "temperature",
+    name: "Temperatura",
+    unit: "°C",
+    icon: Thermometer,
+    color: "#3b82f6",
+    minOptimal: 18,
+    maxOptimal: 28,
+  },
   { id: "ph", name: "pH", unit: "", icon: Droplets, color: "#22c55e", minOptimal: 6.5, maxOptimal: 8.5 },
   { id: "turbidity", name: "Turbidez", unit: "NTU", icon: Waves, color: "#f59e0b", minOptimal: 0, maxOptimal: 25 },
   { id: "magnetism", name: "Magnetismo", unit: "μT", icon: Magnet, color: "#a855f7", minOptimal: 25, maxOptimal: 65 },
@@ -74,20 +72,18 @@ const SENSORS: SensorConfig[] = [
 
 const generateMockData = (period: Period): SensorAnalysis[] => {
   const periodMultiplier = period === "24h" ? 1 : period === "7d" ? 7 : 30;
-  
+
   return SENSORS.map((sensor) => {
     const baseAlerts = Math.floor(Math.random() * 15) + 2;
     const alerts = baseAlerts * (periodMultiplier / 7);
     const outOfRange = Math.random() * 25 + 5;
     const stability = Math.random() * 40 + 60;
-    
-    const trendData = Array.from({ length: 12 }, () => 
-      50 + (Math.random() - 0.5) * 30
-    );
-    
+
+    const trendData = Array.from({ length: 12 }, () => 50 + (Math.random() - 0.5) * 30);
+
     const trendDirection = trendData[trendData.length - 1] - trendData[0];
     const trend: Trend = trendDirection > 5 ? "up" : trendDirection < -5 ? "down" : "stable";
-    
+
     let status: SensorStatus = "normal";
     if (outOfRange > 20 || alerts > 10) status = "critical";
     else if (outOfRange > 10 || alerts > 5) status = "alert";
@@ -97,7 +93,7 @@ const generateMockData = (period: Period): SensorAnalysis[] => {
     const min = sensor.minOptimal - range * Math.random() * 0.3;
     const max = sensor.maxOptimal + range * Math.random() * 0.3;
 
-    const hours = Math.floor(outOfRange * periodMultiplier * 24 / 100);
+    const hours = Math.floor((outOfRange * periodMultiplier * 24) / 100);
     const mins = Math.floor(Math.random() * 60);
 
     return {
@@ -122,12 +118,24 @@ const generateMockData = (period: Period): SensorAnalysis[] => {
 
 const StatusBadge = ({ status }: { status: SensorStatus }) => {
   const config = {
-    normal: { icon: CheckCircle2, label: "Normal", className: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" },
-    alert: { icon: AlertCircle, label: "Alerta", className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" },
-    critical: { icon: XCircle, label: "Crítico", className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" },
+    normal: {
+      icon: CheckCircle2,
+      label: "Normal",
+      className: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+    },
+    alert: {
+      icon: AlertCircle,
+      label: "Alerta",
+      className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+    },
+    critical: {
+      icon: XCircle,
+      label: "Crítico",
+      className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+    },
   };
   const { icon: Icon, label, className } = config[status];
-  
+
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${className}`}>
       <Icon className="h-3 w-3" />
@@ -143,7 +151,7 @@ const TrendIndicator = ({ trend }: { trend: Trend }) => {
     stable: { icon: Minus, label: "Estable", className: "text-green-500" },
   };
   const { icon: Icon, label, className } = config[trend];
-  
+
   return (
     <span className={`inline-flex items-center gap-1 text-xs ${className}`}>
       <Icon className="h-3 w-3" />
@@ -154,18 +162,12 @@ const TrendIndicator = ({ trend }: { trend: Trend }) => {
 
 const Sparkline = ({ data, color }: { data: number[]; color: string }) => {
   const chartData = data.map((value, index) => ({ index, value }));
-  
+
   return (
     <div className="h-10 w-24">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke={color}
-            strokeWidth={1.5}
-            dot={false}
-          />
+          <Line type="monotone" dataKey="value" stroke={color} strokeWidth={1.5} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -229,12 +231,12 @@ export default function AnalysisPage() {
       const match = s.outOfRangeTime.match(/(\d+)h/);
       return sum + (match ? parseInt(match[1]) : 0);
     }, 0);
-    
+
     const mostUnstable = [...sensorData].sort((a, b) => a.stability - b.stability)[0];
-    
-    const criticalCount = sensorData.filter(s => s.status === "critical").length;
-    const alertCount = sensorData.filter(s => s.status === "alert").length;
-    
+
+    const criticalCount = sensorData.filter((s) => s.status === "critical").length;
+    const alertCount = sensorData.filter((s) => s.status === "alert").length;
+
     let systemStatus: SensorStatus = "normal";
     if (criticalCount > 0) systemStatus = "critical";
     else if (alertCount > 1) systemStatus = "alert";
@@ -242,13 +244,13 @@ export default function AnalysisPage() {
     return { totalAlerts, totalOutOfRangeHours, mostUnstable, systemStatus };
   }, [sensorData]);
 
-  const outOfRangeChartData = sensorData.map(s => ({
+  const outOfRangeChartData = sensorData.map((s) => ({
     name: s.name,
     value: s.outOfRangePercent,
     fill: s.color,
   }));
 
-  const alertsChartData = sensorData.map(s => ({
+  const alertsChartData = sensorData.map((s) => ({
     name: s.name,
     value: s.alertCount,
     fill: s.color,
@@ -258,7 +260,7 @@ export default function AnalysisPage() {
     "24h": "Últimas 24 horas",
     "7d": "Últimos 7 días",
     "30d": "Últimos 30 días",
-    "custom": "Rango personalizado",
+    custom: "Rango personalizado",
   };
 
   return (
@@ -285,7 +287,7 @@ export default function AnalysisPage() {
             </span>
             <ChevronDown className="h-4 w-4" />
           </Button>
-          
+
           {showPeriodMenu && (
             <div className="bg-card absolute right-0 z-10 mt-2 w-48 rounded-md border shadow-lg">
               {(Object.keys(periodLabels) as Period[]).map((period) => (
@@ -321,7 +323,13 @@ export default function AnalysisPage() {
           value={`${globalStats.totalOutOfRangeHours}h`}
           subtitle="Suma de todos los sensores"
           icon={Clock}
-          variant={globalStats.totalOutOfRangeHours > 48 ? "danger" : globalStats.totalOutOfRangeHours > 24 ? "warning" : "default"}
+          variant={
+            globalStats.totalOutOfRangeHours > 48
+              ? "danger"
+              : globalStats.totalOutOfRangeHours > 24
+                ? "warning"
+                : "default"
+          }
         />
         <KPICard
           title="Sensor Más Inestable"
@@ -332,10 +340,22 @@ export default function AnalysisPage() {
         />
         <KPICard
           title="Estado del Sistema"
-          value={globalStats.systemStatus === "normal" ? "Óptimo" : globalStats.systemStatus === "alert" ? "Atención" : "Crítico"}
+          value={
+            globalStats.systemStatus === "normal"
+              ? "Óptimo"
+              : globalStats.systemStatus === "alert"
+                ? "Atención"
+                : "Crítico"
+          }
           subtitle={globalStats.systemStatus === "normal" ? "Todo funcionando correctamente" : "Requiere revisión"}
           icon={Shield}
-          variant={globalStats.systemStatus === "normal" ? "success" : globalStats.systemStatus === "alert" ? "warning" : "danger"}
+          variant={
+            globalStats.systemStatus === "normal"
+              ? "success"
+              : globalStats.systemStatus === "alert"
+                ? "warning"
+                : "danger"
+          }
         />
       </div>
 
@@ -354,7 +374,7 @@ export default function AnalysisPage() {
               return (
                 <div
                   key={sensor.id}
-                  className="bg-muted/30 flex items-start gap-4 rounded-lg border p-4 transition-colors hover:border-primary/50"
+                  className="bg-muted/30 hover:border-primary/50 flex items-start gap-4 rounded-lg border p-4 transition-colors"
                 >
                   <div
                     className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
@@ -362,13 +382,17 @@ export default function AnalysisPage() {
                   >
                     <Icon className="h-6 w-6" style={{ color: sensor.color }} />
                   </div>
-                  
+
                   <div className="min-w-0 flex-1 space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <h4 className="font-semibold">{sensor.name}</h4>
                         <p className="text-muted-foreground text-sm">
-                          Promedio: <span className="font-medium text-foreground">{sensor.average}{sensor.unit}</span>
+                          Promedio:{" "}
+                          <span className="text-foreground font-medium">
+                            {sensor.average}
+                            {sensor.unit}
+                          </span>
                         </p>
                       </div>
                       <StatusBadge status={sensor.status} />
@@ -377,11 +401,17 @@ export default function AnalysisPage() {
                     <div className="grid grid-cols-3 gap-2 text-sm">
                       <div>
                         <p className="text-muted-foreground text-xs">Mín</p>
-                        <p className="font-medium">{sensor.min}{sensor.unit}</p>
+                        <p className="font-medium">
+                          {sensor.min}
+                          {sensor.unit}
+                        </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground text-xs">Máx</p>
-                        <p className="font-medium">{sensor.max}{sensor.unit}</p>
+                        <p className="font-medium">
+                          {sensor.max}
+                          {sensor.unit}
+                        </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground text-xs">Fuera rango</p>
@@ -392,9 +422,7 @@ export default function AnalysisPage() {
                     <div className="flex items-center justify-between border-t pt-2">
                       <div className="flex items-center gap-4">
                         <TrendIndicator trend={sensor.trend} />
-                        <span className="text-muted-foreground text-xs">
-                          {sensor.alertCount} alertas
-                        </span>
+                        <span className="text-muted-foreground text-xs">{sensor.alertCount} alertas</span>
                       </div>
                       <Sparkline data={sensor.trendData} color={sensor.color} />
                     </div>
@@ -482,25 +510,21 @@ export default function AnalysisPage() {
             {sensorData.map((sensor) => {
               const Icon = sensor.icon;
               const stabilityColor =
-                sensor.stability >= 80 ? "text-green-500" :
-                sensor.stability >= 60 ? "text-amber-500" : "text-red-500";
+                sensor.stability >= 80 ? "text-green-500" : sensor.stability >= 60 ? "text-amber-500" : "text-red-500";
               const stabilityBg =
-                sensor.stability >= 80 ? "bg-green-500" :
-                sensor.stability >= 60 ? "bg-amber-500" : "bg-red-500";
-              
+                sensor.stability >= 80 ? "bg-green-500" : sensor.stability >= 60 ? "bg-amber-500" : "bg-red-500";
+
               return (
                 <div key={sensor.id} className="space-y-3 rounded-lg border p-4">
                   <div className="flex items-center gap-2">
                     <Icon className="h-4 w-4" style={{ color: sensor.color }} />
                     <span className="font-medium">{sensor.name}</span>
                   </div>
-                  
+
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Estabilidad</span>
-                      <span className={`font-semibold ${stabilityColor}`}>
-                        {sensor.stability}%
-                      </span>
+                      <span className={`font-semibold ${stabilityColor}`}>{sensor.stability}%</span>
                     </div>
                     <div className="bg-muted h-2 overflow-hidden rounded-full">
                       <div
@@ -509,7 +533,7 @@ export default function AnalysisPage() {
                       />
                     </div>
                   </div>
-                  
+
                   <p className="text-muted-foreground text-xs">
                     {sensor.stability >= 80
                       ? "Lecturas consistentes"

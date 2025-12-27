@@ -1,5 +1,5 @@
 import { Poppins } from "next/font/google";
-import Providers from './providers';
+import Providers from "./providers";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 
