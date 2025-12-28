@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
-import { signAccessToken, signRefreshToken } from "@/app/utils/auth";
+import { signAccessToken, signRefreshToken } from "@/utils/auth";
 
 export async function POST(req: Request) {
   try {

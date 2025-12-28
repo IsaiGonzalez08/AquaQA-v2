@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { loginFormSchema } from "../../utils/schemas";
+import { loginFormSchema } from "@/utils/schemas";
 import { useState } from "react";
 import Image from "next/image";
 import Loading from "@/components/ui/loading";

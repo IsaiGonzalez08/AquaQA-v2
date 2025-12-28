@@ -1,6 +1,6 @@
+import { verifyAccessToken, verifyRefreshToken } from "@/utils/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifyAccessToken, verifyRefreshToken } from "@/app/utils/auth";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

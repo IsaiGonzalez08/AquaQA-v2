@@ -4,7 +4,7 @@ import z from "zod";
 import { useRouter } from "next/navigation";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
-import { registerFormSchema } from "../../utils/schemas";
+import { registerFormSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

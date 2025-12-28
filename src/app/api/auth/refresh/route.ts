@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifyRefreshToken, signAccessToken } from "@/app/utils/auth";
+import { verifyRefreshToken, signAccessToken } from "@/utils/auth";
 
 export async function POST() {
   try {

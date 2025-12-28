@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useState } from "react";
+
 
 export default function SettingsPage() {
   const [notifications, setNotifications] = useState(true);
