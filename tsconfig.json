@@ -21,11 +21,12 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/contexts/*": ["contexts/*"],
+      "@/features/*": ["features/*"],
       "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/store/*": ["store/*"],
       "@/types/*": ["types/*"],
-      "@/utils/*": ["utils/*"],
+      "@/utils/*": ["utils/*"]
     },
     "baseUrl": "src/"
   },

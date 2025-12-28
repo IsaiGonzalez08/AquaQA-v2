@@ -66,10 +66,6 @@ export async function POST(req: Request) {
         message: "Usuario registrado exitosamente",
         user: {
           id: newUser.id,
-          email: newUser.email,
-          name: newUser.name,
-          lastname: newUser.lastname,
-          username: newUser.username,
           role: newUser.role,
         },
       },
