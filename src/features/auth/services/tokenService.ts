@@ -1,6 +1,6 @@
-import { signAccessToken, signRefreshToken } from "@/utils/auth";
+import { signAccessToken, signRefreshToken, SessionPayload } from "@/utils/auth";
 
-export async function generateTokens(payload: any) {
+export async function generateTokens(payload: SessionPayload) {
   return {
     accessToken: await signAccessToken(payload),
     refreshToken: await signRefreshToken(payload),

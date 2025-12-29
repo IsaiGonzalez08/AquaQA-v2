@@ -6,8 +6,6 @@ import Image from "next/image";
 import { dividers } from "./data";
 
 export function InitSection() {
-
-
   return (
     <div className="flex w-full flex-row items-center px-20">
       <motion.div
