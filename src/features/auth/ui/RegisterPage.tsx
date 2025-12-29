@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { registerUseCase } from "../application/registerUseCase";
+import { registerUseCase } from "../application/register.usecase.client";
 import { registerFormSchema, RegisterFormData } from "../domain/registerSchema";
 import Link from "next/link";
 import Image from "next/image";

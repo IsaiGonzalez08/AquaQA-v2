@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { loginUseCase } from "../application/loginUseCase";
+import { loginUseCase } from "../application/login.usecase.client";
 import { loginFormSchema, LoginFormData } from "../domain/loginSchema";
 import Image from "next/image";
 import Link from "next/link";

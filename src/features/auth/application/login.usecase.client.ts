@@ -1,4 +1,4 @@
-import { loginService } from "../services/authServices";
+import { loginService } from "../services/authHttp.service";
 import { LoginInput, LoginResult } from "../domain/loginSchema";
 
 export async function loginUseCase(input: LoginInput): Promise<LoginResult> {
