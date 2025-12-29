@@ -24,3 +24,23 @@ export async function setAuthCookies(
     });
   }
 }
+
+export async function clearAuthSession() {
+  const cookieStore = await cookies();
+
+  cookieStore.set("access_token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0,
+  });
+
+  cookieStore.set("refresh_token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0,
+  });
+}

@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
 
 interface UserData {
   userId: string;
@@ -87,7 +88,7 @@ export function AppSidebar() {
   const currentMenuItems = userData?.role === "admin" ? adminMenuItems : menuItems;
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
+    await logoutUsecase();
     router.replace("/");
   };
 

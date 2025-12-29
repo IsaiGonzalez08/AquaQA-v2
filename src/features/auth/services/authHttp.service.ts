@@ -32,3 +32,13 @@ export async function registerService(input: RegisterInput): Promise<RegisterRes
 
   return result;
 }
+
+export async function logoutService () {
+  const res = await fetch("/api/auth/logout", { method: "POST" });
+
+  if (!res.ok) {
+    throw new Error("Error al cerrar sesión");
+  }
+
+  return res.json();
+}
