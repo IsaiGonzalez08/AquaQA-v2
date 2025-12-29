@@ -1,9 +1,6 @@
 import { cookies } from "next/headers";
 
-export async function setAuthCookies(
-  accessToken: string,
-  refreshToken?: string
-) {
+export async function setAuthCookies(accessToken: string, refreshToken?: string) {
   const cookieStore = await cookies();
 
   cookieStore.set("access_token", accessToken, {
@@ -43,4 +40,8 @@ export async function clearAuthSession() {
     path: "/",
     maxAge: 0,
   });
+}
+
+export async function getRefreshToken() {
+  return (await cookies()).get("refresh_token")?.value;
 }

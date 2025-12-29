@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/Sidebar";
+import { refreshUsecase } from "@/features/auth/application/refresh.usecase.client";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -14,9 +15,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         const response = await fetch("/api/user/me");
 
         if (response.status === 401) {
-          const refreshResponse = await fetch("/api/auth/refresh", {
-            method: "POST",
-          });
+          const refreshResponse = await refreshUsecase();
 
           if (!refreshResponse.ok) {
             router.replace("/auth/login");
