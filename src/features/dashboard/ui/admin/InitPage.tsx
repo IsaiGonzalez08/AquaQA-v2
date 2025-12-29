@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-interface UserData {
-  userId: string;
-  email: string;
-  name: string;
-}
+import { AdminData } from "./types/admin.dashboard.types";
 
 export function InitPage() {
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<AdminData | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {

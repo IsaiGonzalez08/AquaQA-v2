@@ -3,10 +3,6 @@
 import { useState, useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import {
-  Thermometer,
-  Droplets,
-  Waves,
-  Magnet,
   AlertTriangle,
   Clock,
   Activity,
@@ -22,53 +18,8 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-type Period = "24h" | "7d" | "30d" | "custom";
-type SensorStatus = "normal" | "alert" | "critical";
-type Trend = "up" | "down" | "stable";
-
-interface SensorConfig {
-  id: string;
-  name: string;
-  unit: string;
-  icon: React.ElementType;
-  color: string;
-  minOptimal: number;
-  maxOptimal: number;
-}
-
-interface SensorAnalysis {
-  id: string;
-  name: string;
-  unit: string;
-  icon: React.ElementType;
-  color: string;
-  average: number;
-  min: number;
-  max: number;
-  outOfRangePercent: number;
-  outOfRangeTime: string;
-  alertCount: number;
-  status: SensorStatus;
-  trend: Trend;
-  trendData: number[];
-  stability: number;
-}
-
-const SENSORS: SensorConfig[] = [
-  {
-    id: "temperature",
-    name: "Temperatura",
-    unit: "°C",
-    icon: Thermometer,
-    color: "#3b82f6",
-    minOptimal: 18,
-    maxOptimal: 28,
-  },
-  { id: "ph", name: "pH", unit: "", icon: Droplets, color: "#22c55e", minOptimal: 6.5, maxOptimal: 8.5 },
-  { id: "turbidity", name: "Turbidez", unit: "NTU", icon: Waves, color: "#f59e0b", minOptimal: 0, maxOptimal: 25 },
-  { id: "magnetism", name: "Magnetismo", unit: "μT", icon: Magnet, color: "#a855f7", minOptimal: 25, maxOptimal: 65 },
-];
+import { SENSORS, periodLabels } from "./data";
+import type { Period, SensorStatus, Trend, SensorAnalysis } from "./types/user.dashboard.types";
 
 const generateMockData = (period: Period): SensorAnalysis[] => {
   const periodMultiplier = period === "24h" ? 1 : period === "7d" ? 7 : 30;
@@ -255,13 +206,6 @@ export function AnalysisPage() {
     value: s.alertCount,
     fill: s.color,
   }));
-
-  const periodLabels: Record<Period, string> = {
-    "24h": "Últimas 24 horas",
-    "7d": "Últimos 7 días",
-    "30d": "Últimos 30 días",
-    custom: "Rango personalizado",
-  };
 
   return (
     <div className="space-y-6">

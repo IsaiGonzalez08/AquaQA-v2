@@ -19,10 +19,6 @@ import {
   Area,
 } from "recharts";
 import {
-  Thermometer,
-  Droplets,
-  Waves,
-  Magnet,
   Calendar,
   Filter,
   ZoomIn,
@@ -40,62 +36,15 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-type Resolution = "raw" | "minute" | "hour";
-type ViewMode = "single" | "compare" | "histogram";
-
-interface SensorConfig {
-  id: string;
-  name: string;
-  unit: string;
-  icon: React.ElementType;
-  color: string;
-  minOptimal: number;
-  maxOptimal: number;
-}
-
-interface DataPoint {
-  timestamp: string;
-  time: string;
-  temperature: number;
-  ph: number;
-  turbidity: number;
-  magnetism: number;
-}
-
-interface AlertEvent {
-  id: string;
-  sensor: string;
-  startTime: string;
-  endTime: string;
-  startIndex: number;
-  endIndex: number;
-  type: "warning" | "critical";
-  message: string;
-}
-
-interface HistoricalRecord {
-  timestamp: string;
-  sensor: string;
-  value: number;
-  status: "normal" | "warning" | "critical";
-  event: string | null;
-}
-
-const SENSORS: SensorConfig[] = [
-  {
-    id: "temperature",
-    name: "Temperatura",
-    unit: "°C",
-    icon: Thermometer,
-    color: "#3b82f6",
-    minOptimal: 18,
-    maxOptimal: 28,
-  },
-  { id: "ph", name: "pH", unit: "", icon: Droplets, color: "#22c55e", minOptimal: 6.5, maxOptimal: 8.5 },
-  { id: "turbidity", name: "Turbidez", unit: "NTU", icon: Waves, color: "#f59e0b", minOptimal: 0, maxOptimal: 25 },
-  { id: "magnetism", name: "Magnetismo", unit: "μT", icon: Magnet, color: "#a855f7", minOptimal: 25, maxOptimal: 65 },
-];
+import { SENSORS, resolutionOptions } from "./data";
+import type {
+  Resolution,
+  ViewMode,
+  SensorConfig,
+  DataPoint,
+  AlertEvent,
+  HistoricalRecord,
+} from "./types/user.dashboard.types";
 
 const generateTimeSeriesData = (hours: number = 24): DataPoint[] => {
   const data: DataPoint[] = [];
@@ -325,12 +274,6 @@ export function ResultChartsPage() {
     if (!zoomDomain) return timeSeriesData;
     return timeSeriesData.slice(zoomDomain.start, zoomDomain.end + 1);
   }, [timeSeriesData, zoomDomain]);
-
-  const resolutionOptions = [
-    { value: "raw", label: "Crudo (15 min)" },
-    { value: "minute", label: "Por minuto" },
-    { value: "hour", label: "Por hora" },
-  ];
 
   const viewModeOptions = [
     { value: "single", label: "Series de tiempo", icon: TrendingUp },
