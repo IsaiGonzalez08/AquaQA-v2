@@ -3,22 +3,10 @@
 import { motion } from "framer-motion";
 import { Button } from "../../../components/ui/button";
 import Image from "next/image";
+import { dividers } from "./data";
 
 export function InitSection() {
-  const dividerInfo = [
-    {
-      quantity: "80+",
-      text: "Zonas",
-    },
-    {
-      quantity: "2000+",
-      text: "Personas",
-    },
-    {
-      quantity: "10+",
-      text: "Estados",
-    },
-  ];
+
 
   return (
     <div className="flex w-full flex-row items-center px-20">
@@ -45,13 +33,13 @@ export function InitSection() {
             </Button>
           </div>
           <div className="mt-10 ml-4 flex w-fit flex-row">
-            {dividerInfo.map((item, index) => (
+            {dividers.map((item, index) => (
               <div key={index} className="flex flex-row items-center">
                 <div className="flex flex-col items-center">
                   <h1 className="text-primary text-3xl font-bold">{item.quantity}</h1>
                   <h3 className="text-secondary text-center text-lg font-medium">{item.text}</h3>
                 </div>
-                {index < dividerInfo.length - 1 && <div className="bg-grayLight mx-12 h-20 w-0.5" />}
+                {index < dividers.length - 1 && <div className="bg-grayLight mx-12 h-20 w-0.5" />}
               </div>
             ))}
           </div>

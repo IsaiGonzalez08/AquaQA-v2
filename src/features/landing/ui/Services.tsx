@@ -1,37 +1,10 @@
 "use client";
-import { ServicesCard } from "./ServicesCard";
 
+import { ServicesCard } from "./ServicesCard";
 import { motion } from "framer-motion";
+import { services } from "./data";
 
 export function Services() {
-  const services = [
-    {
-      title: "Análisis de agua",
-      description: "Monitoreo de calidad de agua de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Carbohidratos",
-      description: "Monitoreo de carbohidratos de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Conductividad",
-      description: "Monitoreo de conductividad de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Nivel de agua",
-      description: "Monitoreo de nivel de agua de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Turbidez",
-      description: "Monitoreo de turbidez de los suministros de agua",
-      img: "/Images/service.png",
-    },
-  ];
-
   return (
     <div id="services" className="bg-light-green px-20 py-28">
       <div className="flex flex-col gap-3 text-center">

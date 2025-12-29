@@ -3,15 +3,9 @@
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { features } from "./data";
 
 export function AboutUs() {
-  const features = [
-    "Instalación de dispositivos",
-    "Materiales de calidad",
-    "Garantía de servicio",
-    "Garantía de materiales",
-  ];
-
   const circleRef = useRef(null);
   const isInView = useInView(circleRef, { once: true });
   const percentage = useMotionValue(0);
