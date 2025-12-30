@@ -2,7 +2,7 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { LucideIcon } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 
 interface GaugeCardProps {
   title: string;

@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { useTheme } from "@/contexts/ThemeContext";
+import { Button } from "@/components/button";
+import { Switch } from "@/components/switch";
+import { useTheme } from "shared/contexts/ThemeContext";
 import { useState } from "react";
 
 export function SettingsPage() {

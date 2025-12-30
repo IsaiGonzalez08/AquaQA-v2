@@ -1,4 +1,4 @@
-import { signAccessToken, signRefreshToken, SessionPayload } from "@/utils/auth";
+import { signAccessToken, signRefreshToken, SessionPayload } from "shared/utils/auth";
 
 export async function generateTokens(payload: SessionPayload) {
   return {

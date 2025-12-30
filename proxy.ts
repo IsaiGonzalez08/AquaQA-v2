@@ -1,4 +1,4 @@
-import { verifyAccessToken, verifyRefreshToken } from "@/utils/auth";
+import { verifyAccessToken, verifyRefreshToken } from "shared/utils/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
