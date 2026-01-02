@@ -16,8 +16,8 @@ import {
   CheckCircle2,
   XCircle,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
+import { Button } from "@/components/button";
 import { SENSORS, periodLabels } from "./data";
 import type { Period, SensorStatus, Trend, SensorAnalysis } from "./types/user.dashboard.types";
 

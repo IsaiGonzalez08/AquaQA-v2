@@ -19,14 +19,14 @@
       }
     ],
     "paths": {
-      "@/components/*": ["components/*"],
+      "@/components/*": ["shared/components/ui/*"],
       "@/contexts/*": ["contexts/*"],
       "@/features/*": ["features/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/lib/*": ["lib/*"],
+      "@/lib/*": ["shared/lib/*"],
       "@/store/*": ["store/*"],
       "@/types/*": ["types/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["shared/utils/*"]
     },
     "baseUrl": "src/"
   },

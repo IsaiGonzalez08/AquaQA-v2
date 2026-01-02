@@ -5,12 +5,12 @@ export async function POST() {
   try {
     const result = await refreshUsecase();
     return NextResponse.json(result);
-  } catch (error: any) {
-    if (error.message === "NO_REFRESH_TOKEN") {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "NO_REFRESH_TOKEN") {
       return NextResponse.json({ error: "No refresh token found" }, { status: 401 });
     }
 
-    if (error.message === "INVALID_REFRESH_TOKEN") {
+    if (error instanceof Error && error.message === "INVALID_REFRESH_TOKEN") {
       return NextResponse.json({ error: "Invalid refresh token" }, { status: 401 });
     }
 

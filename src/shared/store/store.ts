@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./authSlice";
+import themeReducer from "./themeSlice";
 
 export const store = configureStore({
   reducer: {

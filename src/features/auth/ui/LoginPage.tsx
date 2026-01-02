@@ -4,15 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Button } from "@/components/button";
+import { Input } from "@/components/input";
+import { Switch } from "@/components/switch";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/field";
 import { loginUseCase } from "../application/login.usecase.client";
 import { loginFormSchema, LoginFormData } from "../domain/loginSchema";
 import Image from "next/image";
 import Link from "next/link";
-import Loading from "@/components/ui/loading";
+import Loading from "@/components/loading";
 
 export function LoginPage() {
   const router = useRouter();

@@ -1,13 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "../../../components/ui/button";
+import { Button } from "@/components/button";
 import Image from "next/image";
 import { dividers } from "./data";
 
 export function InitSection() {
-
-
   return (
     <div className="flex w-full flex-row items-center px-20">
       <motion.div

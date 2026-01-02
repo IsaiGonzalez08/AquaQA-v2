@@ -34,8 +34,8 @@ import {
   Table,
   Layers,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
+import { Button } from "@/components/button";
 import { SENSORS, resolutionOptions } from "./data";
 import type {
   Resolution,

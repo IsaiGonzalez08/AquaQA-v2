@@ -1,4 +1,4 @@
-import { signAccessToken, verifyRefreshToken } from "@/utils/auth";
+import { signAccessToken, verifyRefreshToken } from "shared/utils/auth";
 import { clearAuthSession, getRefreshToken, setAuthCookies } from "../services/sessionService";
 
 export async function refreshUsecase() {

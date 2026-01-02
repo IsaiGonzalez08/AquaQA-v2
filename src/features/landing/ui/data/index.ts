@@ -39,29 +39,29 @@ export const dividers = [
 ];
 
 export const services = [
-    {
-      title: "Análisis de agua",
-      description: "Monitoreo de calidad de agua de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Carbohidratos",
-      description: "Monitoreo de carbohidratos de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Conductividad",
-      description: "Monitoreo de conductividad de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Nivel de agua",
-      description: "Monitoreo de nivel de agua de los suministros de agua",
-      img: "/Images/service.png",
-    },
-    {
-      title: "Turbidez",
-      description: "Monitoreo de turbidez de los suministros de agua",
-      img: "/Images/service.png",
-    },
-  ];
+  {
+    title: "Análisis de agua",
+    description: "Monitoreo de calidad de agua de los suministros de agua",
+    img: "/Images/service.png",
+  },
+  {
+    title: "Carbohidratos",
+    description: "Monitoreo de carbohidratos de los suministros de agua",
+    img: "/Images/service.png",
+  },
+  {
+    title: "Conductividad",
+    description: "Monitoreo de conductividad de los suministros de agua",
+    img: "/Images/service.png",
+  },
+  {
+    title: "Nivel de agua",
+    description: "Monitoreo de nivel de agua de los suministros de agua",
+    img: "/Images/service.png",
+  },
+  {
+    title: "Turbidez",
+    description: "Monitoreo de turbidez de los suministros de agua",
+    img: "/Images/service.png",
+  },
+];

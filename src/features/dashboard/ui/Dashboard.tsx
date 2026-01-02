@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/sidebar";
 import { AppSidebar } from "./components/Sidebar";
 import { refreshUsecase } from "@/features/auth/application/refresh.usecase.client";
 import { meUseCase } from "@/features/dashboard/application/me.usecase.server";

@@ -1,4 +1,4 @@
-import { Home, BarChart3, ChartLine, User } from "lucide-react";    
+import { Home, BarChart3, ChartLine, User } from "lucide-react";
 
 export const menuItems = [
   {

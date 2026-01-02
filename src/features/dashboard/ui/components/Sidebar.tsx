@@ -12,8 +12,8 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarHeader,
-} from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+} from "@/components/sidebar";
+import { Avatar, AvatarFallback } from "@/components/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/dropdown-menu";
 import { useRouter } from "next/navigation";
 import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
 import { meUseCase } from "../../application/me.usecase.server";
