@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "../../../server/db/prisma";
 import bcrypt from "bcryptjs";
 import { generateTokens } from "../services/tokenService";
 import { setAuthCookies } from "../services/sessionService";
