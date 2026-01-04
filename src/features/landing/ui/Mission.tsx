@@ -10,7 +10,7 @@ export function Mission() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="z-50 w-full md:w-1/2"
+        className="z-50 w-full lg:w-1/2"
       >
         <h2 className="text-primary text-center text-2xl font-bold sm:text-left">¿Por que elegirnos?</h2>
         <h1 className="text-grayDark w-fit text-center text-2xl font-bold sm:text-left">
@@ -51,7 +51,7 @@ export function Mission() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="z-50 hidden md:flex md:w-1/2 md:justify-end"
+        className="z-50 hidden w-1/2 lg:flex lg:justify-end"
       >
         <Image width={550} height={550} src="/Images/mission.png" alt="mission" className="rounded-2xl" />
       </motion.div>

@@ -12,13 +12,13 @@ export function InitSection() {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
-        className="flex w-full flex-col md:w-1/2"
+        className="flex w-full flex-col lg:w-1/2"
       >
-        <span className="flex flex-col items-center text-4xl font-bold sm:text-6xl sm:leading-[1.2] md:items-start">
+        <span className="flex flex-col items-center text-4xl font-bold sm:text-6xl sm:leading-[1.2] lg:items-start">
           <span className="text-primary">Agua limpia,</span>
           <span className="text-secondary">futuro brillante</span>
         </span>
-        <h3 className="text-foreground mt-2 text-center text-base font-medium sm:text-xl md:text-left">
+        <h3 className="text-foreground mt-2 text-center text-base font-medium sm:text-xl lg:text-left">
           Invirtamos en calidad para un mundo radiante
         </h3>
         <div className="mt-5 flex flex-row justify-center gap-4 sm:mt-10">
@@ -44,7 +44,7 @@ export function InitSection() {
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-        className="relative hidden w-1/2 flex-row items-center justify-start gap-4 pb-20 md:flex"
+        className="relative hidden w-1/2 flex-row items-center justify-start gap-4 pb-20 lg:flex"
       >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"

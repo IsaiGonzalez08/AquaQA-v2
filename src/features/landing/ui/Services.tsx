@@ -6,7 +6,7 @@ import { services } from "./data";
 
 export function Services() {
   return (
-    <div id="services" className="bg-light-green py-10 px-5 sm:mt-20">
+    <div id="services" className="bg-light-green py-10 px-5 sm:mt-10 lg:mt-20">
       <div className="flex flex-col text-center">
         <h2 className="text-primary text-2xl font-semibold">Nuestros Servicios</h2>
         <h1 className="text-grayDark text-2xl font-bold">Cuida tu agua con nosotros</h1>
