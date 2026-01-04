@@ -33,18 +33,22 @@ import Image from "next/image";
 export function AppSidebar() {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await meUseCase();
-        setUserData(response);
+        if (response.ok) {
+          setUserData(response);
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
+    setMounted(true);
   }, []);
 
   const currentMenuItems = userData?.role === "admin" ? adminMenuItems : menuItems;
@@ -81,45 +85,58 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="hover:bg-sidebar-accent flex w-full items-center gap-3 rounded-lg p-2 transition-colors">
-              <Avatar className="h-10 w-10">
-                <AvatarFallback className="bg-primary text-primary-foreground">
-                  <User className="h-5 w-5" />
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-1 flex-col text-left">
-                <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
-                <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
-              </div>
-              <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/user/profile" className="flex cursor-pointer items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>Perfil</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/user/settings" className="flex cursor-pointer items-center">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Configuración</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer text-red-600">
-              <button onClick={handleLogout} className="flex cursor-pointer items-center">
+        {mounted ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="hover:bg-sidebar-accent flex h-auto w-full items-center gap-3 rounded-lg p-2 transition-colors">
+                <Avatar className="h-10 w-10">
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    <User className="h-5 w-5" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-1 flex-col text-left">
+                  <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
+                  <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
+                </div>
+                <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user/profile" className="flex cursor-pointer items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Perfil</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user/settings" className="flex cursor-pointer items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Configuración</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Cerrar sesión</span>
-              </button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <div className="flex h-auto w-full items-center gap-3 rounded-lg p-2">
+            <Avatar className="h-10 w-10">
+              <AvatarFallback className="bg-primary text-primary-foreground">
+                <User className="h-5 w-5" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex flex-1 flex-col text-left">
+              <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
+              <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
+            </div>
+            <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

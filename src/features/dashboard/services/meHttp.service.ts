@@ -1,9 +1,7 @@
 export async function meService() {
   const res = await fetch("/api/user/me");
 
-  if (!res.ok) {
-    throw new Error("Error al obtener el usuario");
-  }
+  const data = await res.json();
 
-  return res.json();
+  return { ...data, status: res.status, ok: res.ok };
 }

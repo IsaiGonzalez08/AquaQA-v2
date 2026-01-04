@@ -1,47 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/sidebar";
 import { AppSidebar } from "./components/Sidebar";
-import { refreshUsecase } from "@/features/auth/application/refresh.usecase.client";
-import { meUseCase } from "@/features/dashboard/application/me.usecase.server";
+import { useAuthCheck } from "@/hooks/useAuthCheck";
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await meUseCase();
-
-        if (response.status === 401) {
-          const refreshResponse = await refreshUsecase();
-
-          if (!refreshResponse.ok) {
-            router.replace("/auth/login");
-          }
-        }
-      } catch (error) {
-        console.error("Auth check error:", error);
-      }
-    };
-
-    checkAuth();
-
-    const interval = setInterval(
-      () => {
-        checkAuth();
-      },
-      14 * 60 * 1000
-    );
-
-    return () => clearInterval(interval);
-  }, [router]);
+  useAuthCheck();
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full">
+      <div className="flex min-h-dvh w-full">
         <AppSidebar />
         <SidebarInset className="flex-1 p-10">
           <SidebarTrigger className="mb-10" />
