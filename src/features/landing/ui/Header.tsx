@@ -13,9 +13,9 @@ export function Header() {
   };
 
   return (
-    <header className="mx-auto flex h-32 w-full max-w-[2000px] items-center justify-between px-20">
+    <header className="mx-auto flex w-full max-w-[2000px] items-center justify-between px-5 py-10 sm:px-10">
       <Image src="/aquaQA.svg" alt="Logo" width={40} height={40} />
-      <nav className="text-text flex flex-row gap-10 font-medium">
+      <nav className="hidden sm:flex font-medium gap-10">
         <Link href="/">Inicio</Link>
         <Link href="#about-us" onClick={(e) => handleSmoothScroll(e, "about-us")}>
           Nosotros
@@ -27,7 +27,7 @@ export function Header() {
           Misión
         </Link>
       </nav>
-      <Link href="/auth/login">
+      <Link href="/auth/login" className="hidden sm:block">
         <Button variant="secondary" iconSize={40} className="h-9 w-36 text-base">
           Comenzar
         </Button>

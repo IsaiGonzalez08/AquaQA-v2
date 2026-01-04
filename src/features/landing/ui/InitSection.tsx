@@ -7,52 +7,49 @@ import { dividers } from "./data";
 
 export function InitSection() {
   return (
-    <div className="flex w-full flex-row items-center px-20">
+    <div className="flex w-full flex-row items-center px-5 sm:gap-10 sm:px-10">
       <motion.div
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
-        className="flex w-1/2 justify-start 2xl:justify-center"
+        className="flex flex-col sm:w-1/2"
       >
-        <div>
-          <h1 className="text-primary w-fit text-6xl leading-20 font-bold">
-            Agua limpia, <br />
-            <span className="text-secondary">futuro brillante</span>
-          </h1>
-          <h3 className="text-foreground mt-2 w-fit text-2xl font-medium">
-            Invirtamos en calidad para un mundo radiante
-          </h3>
-          <div className="mt-10 ml-4 flex w-fit gap-5">
-            <Button variant="primary" icon="/start.svg" iconSize={25} className="h-14 w-48 text-xl">
-              Iniciar
-            </Button>
-            <Button variant="secondary" icon="/add.svg" iconSize={25} className="h-14 w-48 text-xl">
-              Saber más
-            </Button>
-          </div>
-          <div className="mt-10 ml-4 flex w-fit flex-row">
-            {dividers.map((item, index) => (
-              <div key={index} className="flex flex-row items-center">
-                <div className="flex flex-col items-center">
-                  <h1 className="text-primary text-3xl font-bold">{item.quantity}</h1>
-                  <h3 className="text-secondary text-center text-lg font-medium">{item.text}</h3>
-                </div>
-                {index < dividers.length - 1 && <div className="bg-grayLight mx-12 h-20 w-0.5" />}
+        <span className="flex flex-col items-center text-4xl font-bold sm:text-6xl sm:items-start sm:leading-[1.2]">
+          <span className="text-primary">Agua limpia,</span>
+          <span className="text-secondary">futuro brillante</span>
+        </span>
+        <h3 className="text-foreground text-center text-base font-medium mt-2 sm:text-xl sm:text-left">
+          Invirtamos en calidad para un mundo radiante
+        </h3>
+        <div className="flex flex-row justify-center gap-4 mt-5 sm:mt-10">
+          <Button variant="primary" icon="/start.svg" iconSize={25} className="w-full">
+            Iniciar
+          </Button>
+          <Button variant="secondary" icon="/add.svg" iconSize={25} className="w-full">
+            Saber más
+          </Button>
+        </div>
+        <div className="flex w-full flex-row justify-around my-5 sm:my-10 sm:justify-center sm:gap-10">
+          {dividers.map((item, index) => (
+            <div key={index} className="flex flex-row items-center">
+              <div className="flex flex-col items-center">
+                <h1 className="text-primary text-3xl font-bold">{item.quantity}</h1>
+                <h3 className="text-secondary text-center text-lg font-medium">{item.text}</h3>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-        className="relative flex w-1/2 flex-row items-center justify-start gap-4 pb-20 2xl:justify-center"
+        className="relative hidden sm:flex w-1/2 flex-row items-center justify-start gap-4 pb-20"
       >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
           style={{
-            background: "radial-gradient(circle at center 52%, #3CC0C933 0%, transparent 60%)",
+            background: "radial-gradient(circle at center 58%, #3CC0C933 30%, transparent 60%)",
           }}
         />
         <Image

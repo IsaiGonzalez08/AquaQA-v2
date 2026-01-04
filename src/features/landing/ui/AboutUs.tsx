@@ -26,33 +26,26 @@ export function AboutUs() {
   }, [springPercentage]);
 
   return (
-    <div id="about-us" className="relative mt-10 flex w-full flex-row items-start justify-between gap-16 px-20 py-32">
-      <Image
-        width={550}
-        height={550}
-        src="/Images/box-background.png"
-        alt="box"
-        className="absolute bottom-0 left-0 z-0"
-      />
+    <div id="about-us" className="relative mt-10 flex w-full flex-row items-start justify-around">
       <motion.div
-        className="z-50 w-1/2"
+        className="z-50 hidden sm:block w-1/2"
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.03 }}
       >
         <Image width={550} height={550} src="/Images/about-us.png" alt="about-us" />
       </motion.div>
 
       <motion.div
-        className="flex w-1/2 flex-col"
+        className="flex flex-col px-5 py-10 sm:p-0 sm:pr-10 sm:w-1/2 sm:items-start"
         initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.03 }}
       >
         <h2 className="text-primary text-2xl font-semibold">Sobre nosotros</h2>
-        <h1 className="text-foreground text-4xl leading-tight font-bold">
+        <h1 className="text-foreground text-2xl leading-tight font-bold">
           Somos empresa dedicada a la revisión y garantía de la calidad del agua
         </h1>
         <p className="text-foreground mt-3 text-base font-medium">
@@ -60,7 +53,7 @@ export function AboutUs() {
           exhaustivos en muestras de agua.
         </p>
 
-        <div className="mt-10 flex flex-row gap-10">
+        <div className="mt-10 flex flex-col items-center gap-10 sm:flex-row">
           <div className="flex flex-col gap-4">
             {features.map((feature, index) => (
               <div key={index} className="flex flex-row items-center gap-3">
