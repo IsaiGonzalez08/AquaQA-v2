@@ -26,9 +26,9 @@ export function AboutUs() {
   }, [springPercentage]);
 
   return (
-    <div id="about-us" className="relative mt-10 flex w-full flex-row items-start justify-around">
+    <div id="about-us" className="relative flex w-full flex-row items-start justify-around md:mt-20">
       <motion.div
-        className="z-50 hidden sm:block w-1/2"
+        className="z-50 hidden w-1/2 md:block"
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
@@ -38,7 +38,7 @@ export function AboutUs() {
       </motion.div>
 
       <motion.div
-        className="flex flex-col px-5 py-10 sm:p-0 sm:pr-10 sm:w-1/2 sm:items-start"
+        className="flex flex-col px-5 py-10 sm:items-start md:pr-10 md:w-1/2"
         initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
@@ -53,7 +53,7 @@ export function AboutUs() {
           exhaustivos en muestras de agua.
         </p>
 
-        <div className="mt-10 flex flex-col items-center gap-10 sm:flex-row">
+        <div className="flex flex-col items-center gap-10 w-full mt-10 sm:flex-row sm:justify-center md:justify-start">
           <div className="flex flex-col gap-4">
             {features.map((feature, index) => (
               <div key={index} className="flex flex-row items-center gap-3">
