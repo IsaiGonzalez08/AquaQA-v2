@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} h-svh`}>
+      <body className={`${poppins.className} h-dvh max-w-[2000px] mx-auto`}>
         <Providers>{children}</Providers>
       </body>
     </html>

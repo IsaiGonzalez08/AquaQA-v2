@@ -50,7 +50,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 px-8">
+    <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 p-4">
       {isLoading && <Loading />}
 
       <Image width={50} height={50} src="/aquaQA.svg" alt="Logo" />
@@ -59,12 +59,16 @@ export function LoginPage() {
       <h3 className="text-center text-xl font-semibold text-gray-200">Bienvenido, por favor ingrese sus datos</h3>
 
       {error && (
-        <div className="w-full rounded-lg border border-red-500 bg-red-500/10 p-3 text-center text-red-500 lg:w-1/4">
+        <div className="w-full rounded-lg border border-red-500 bg-red-500/10 p-3 text-center text-red-500 lg:w-3/6">
           {error}
         </div>
       )}
 
-      <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-4 lg:w-1/4">
+      <form
+        id="form-rhf-demo"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-4 lg:max-w-3/6"
+      >
         <FieldGroup>
           <Controller
             name="email"
