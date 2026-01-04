@@ -11,8 +11,8 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <div className="flex min-h-dvh w-full">
         <AppSidebar />
-        <SidebarInset className="flex-1 p-10">
-          <SidebarTrigger className="mb-10" />
+        <SidebarInset className="flex-1 p-5">
+          <SidebarTrigger className="m-0 border-0 mb-5" />
           <div>{children}</div>
         </SidebarInset>
       </div>

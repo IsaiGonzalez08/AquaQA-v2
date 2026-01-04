@@ -309,9 +309,9 @@ export function ResultChartsPage() {
               {/* Date Range */}
               <div className="space-y-2">
                 <label className="text-sm font-medium">Rango de fechas</label>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <div className="relative flex-1">
-                    <Calendar className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                    <Calendar className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                     <input
                       type="date"
                       value={dateRange.start}
@@ -319,9 +319,9 @@ export function ResultChartsPage() {
                       className="bg-background w-full rounded-md border py-2 pr-3 pl-10 text-sm"
                     />
                   </div>
-                  <span className="text-muted-foreground">a</span>
+                  <span className="text-muted-foreground hidden sm:block">a</span>
                   <div className="relative flex-1">
-                    <Calendar className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                    <Calendar className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                     <input
                       type="date"
                       value={dateRange.end}
@@ -392,9 +392,9 @@ export function ResultChartsPage() {
       {/* Main Chart Area */}
       {viewMode === "single" && (
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="text-lg">Series de Tiempo</CardTitle>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -418,7 +418,7 @@ export function ResultChartsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-96">
+            <div className="h-64 sm:h-96">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={displayData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -545,7 +545,7 @@ export function ResultChartsPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-72">
+                  <div className="h-56 sm:h-72">
                     <ResponsiveContainer width="100%" height="100%">
                       <ComposedChart data={displayData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -593,7 +593,7 @@ export function ResultChartsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-72">
+                <div className="h-56 sm:h-72">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={displayData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -645,7 +645,7 @@ export function ResultChartsPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-64">
+                  <div className="h-48 sm:h-64">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -690,19 +690,19 @@ export function ResultChartsPage() {
 
       {/* Historical Data Table */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <CardHeader className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Table className="h-5 w-5" />
             Tabla de Datos Históricos y Eventos
           </CardTitle>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="w-full sm:w-auto">
             <Download className="mr-2 h-4 w-4" />
             Exportar CSV
           </Button>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[600px] text-sm">
               <thead>
                 <tr className="border-b">
                   <th className="px-4 py-3 text-left font-medium">Timestamp</th>

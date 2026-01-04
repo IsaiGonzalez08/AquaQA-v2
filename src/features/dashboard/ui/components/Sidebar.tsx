@@ -12,6 +12,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarHeader,
+  useSidebar,
 } from "@/components/sidebar";
 import { Avatar, AvatarFallback } from "@/components/avatar";
 import {
@@ -32,8 +33,15 @@ import Image from "next/image";
 
 export function AppSidebar() {
   const router = useRouter();
+  const { setOpenMobile, isMobile } = useSidebar();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [mounted, setMounted] = useState(false);
+
+  const handleMenuClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -72,7 +80,7 @@ export function AppSidebar() {
               {currentMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="hover:bg-sidebar-accent transition-colors">
-                    <Link href={item.url} className="flex items-center gap-3 px-3 py-2.5">
+                    <Link href={item.url} onClick={handleMenuClick} className="flex items-center gap-3 px-3 py-2.5">
                       <item.icon className="text-sidebar-foreground h-5 w-5" />
                       <span className="text-sm font-medium">{item.title}</span>
                     </Link>
