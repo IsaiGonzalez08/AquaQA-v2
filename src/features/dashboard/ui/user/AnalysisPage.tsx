@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import {
   AlertTriangle,
@@ -173,8 +173,11 @@ const KPICard = ({
 export function AnalysisPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<Period>("7d");
   const [showPeriodMenu, setShowPeriodMenu] = useState(false);
+  const [sensorData, setSensorData] = useState<SensorAnalysis[]>([]);
 
-  const sensorData = useMemo(() => generateMockData(selectedPeriod), [selectedPeriod]);
+  useEffect(() => {
+    setSensorData(generateMockData(selectedPeriod));
+  }, [selectedPeriod]);
 
   const globalStats = useMemo(() => {
     const totalAlerts = sensorData.reduce((sum, s) => sum + s.alertCount, 0);
@@ -206,6 +209,14 @@ export function AnalysisPage() {
     value: s.alertCount,
     fill: s.color,
   }));
+
+  if (sensorData.length === 0) {
+    return (
+      <div className="flex h-64 items-center justify-center">
+        <div className="text-muted-foreground">Cargando datos...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -394,14 +405,15 @@ export function AnalysisPage() {
                 <BarChart data={outOfRangeChartData} layout="vertical">
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
                   <XAxis type="number" domain={[0, "auto"]} unit="%" />
-                  <YAxis type="category" dataKey="name" width={80} />
+                  <YAxis type="category" dataKey="name" width={120} />
                   <Tooltip
                     formatter={(value) => [`${value}%`, "Tiempo fuera de rango"]}
                     contentStyle={{
-                      backgroundColor: "hsl(var(--card))",
-                      border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
+                      fontSize: "12px",
+                      padding: "6px 10px",
                     }}
+                    wrapperStyle={{ maxWidth: "200px" }}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} />
                 </BarChart>
@@ -422,16 +434,17 @@ export function AnalysisPage() {
             <div className="h-48 sm:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={alertsChartData} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+                  <CartesianGrid strokeDasharray="1 1" horizontal={true} vertical={false} />
                   <XAxis type="number" domain={[0, "auto"]} />
-                  <YAxis type="category" dataKey="name" width={80} />
+                  <YAxis type="category" dataKey="name" width={120} />
                   <Tooltip
                     formatter={(value) => [`${value}`, "Alertas"]}
                     contentStyle={{
-                      backgroundColor: "hsl(var(--card))",
-                      border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
+                      fontSize: "14px",
+                      padding: "6px 10px",
                     }}
+                    wrapperStyle={{ maxWidth: "200px" }}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} />
                 </BarChart>

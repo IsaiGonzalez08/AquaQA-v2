@@ -59,7 +59,7 @@ export function LoginPage() {
       <h3 className="text-center text-xl font-semibold text-gray-200">Bienvenido, por favor ingrese sus datos</h3>
 
       {error && (
-        <div className="w-full rounded-lg border border-red-500 bg-red-500/10 p-3 text-center text-red-500 lg:w-3/6">
+        <div className="w-full rounded-lg border border-red-500 bg-red-500/10 p-3 text-center text-red-500 sm:max-w-4/6 xl:max-w-2/6">
           {error}
         </div>
       )}
@@ -67,7 +67,7 @@ export function LoginPage() {
       <form
         id="form-rhf-demo"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-4 lg:max-w-3/6"
+        className="flex w-full flex-col gap-4 sm:max-w-4/6 xl:max-w-2/6"
       >
         <FieldGroup>
           <Controller

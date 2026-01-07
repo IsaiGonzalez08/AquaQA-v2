@@ -23,7 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/dropdown-menu";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
 import { meUseCase } from "../../application/me.usecase.server";
 import { adminMenuItems, menuItems } from "../data";
@@ -33,6 +33,7 @@ import Image from "next/image";
 
 export function AppSidebar() {
   const router = useRouter();
+  const pathname = usePathname();
   const { setOpenMobile, isMobile } = useSidebar();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -79,7 +80,7 @@ export function AppSidebar() {
             <SidebarMenu className="space-y-2">
               {currentMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="hover:bg-sidebar-accent transition-colors">
+                  <SidebarMenuButton asChild className={`transition-colors ${pathname === item.url ? 'bg-light-green' : 'hover:bg-light-green'}`}>
                     <Link href={item.url} onClick={handleMenuClick} className="flex items-center gap-3 px-3 py-2.5">
                       <item.icon className="text-sidebar-foreground h-5 w-5" />
                       <span className="text-sm font-medium">{item.title}</span>

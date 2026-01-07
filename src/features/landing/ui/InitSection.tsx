@@ -14,14 +14,14 @@ export function InitSection() {
         transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
         className="flex w-full flex-col lg:w-1/2"
       >
-        <span className="flex flex-col items-center text-4xl font-bold sm:text-6xl sm:leading-[1.2] lg:items-start">
+        <span className="flex flex-col items-center text-4xl font-bold sm:text-6xl sm:leading-[1.2] lg:items-center xl:text-7xl">
           <span className="text-primary">Agua limpia,</span>
           <span className="text-secondary">futuro brillante</span>
         </span>
-        <h3 className="text-foreground mt-2 text-center text-base font-medium sm:text-xl lg:text-left">
+        <h3 className="text-foreground mt-2 text-center text-base font-medium sm:text-xl lg:text-center">
           Invirtamos en calidad para un mundo radiante
         </h3>
-        <div className="mt-5 flex flex-row justify-center gap-4 sm:mt-10">
+        <div className="mt-5 flex flex-row justify-center gap-4 sm:mt-10 lg:px-20">
           <Button variant="primary" icon="/start.svg" iconSize={25} className="w-full">
             Iniciar
           </Button>
@@ -44,12 +44,12 @@ export function InitSection() {
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-        className="relative hidden w-1/2 flex-row items-center justify-start gap-4 pb-20 lg:flex"
+        className="relative hidden w-1/2 flex-row items-center justify-center gap-4 pb-20 lg:flex"
       >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
           style={{
-            background: "radial-gradient(circle at center 58%, #3CC0C933 30%, transparent 60%)",
+            background: "radial-gradient(circle at center 50%, #3CC0C933 30%, transparent 60%)",
           }}
         />
         <Image
