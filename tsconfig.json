@@ -22,7 +22,7 @@
       "@/components/*": ["shared/components/ui/*"],
       "@/contexts/*": ["contexts/*"],
       "@/features/*": ["features/*"],
-      "@/hooks/*": ["hooks/*"],
+      "@/hooks/*": ["shared/hooks/*"],
       "@/lib/*": ["shared/lib/*"],
       "@/store/*": ["store/*"],
       "@/types/*": ["types/*"],

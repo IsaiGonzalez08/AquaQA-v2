@@ -7,12 +7,17 @@ import { UserData, SensorData } from "./types/user.dashboard.types";
 
 export function InitPage() {
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [time, setTime] = useState<string | null>(null);
   const [sensorData, setSensorData] = useState<SensorData>({
     temperature: 22.5,
     ph: 7.2,
     turbidity: 15.3,
     magnetism: 45.8,
   });
+
+  useEffect(() => {
+    setTime(new Date().toLocaleString("es-MX"))
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -99,7 +104,7 @@ export function InitPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <p className="text-muted-foreground text-sm">Última actualización</p>
-            <p className="text-lg font-medium">{new Date().toLocaleString("es-MX")}</p>
+            <p className="text-lg font-medium">{time}</p>
           </div>
           <div className="space-y-2">
             <p className="text-muted-foreground text-sm">Estado de sensores</p>

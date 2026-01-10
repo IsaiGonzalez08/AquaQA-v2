@@ -5,27 +5,27 @@ import Image from "next/image";
 export function Footer() {
   return (
     <footer className="bg-footer mx-auto w-full max-w-[2000px]">
-      <div className="bg-primary flex h-64 flex-row items-center justify-center gap-10 px-20 text-white">
+      <div className="bg-primary flex flex-col items-center justify-center gap-5 rounded-lg p-5 text-white sm:py-14 md:flex-row md:gap-10 md:py-24">
         <div className="text-4xl font-normal">
           AQUA<span className="font-bold">QA</span>
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-col gap-5 sm:flex-row">
           <div className="mr-3 flex flex-row items-center gap-3">
-            <Image width={40} height={40} src="/email.svg" alt="email" />
+            <Image width={30} height={30} src="/email.svg" alt="email" />
             <div className="flex flex-col">
               <span className="text-sm font-medium">Envíanos un correo</span>
               <span className="text-base font-normal">aquaQA@gmail.com</span>
             </div>
           </div>
-          <div className="mr-3 flex flex-row items-center gap-3">
-            <Image width={40} height={40} src="/phone.svg" alt="phone" />
+          <div className="flex flex-row items-center gap-3">
+            <Image width={30} height={30} src="/phone.svg" alt="phone" />
             <div className="flex flex-col">
               <span className="text-sm font-medium">Llamanos</span>
               <span className="text-base font-normal">(+55) 888-223-1234</span>
             </div>
           </div>
           <div className="flex flex-row items-center gap-3">
-            <Image width={40} height={40} src="/marker.svg" alt="marker" />
+            <Image width={30} height={30} src="/marker.svg" alt="marker" />
             <div className="flex flex-col">
               <span className="text-sm font-medium">Ubicación</span>
               <span className="text-base font-normal">Suchiapa-CH,MX 29150</span>
@@ -34,12 +34,14 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="flex h-52 flex-row items-center justify-between px-20">
+      <div className="flex flex-col items-center justify-center gap-4 p-5 sm:flex-row sm:justify-around sm:py-20">
         <div className="flex flex-row items-center gap-3">
           <Image width={40} height={40} src="/vji.svg" alt="VJI Corporation" />
           <span className="text-primary text-2xl font-extrabold">VJI Corporation</span>
         </div>
-        <div className="text-sm text-[#A5A5A5]">Copyright © 2023. AquaQA Todos los derechos reservados</div>
+        <div className="text-center text-sm text-[#A5A5A5]">
+          Copyright © 2023. AquaQA Todos los derechos reservados
+        </div>
       </div>
     </footer>
   );

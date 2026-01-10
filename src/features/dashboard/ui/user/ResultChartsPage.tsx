@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -171,7 +171,7 @@ const SensorCheckbox = ({
   return (
     <button
       onClick={onToggle}
-      className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-all ${
+      className={`flex w-full items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-all ${
         selected
           ? "border-primary bg-primary/10 text-primary"
           : "border-muted hover:border-primary/50 hover:bg-muted/50"
@@ -202,7 +202,7 @@ const CustomTooltip = ({
   if (!active || !payload?.length) return null;
 
   return (
-    <div className="bg-card rounded-lg border p-3 shadow-lg">
+    <div className="border-grayLight bg-light-green rounded-lg border p-3 shadow-lg">
       <p className="mb-2 text-sm font-medium">{label}</p>
       {payload.map((entry, index) => {
         const sensor = SENSORS.find((s) => s.id === entry.name || s.name === entry.name);
@@ -230,12 +230,15 @@ export function ResultChartsPage() {
   const [dateRange, setDateRange] = useState({ start: "2024-12-24", end: "2024-12-25" });
   const [zoomDomain, setZoomDomain] = useState<{ start: number; end: number } | null>(null);
 
-  const timeSeriesData = useMemo(() => generateTimeSeriesData(24), []);
+  const [timeSeriesData, setTimeSeriesData] = useState<DataPoint[]>([]);
   const alertEvents = useMemo(() => generateAlertEvents(), []);
-  const historicalRecords = useMemo(
-    () => generateHistoricalRecords(timeSeriesData, alertEvents),
-    [timeSeriesData, alertEvents]
-  );
+  const [historicalRecords, setHistoricalRecords] = useState<HistoricalRecord[]>([]);
+
+  useEffect(() => {
+    const data = generateTimeSeriesData(24);
+    setTimeSeriesData(data);
+    setHistoricalRecords(generateHistoricalRecords(data, alertEvents));
+  }, [alertEvents]);
 
   const toggleSensor = (sensorId: string) => {
     setSelectedSensors((prev) =>
@@ -281,6 +284,14 @@ export function ResultChartsPage() {
     { value: "histogram", label: "Distribución", icon: BarChart3 },
   ];
 
+  if (timeSeriesData.length === 0) {
+    return (
+      <div className="flex h-64 items-center justify-center">
+        <div className="text-muted-foreground">Cargando datos...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -304,66 +315,58 @@ export function ResultChartsPage() {
       {/* Filters Panel */}
       {showFilters && (
         <Card>
-          <CardContent className="p-4">
-            <div className="grid gap-6 lg:grid-cols-4">
-              {/* Date Range */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Rango de fechas</label>
-                <div className="flex items-center gap-2">
-                  <div className="relative flex-1">
-                    <Calendar className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
-                    <input
-                      type="date"
-                      value={dateRange.start}
-                      onChange={(e) => setDateRange((prev) => ({ ...prev, start: e.target.value }))}
-                      className="bg-background w-full rounded-md border py-2 pr-3 pl-10 text-sm"
-                    />
-                  </div>
-                  <span className="text-muted-foreground">a</span>
-                  <div className="relative flex-1">
-                    <Calendar className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
-                    <input
-                      type="date"
-                      value={dateRange.end}
-                      onChange={(e) => setDateRange((prev) => ({ ...prev, end: e.target.value }))}
-                      className="bg-background w-full rounded-md border py-2 pr-3 pl-10 text-sm"
-                    />
-                  </div>
-                </div>
+          <CardContent className="flex w-full flex-col justify-between gap-2 p-4 lg:flex-row lg:gap-8">
+            {/* Date Range */}
+            <div>
+              <label className="text-sm font-medium">Rango de fechas</label>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <input
+                  type="date"
+                  value={dateRange.start}
+                  onChange={(e) => setDateRange((prev) => ({ ...prev, start: e.target.value }))}
+                  className="bg-background w-full rounded-md border px-3 py-2 text-sm"
+                />
+                <span className="text-muted-foreground hidden sm:block">a</span>
+                <input
+                  type="date"
+                  value={dateRange.end}
+                  onChange={(e) => setDateRange((prev) => ({ ...prev, end: e.target.value }))}
+                  className="bg-background w-full rounded-md border px-3 py-2 text-sm"
+                />
               </div>
+            </div>
 
-              {/* Sensor Selection */}
-              <div className="space-y-2 lg:col-span-2">
-                <label className="text-sm font-medium">Sensores</label>
-                <div className="flex flex-wrap gap-2">
-                  {SENSORS.map((sensor) => (
-                    <SensorCheckbox
-                      key={sensor.id}
-                      sensor={sensor}
-                      selected={selectedSensors.includes(sensor.id)}
-                      onToggle={() => toggleSensor(sensor.id)}
-                    />
+            {/* Sensor Selection */}
+            <div className="w-full flex-1">
+              <label className="text-sm font-medium">Sensores</label>
+              <div className="grid grid-cols-1 gap-2 lg:flex">
+                {SENSORS.map((sensor) => (
+                  <SensorCheckbox
+                    key={sensor.id}
+                    sensor={sensor}
+                    selected={selectedSensors.includes(sensor.id)}
+                    onToggle={() => toggleSensor(sensor.id)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Resolution */}
+            <div>
+              <label className="text-sm font-medium">Resolución</label>
+              <div className="relative">
+                <select
+                  value={resolution}
+                  onChange={(e) => setResolution(e.target.value as Resolution)}
+                  className="bg-background w-full appearance-none rounded-md border py-2 pr-10 pl-3 text-sm"
+                >
+                  {resolutionOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
                   ))}
-                </div>
-              </div>
-
-              {/* Resolution */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Resolución</label>
-                <div className="relative">
-                  <select
-                    value={resolution}
-                    onChange={(e) => setResolution(e.target.value as Resolution)}
-                    className="bg-background w-full appearance-none rounded-md border py-2 pr-10 pl-3 text-sm"
-                  >
-                    {resolutionOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" />
-                </div>
+                </select>
+                <ChevronDown className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" />
               </div>
             </div>
           </CardContent>
@@ -392,9 +395,9 @@ export function ResultChartsPage() {
       {/* Main Chart Area */}
       {viewMode === "single" && (
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="text-lg">Series de Tiempo</CardTitle>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -418,7 +421,7 @@ export function ResultChartsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="h-96">
+            <div className="h-64 sm:h-96">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={displayData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -545,7 +548,7 @@ export function ResultChartsPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-72">
+                  <div className="h-56 sm:h-72">
                     <ResponsiveContainer width="100%" height="100%">
                       <ComposedChart data={displayData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -593,7 +596,7 @@ export function ResultChartsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-72">
+                <div className="h-56 sm:h-72">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={displayData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -645,7 +648,7 @@ export function ResultChartsPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-64">
+                  <div className="h-48 sm:h-64">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -664,8 +667,6 @@ export function ResultChartsPage() {
                           formatter={(value) => [value, "Lecturas"]}
                           labelFormatter={(label) => `Rango: ${label} ${sensor.unit}`}
                           contentStyle={{
-                            backgroundColor: "hsl(var(--card))",
-                            border: "1px solid hsl(var(--border))",
                             borderRadius: "8px",
                           }}
                         />
@@ -690,19 +691,19 @@ export function ResultChartsPage() {
 
       {/* Historical Data Table */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <CardHeader className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Table className="h-5 w-5" />
             Tabla de Datos Históricos y Eventos
           </CardTitle>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="w-full sm:w-auto">
             <Download className="mr-2 h-4 w-4" />
             Exportar CSV
           </Button>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[600px] text-sm">
               <thead>
                 <tr className="border-b">
                   <th className="px-4 py-3 text-left font-medium">Timestamp</th>

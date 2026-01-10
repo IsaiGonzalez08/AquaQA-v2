@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import {
   AlertTriangle,
@@ -115,7 +115,7 @@ const Sparkline = ({ data, color }: { data: number[]; color: string }) => {
   const chartData = data.map((value, index) => ({ index, value }));
 
   return (
-    <div className="h-10 w-24">
+    <div className="hidden h-10 w-24 sm:block">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
           <Line type="monotone" dataKey="value" stroke={color} strokeWidth={1.5} dot={false} />
@@ -154,15 +154,15 @@ const KPICard = ({
 
   return (
     <Card className={`${variantStyles[variant]} transition-all hover:shadow-md`}>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-muted-foreground text-sm font-medium">{title}</p>
-            <p className="text-2xl font-bold">{value}</p>
-            {subtitle && <p className="text-muted-foreground text-xs">{subtitle}</p>}
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1 space-y-1">
+            <p className="text-muted-foreground text-xs font-medium sm:text-sm">{title}</p>
+            <p className="truncate text-lg font-bold sm:text-2xl">{value}</p>
+            {subtitle && <p className="text-muted-foreground truncate text-xs">{subtitle}</p>}
           </div>
-          <div className={`rounded-full p-3 ${variant === "default" ? "bg-muted" : ""}`}>
-            <Icon className={`h-5 w-5 ${iconStyles[variant]}`} />
+          <div className={`shrink-0 rounded-full p-2 sm:p-3 ${variant === "default" ? "bg-muted" : ""}`}>
+            <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${iconStyles[variant]}`} />
           </div>
         </div>
       </CardContent>
@@ -173,8 +173,11 @@ const KPICard = ({
 export function AnalysisPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<Period>("7d");
   const [showPeriodMenu, setShowPeriodMenu] = useState(false);
+  const [sensorData, setSensorData] = useState<SensorAnalysis[]>([]);
 
-  const sensorData = useMemo(() => generateMockData(selectedPeriod), [selectedPeriod]);
+  useEffect(() => {
+    setSensorData(generateMockData(selectedPeriod));
+  }, [selectedPeriod]);
 
   const globalStats = useMemo(() => {
     const totalAlerts = sensorData.reduce((sum, s) => sum + s.alertCount, 0);
@@ -206,6 +209,14 @@ export function AnalysisPage() {
     value: s.alertCount,
     fill: s.color,
   }));
+
+  if (sensorData.length === 0) {
+    return (
+      <div className="flex h-64 items-center justify-center">
+        <div className="text-muted-foreground">Cargando datos...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -254,7 +265,7 @@ export function AnalysisPage() {
       </div>
 
       {/* KPIs Globales */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KPICard
           title="Total de Alertas"
           value={globalStats.totalAlerts}
@@ -389,19 +400,20 @@ export function AnalysisPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64">
+            <div className="h-48 sm:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={outOfRangeChartData} layout="vertical">
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
                   <XAxis type="number" domain={[0, "auto"]} unit="%" />
-                  <YAxis type="category" dataKey="name" width={80} />
+                  <YAxis type="category" dataKey="name" width={120} />
                   <Tooltip
                     formatter={(value) => [`${value}%`, "Tiempo fuera de rango"]}
                     contentStyle={{
-                      backgroundColor: "hsl(var(--card))",
-                      border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
+                      fontSize: "12px",
+                      padding: "6px 10px",
                     }}
+                    wrapperStyle={{ maxWidth: "200px" }}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} />
                 </BarChart>
@@ -419,19 +431,20 @@ export function AnalysisPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64">
+            <div className="h-48 sm:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={alertsChartData} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+                  <CartesianGrid strokeDasharray="1 1" horizontal={true} vertical={false} />
                   <XAxis type="number" domain={[0, "auto"]} />
-                  <YAxis type="category" dataKey="name" width={80} />
+                  <YAxis type="category" dataKey="name" width={120} />
                   <Tooltip
                     formatter={(value) => [`${value}`, "Alertas"]}
                     contentStyle={{
-                      backgroundColor: "hsl(var(--card))",
-                      border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
+                      fontSize: "14px",
+                      padding: "6px 10px",
                     }}
+                    wrapperStyle={{ maxWidth: "200px" }}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} />
                 </BarChart>

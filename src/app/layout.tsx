@@ -23,8 +23,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -34,10 +32,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} flex min-h-screen flex-col overflow-x-hidden`}>
-        <Providers>
-          <main className="mx-auto w-full max-w-[2000px] grow">{children}</main>
-        </Providers>
+      <body className={`${poppins.className} h-dvh max-w-[2000px] mx-auto`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

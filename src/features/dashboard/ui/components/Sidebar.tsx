@@ -12,6 +12,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarHeader,
+  useSidebar,
 } from "@/components/sidebar";
 import { Avatar, AvatarFallback } from "@/components/avatar";
 import {
@@ -22,7 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/dropdown-menu";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
 import { meUseCase } from "../../application/me.usecase.server";
 import { adminMenuItems, menuItems } from "../data";
@@ -32,7 +33,15 @@ import Image from "next/image";
 
 export function AppSidebar() {
   const router = useRouter();
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const pathname = usePathname();
+  const { setOpenMobile, isMobile } = useSidebar();
+  const [userData, setUserData] = useState<UserData>();
+
+  const handleMenuClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -67,8 +76,11 @@ export function AppSidebar() {
             <SidebarMenu className="space-y-2">
               {currentMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="hover:bg-sidebar-accent transition-colors">
-                    <Link href={item.url} className="flex items-center gap-3 px-3 py-2.5">
+                  <SidebarMenuButton
+                    asChild
+                    className={`transition-colors ${pathname === item.url ? "bg-light-green" : "hover:bg-light-green"}`}
+                  >
+                    <Link href={item.url} onClick={handleMenuClick} className="flex items-center gap-3 px-3 py-2.5">
                       <item.icon className="text-sidebar-foreground h-5 w-5" />
                       <span className="text-sm font-medium">{item.title}</span>
                     </Link>
@@ -81,45 +93,45 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="hover:bg-sidebar-accent flex w-full items-center gap-3 rounded-lg p-2 transition-colors">
-              <Avatar className="h-10 w-10">
-                <AvatarFallback className="bg-primary text-primary-foreground">
-                  <User className="h-5 w-5" />
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-1 flex-col text-left">
-                <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
-                <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
-              </div>
-              <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/user/profile" className="flex cursor-pointer items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>Perfil</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/user/settings" className="flex cursor-pointer items-center">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Configuración</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer text-red-600">
-              <button onClick={handleLogout} className="flex cursor-pointer items-center">
+        {userData && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="hover:bg-sidebar-accent flex h-auto w-full items-center gap-3 rounded-lg p-2 transition-colors">
+                <Avatar className="h-10 w-10">
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    <User className="h-5 w-5" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-1 flex-col text-left">
+                  <span className="text-sidebar-foreground text-sm font-semibold">{userData.name}</span>
+                  <span className="text-sidebar-foreground/60 text-xs">{userData.email}</span>
+                </div>
+                <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user/profile" className="flex cursor-pointer items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Perfil</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/user/settings" className="flex cursor-pointer items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Configuración</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Cerrar sesión</span>
-              </button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
