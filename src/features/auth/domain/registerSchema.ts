@@ -19,7 +19,7 @@ export type RegisterFormData = z.infer<typeof registerFormSchema>;
 
 export type RegisterInput = RegisterFormData;
 
-export type RegisterResult = {
+export type RegisterResponse = {
   user: {
     role: string;
     email: string;
