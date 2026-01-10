@@ -35,8 +35,7 @@ export function AppSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const { setOpenMobile, isMobile } = useSidebar();
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [userData, setUserData] = useState<UserData>();
 
   const handleMenuClick = () => {
     if (isMobile) {
@@ -48,16 +47,13 @@ export function AppSidebar() {
     const fetchUserData = async () => {
       try {
         const response = await meUseCase();
-        if (response.ok) {
-          setUserData(response);
-        }
+        setUserData(response);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-    setMounted(true);
   }, []);
 
   const currentMenuItems = userData?.role === "admin" ? adminMenuItems : menuItems;
@@ -80,7 +76,10 @@ export function AppSidebar() {
             <SidebarMenu className="space-y-2">
               {currentMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className={`transition-colors ${pathname === item.url ? 'bg-light-green' : 'hover:bg-light-green'}`}>
+                  <SidebarMenuButton
+                    asChild
+                    className={`transition-colors ${pathname === item.url ? "bg-light-green" : "hover:bg-light-green"}`}
+                  >
                     <Link href={item.url} onClick={handleMenuClick} className="flex items-center gap-3 px-3 py-2.5">
                       <item.icon className="text-sidebar-foreground h-5 w-5" />
                       <span className="text-sm font-medium">{item.title}</span>
@@ -94,7 +93,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        {mounted ? (
+        {userData && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="hover:bg-sidebar-accent flex h-auto w-full items-center gap-3 rounded-lg p-2 transition-colors">
@@ -104,8 +103,8 @@ export function AppSidebar() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-1 flex-col text-left">
-                  <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
-                  <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
+                  <span className="text-sidebar-foreground text-sm font-semibold">{userData.name}</span>
+                  <span className="text-sidebar-foreground/60 text-xs">{userData.email}</span>
                 </div>
                 <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
               </button>
@@ -132,19 +131,6 @@ export function AppSidebar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        ) : (
-          <div className="flex h-auto w-full items-center gap-3 rounded-lg p-2">
-            <Avatar className="h-10 w-10">
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                <User className="h-5 w-5" />
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-1 flex-col text-left">
-              <span className="text-sidebar-foreground text-sm font-semibold">{userData?.name || ""}</span>
-              <span className="text-sidebar-foreground/60 text-xs">{userData?.email || ""}</span>
-            </div>
-            <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
-          </div>
         )}
       </SidebarFooter>
     </Sidebar>

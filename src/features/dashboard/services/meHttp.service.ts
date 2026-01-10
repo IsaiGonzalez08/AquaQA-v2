@@ -3,5 +3,9 @@ export async function meService() {
 
   const data = await res.json();
 
+  if (!res.ok) {
+    throw new Error(data.error);
+  }
+
   return { ...data, status: res.status, ok: res.ok };
 }

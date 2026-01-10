@@ -1,6 +1,7 @@
 import { Home, BarChart3, ChartLine, User } from "lucide-react";
+import { menuItem } from "../types/dashboard.types";
 
-export const menuItems = [
+export const menuItems: menuItem[] = [
   {
     title: "Inicio",
     url: "/dashboard/user",
@@ -18,7 +19,7 @@ export const menuItems = [
   },
 ];
 
-export const adminMenuItems = [
+export const adminMenuItems: menuItem[] = [
   {
     title: "Dashboard",
     url: "/dashboard/admin",
