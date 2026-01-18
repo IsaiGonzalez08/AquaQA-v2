@@ -19,8 +19,16 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/components/*": ["shared/components/ui/*"],
+      "@/contexts/*": ["contexts/*"],
+      "@/features/*": ["features/*"],
+      "@/hooks/*": ["shared/hooks/*"],
+      "@/lib/*": ["shared/lib/*"],
+      "@/store/*": ["store/*"],
+      "@/types/*": ["types/*"],
+      "@/utils/*": ["shared/utils/*"]
+    },
+    "baseUrl": "src/"
   },
   "include": [
     "next-env.d.ts",
@@ -28,7 +36,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "types/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }
