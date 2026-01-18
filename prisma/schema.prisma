@@ -18,7 +18,6 @@ model User {
   password  String
   name      String
   lastname  String
-  username  String
   role      String @default("user")
   checked   Boolean @default(false)
   createdAt DateTime @default(now())

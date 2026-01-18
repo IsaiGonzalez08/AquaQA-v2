@@ -1,6 +1,6 @@
 import { registerService } from "../services/authHttp.service";
-import { RegisterInput, RegisterResult } from "../domain/registerSchema";
+import { RegisterInput, RegisterResponse } from "../domain/registerSchema";
 
-export async function registerUseCase(input: RegisterInput): Promise<RegisterResult> {
+export async function registerUseCase(input: RegisterInput): Promise<RegisterResponse> {
   return await registerService(input);
 }

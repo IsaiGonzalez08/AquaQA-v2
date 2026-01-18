@@ -14,7 +14,7 @@ export type LoginInput = LoginFormData & {
   rememberMe: boolean;
 };
 
-export type LoginResult = {
+export type LoginResponse = {
   user: {
     role: string;
     email: string;

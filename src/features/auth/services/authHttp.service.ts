@@ -1,23 +1,38 @@
-import { LoginInput, LoginResult } from "../domain/loginSchema";
-import { RegisterInput, RegisterResult } from "../domain/registerSchema";
+import { NetworkError } from "@/utils/httpErrors";
+import { LoginInput, LoginResponse } from "../domain/loginSchema";
+import { RegisterInput, RegisterResponse } from "../domain/registerSchema";
 
-export async function loginService(input: LoginInput): Promise<LoginResult> {
-  const res = await fetch("/api/auth/login", {
-    method: "POST",
-    body: JSON.stringify(input),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  const result = await res.json();
-
-  if (!res.ok) {
-    throw new Error(result.error || "Error al iniciar sesión");
+export class AuthHttpError extends Error {
+  constructor(public code: string) {
+    super(code);
   }
-
-  return result;
 }
 
-export async function registerService(input: RegisterInput): Promise<RegisterResult> {
+export async function loginService(input: LoginInput): Promise<LoginResponse> {
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new AuthHttpError(result.error?.code || "UNKNOWN_ERROR");
+    }
+
+    return result;
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new NetworkError();
+    }
+
+    throw error;
+  }
+}
+
+export async function registerService(input: RegisterInput): Promise<RegisterResponse> {
   const res = await fetch("/api/auth/register", {
     method: "POST",
     body: JSON.stringify(input),

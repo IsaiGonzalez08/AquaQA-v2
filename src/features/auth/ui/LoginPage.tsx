@@ -10,6 +10,8 @@ import { Switch } from "@/components/switch";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/field";
 import { loginUseCase } from "../application/login.usecase.client";
 import { loginFormSchema, LoginFormData } from "../domain/loginSchema";
+import { AuthHttpError } from "../services/authHttp.service";
+import { NetworkError } from "@/utils/httpErrors";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/components/loading";
@@ -44,7 +46,17 @@ export function LoginPage() {
 
       router.replace("/dashboard/user");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error de conexión");
+      if (e instanceof NetworkError) {
+        setError("No hay conexión a internet. Intenta nuevamente.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (e instanceof AuthHttpError) {
+        if (e.code === "AUTH_INVALID_CREDENTIALS") {
+          setError("Email o contraseña incorrectos");
+        }
+      }
       setIsLoading(false);
     }
   }

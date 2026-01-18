@@ -12,6 +12,8 @@ import { registerFormSchema, RegisterFormData } from "../domain/registerSchema";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "@/components/loading";
+import { NetworkError } from "@/utils/httpErrors";
+import { AuthHttpError } from "../services/authHttp.service";
 
 export function RegisterPage() {
   const router = useRouter();
@@ -25,7 +27,6 @@ export function RegisterPage() {
       password: "",
       name: "",
       lastname: "",
-      username: "",
       confirmPassword: "",
     },
   });
@@ -46,7 +47,17 @@ export function RegisterPage() {
 
       router.replace("/dashboard/user");
     } catch (e) {
-      setError(`Error de conexión: ${e}`);
+      if (e instanceof NetworkError) {
+        setError("No hay conexión a internet. Intenta nuevamente.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (e instanceof AuthHttpError) {
+        if (e.code === "AUTH_INVALID_CREDENTIALS") {
+          setError("Ya existe una cuenta con este correo");
+        }
+      }
       setIsLoading(false);
     }
   }
@@ -66,30 +77,11 @@ export function RegisterPage() {
         </div>
       )}
 
-      <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-4 sm:max-w-4/6 xl:max-w-2/6">
-        <FieldGroup>
-          <Controller
-            name="email"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-email" className="text-gray-200">
-                  Correo electrónico
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-email"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Correo electrónico"
-                  autoComplete="off"
-                  disabled={isLoading}
-                />
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-
+      <form
+        id="form-rhf-demo"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-4 sm:max-w-4/6 xl:max-w-2/6"
+      >
         <div className="flex flex-row gap-5">
           <FieldGroup>
             <Controller
@@ -141,20 +133,19 @@ export function RegisterPage() {
 
         <FieldGroup>
           <Controller
-            name="username"
+            name="email"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-username" className="text-gray-200">
-                  Usuario
+                <FieldLabel htmlFor="form-rhf-demo-email" className="text-gray-200">
+                  Correo electrónico
                 </FieldLabel>
                 <Input
                   {...field}
-                  id="form-rhf-demo-username"
+                  id="form-rhf-demo-email"
                   aria-invalid={fieldState.invalid}
-                  placeholder="Usuario"
+                  placeholder="Correo electrónico"
                   autoComplete="off"
-                  type="text"
                   disabled={isLoading}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
