@@ -32,7 +32,7 @@ export async function loginUseCase(input: LoginInput) {
     userId: user.id,
     email: user.email,
     name: user.name,
-    username: user.username,
+    lastname: user.lastname,
     role: user.role,
   };
 
