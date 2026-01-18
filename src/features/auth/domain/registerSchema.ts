@@ -1,18 +1,23 @@
 import * as z from "zod";
 
-export const registerFormSchema = z.object({
-  email: z.string().min(5, "Escribe al menos 5 caracteres."),
-  name: z.string().min(2, "Escribe al menos 2 caracteres."),
-  lastname: z.string().min(2, "Escribe al menos 2 caracteres."),
-  password: z
-    .string()
-    .min(6, "Escribe al menos 6 caracteres.")
-    .max(20, "La contraseña no debe tener más de 20 caracteres."),
-  confirmPassword: z
-    .string()
-    .min(6, "Escribe al menos 6 caracteres.")
-    .max(20, "La contraseña no debe tener más de 20 caracteres."),
-});
+export const registerFormSchema = z
+  .object({
+    email: z.email("Por favor, ingresa un correo electrónico válido."),
+    name: z.string().min(2, "Por favor, ingresa al menos 2 caracteres."),
+    lastname: z.string().min(2, "Por favor, ingresa al menos 2 caracteres."),
+    password: z
+      .string()
+      .min(8, "Por favor, ingresa al menos 8 caracteres.")
+      .max(20, "La contraseña no debe tener más de 20 caracteres."),
+    confirmPassword: z
+      .string()
+      .min(8, "Por favor, ingresa al menos 8 caracteres.")
+      .max(20, "La contraseña no debe tener más de 20 caracteres."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirmPassword"],
+  });
 
 export type RegisterFormData = z.infer<typeof registerFormSchema>;
 
