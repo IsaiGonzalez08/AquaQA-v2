@@ -8,7 +8,7 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL_DEV;
+  const connectionString = process.env.DATABASE_URL;
 
   if (!connectionString) {
     throw new Error("DATABASE_URL is not defined");
@@ -21,7 +21,7 @@ function createPrismaClient() {
 
   return new PrismaClient({
     adapter,
-    log: ["query"],
+    log: process.env.NODE_ENV === "development" ? ["query"] : [],
   });
 }
 
