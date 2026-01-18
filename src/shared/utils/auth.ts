@@ -5,7 +5,7 @@ export interface SessionPayload {
   userId: string;
   email: string;
   name: string;
-  username: string;
+  lastname: string;
   role: string;
 }
 

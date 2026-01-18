@@ -1,29 +1,28 @@
 import { prisma } from "../../../server/db/prisma";
-import bcrypt from "bcryptjs";
 import { generateTokens } from "../services/tokenService";
 import { setAuthCookies } from "../services/sessionService";
+import { InvalidCredentialsError, MissingCredentialsError } from "../domain/authErrors";
+import { findUserByEmail } from "../services/authRepository";
+import bcrypt from "bcryptjs";
 
 type RegisterInput = {
   email: string;
   password: string;
   name: string;
   lastname: string;
-  username: string;
 };
 
 export async function registerUseCase(input: RegisterInput) {
-  const { email, password, name, lastname, username } = input;
+  const { email, password, name, lastname } = input;
 
-  if (!email || !password || !name || !lastname || !username) {
-    throw new Error("Todos los campos son requeridos");
+  if (!email || !password || !name || !lastname) {
+    throw new MissingCredentialsError();
   }
 
-  const userExists = await prisma.user.findUnique({
-    where: { email },
-  });
+  const user = await findUserByEmail(email);
 
-  if (userExists) {
-    throw new Error("El usuario ya existe");
+  if (user) {
+    throw new InvalidCredentialsError();
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,7 +33,6 @@ export async function registerUseCase(input: RegisterInput) {
       password: hashedPassword,
       name,
       lastname,
-      username,
     },
   });
 
@@ -42,7 +40,7 @@ export async function registerUseCase(input: RegisterInput) {
     userId: newUser.id,
     email: newUser.email,
     name: newUser.name,
-    username: newUser.username,
+    lastname: newUser.lastname,
     role: newUser.role,
   };
 
