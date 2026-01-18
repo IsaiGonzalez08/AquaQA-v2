@@ -14,19 +14,21 @@ import Image from "next/image";
 import Loading from "@/components/loading";
 import { NetworkError } from "@/utils/httpErrors";
 import { AuthHttpError } from "../services/authHttp.service";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export function RegisterPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
       name: "",
       lastname: "",
+      email: "",
+      password: "",
       confirmPassword: "",
     },
   });
@@ -96,7 +98,7 @@ export function RegisterPage() {
                     {...field}
                     id="form-rhf-demo-name"
                     aria-invalid={fieldState.invalid}
-                    placeholder="Nombre"
+                    placeholder="John"
                     autoComplete="off"
                     type="text"
                     disabled={isLoading}
@@ -119,7 +121,7 @@ export function RegisterPage() {
                     {...field}
                     id="form-rhf-demo-lastname"
                     aria-invalid={fieldState.invalid}
-                    placeholder="Apellido"
+                    placeholder="Doe"
                     autoComplete="off"
                     type="text"
                     disabled={isLoading}
@@ -144,7 +146,7 @@ export function RegisterPage() {
                   {...field}
                   id="form-rhf-demo-email"
                   aria-invalid={fieldState.invalid}
-                  placeholder="Correo electrónico"
+                  placeholder="example@gmail.com"
                   autoComplete="off"
                   disabled={isLoading}
                 />
@@ -163,15 +165,31 @@ export function RegisterPage() {
                 <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
                   Contraseña
                 </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Contraseña"
-                  autoComplete="off"
-                  type="password"
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    id="form-rhf-demo-password"
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                    placeholder="Al menos 8 caracteres"
+                    type={showPassword ? "text" : "password"}
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeIcon className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
+                    )}
+                    <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
+                  </Button>
+                </div>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}
@@ -184,18 +202,34 @@ export function RegisterPage() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
+                <FieldLabel htmlFor="form-rhf-demo-confirm-password" className="text-gray-200">
                   Confirmar Contraseña
                 </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Confirmar contraseña"
-                  autoComplete="off"
-                  type="password"
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    id="form-rhf-demo-confirm-password"
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                    placeholder="Al menos 8 caracteres"
+                    type={showPassword ? "text" : "password"}
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeIcon className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
+                    )}
+                    <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
+                  </Button>
+                </div>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}
