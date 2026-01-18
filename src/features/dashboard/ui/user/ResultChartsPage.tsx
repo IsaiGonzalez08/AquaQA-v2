@@ -301,11 +301,11 @@ export function ResultChartsPage() {
           <p className="text-muted-foreground mt-1">Análisis detallado del comportamiento histórico de los sensores</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => setShowFilters(!showFilters)}>
+          <Button onClick={() => setShowFilters(!showFilters)}>
             <Filter className="mr-2 h-4 w-4" />
             Filtros
           </Button>
-          <Button variant="outline" size="sm">
+          <Button>
             <Download className="mr-2 h-4 w-4" />
             Exportar
           </Button>
@@ -398,23 +398,18 @@ export function ResultChartsPage() {
           <CardHeader className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="text-lg">Series de Tiempo</CardTitle>
             <div className="flex flex-wrap items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowEvents(!showEvents)}
-                className={showEvents ? "bg-muted" : ""}
-              >
+              <Button onClick={() => setShowEvents(!showEvents)} className={showEvents ? "bg-muted" : ""}>
                 <AlertTriangle className="mr-1 h-4 w-4" />
                 Eventos
               </Button>
               <div className="flex items-center rounded-md border">
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleZoomIn}>
+                <Button className="h-8 w-8" onClick={handleZoomIn}>
                   <ZoomIn className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleZoomOut}>
+                <Button className="h-8 w-8" onClick={handleZoomOut}>
                   <ZoomOut className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleResetZoom}>
+                <Button className="h-8 w-8" onClick={handleResetZoom}>
                   <RotateCcw className="h-4 w-4" />
                 </Button>
               </div>
@@ -696,7 +691,7 @@ export function ResultChartsPage() {
             <Table className="h-5 w-5" />
             Tabla de Datos Históricos y Eventos
           </CardTitle>
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto">
             <Download className="mr-2 h-4 w-4" />
             Exportar CSV
           </Button>
@@ -746,12 +741,8 @@ export function ResultChartsPage() {
           <div className="text-muted-foreground mt-4 flex items-center justify-between text-sm">
             <span>Mostrando {historicalRecords.length} registros</span>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" disabled>
-                Anterior
-              </Button>
-              <Button variant="outline" size="sm">
-                Siguiente
-              </Button>
+              <Button disabled>Anterior</Button>
+              <Button>Siguiente</Button>
             </div>
           </div>
         </CardContent>

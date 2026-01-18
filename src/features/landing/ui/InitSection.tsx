@@ -7,29 +7,30 @@ import { dividers } from "./data";
 
 export function InitSection() {
   return (
-    <div className="flex w-full flex-row items-center px-5 sm:gap-10 sm:px-10">
+    <div className="flex w-full flex-row items-center justify-around gap-10 px-5 sm:px-10">
       <motion.div
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
-        className="flex w-full flex-col lg:w-1/2"
+        className="flex flex-col"
       >
-        <span className="flex flex-col items-center text-4xl font-bold sm:text-6xl sm:leading-[1.2] lg:items-center xl:text-7xl">
+        <span className="text-center text-4xl leading-[1.2] font-bold sm:text-5xl xl:text-center xl:text-7xl">
           <span className="text-primary">Agua limpia,</span>
+          <br />
           <span className="text-secondary">futuro brillante</span>
         </span>
-        <h3 className="text-foreground mt-2 text-center text-base font-medium sm:text-xl lg:text-center">
+        <h3 className="mt-3 text-foreground text-center text-base font-medium sm:text-xl lg:text-center">
           Invirtamos en calidad para un mundo radiante
         </h3>
-        <div className="mt-5 flex flex-row justify-center gap-4 sm:mt-10 lg:px-20">
-          <Button variant="primary" icon="/start.svg" iconSize={25} className="w-full">
+        <div className="mt-3 flex flex-row justify-center gap-4">
+          <Button variant="primary" icon="/start.svg" iconSize={25} className="px-10">
             Iniciar
           </Button>
-          <Button variant="secondary" icon="/add.svg" iconSize={25} className="w-full">
+          <Button variant="secondary" icon="/add.svg" iconSize={25}>
             Saber más
           </Button>
         </div>
-        <div className="mt-8 flex w-full flex-row justify-around sm:my-10 sm:gap-10 sm:justify-center">
+        <div className="flex w-full flex-row justify-around mt-5 sm:justify-center sm:gap-10">
           {dividers.map((item, index) => (
             <div key={index} className="flex flex-row items-center">
               <div className="flex flex-col items-center">
@@ -44,7 +45,7 @@ export function InitSection() {
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
-        className="relative hidden w-1/2 flex-row items-center justify-center gap-4 pb-20 lg:flex"
+        className="relative hidden flex-row items-center justify-center gap-4 lg:flex"
       >
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
