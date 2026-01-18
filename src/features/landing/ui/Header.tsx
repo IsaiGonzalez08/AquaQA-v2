@@ -28,7 +28,7 @@ export function Header() {
         </Link>
       </nav>
       <Link href="/auth/login">
-        <Button variant="secondary" iconSize={40} className="h-9 w-36 text-base">
+        <Button variant="secondary" className="py-1 px-5">
           Comenzar
         </Button>
       </Link>

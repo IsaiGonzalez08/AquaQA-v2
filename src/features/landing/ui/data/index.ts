@@ -59,9 +59,4 @@ export const services = [
     description: "Monitoreo de nivel de agua de los suministros de agua",
     img: "/Images/service.png",
   },
-  {
-    title: "Turbidez",
-    description: "Monitoreo de turbidez de los suministros de agua",
-    img: "/Images/service.png",
-  },
 ];
