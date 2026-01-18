@@ -14,7 +14,6 @@ export async function GET() {
         userId: user.userId,
         email: user.email,
         name: user.name,
-        username: user.username,
         role: user.role,
       },
       { status: 200 }
