@@ -42,7 +42,7 @@ export function ProfilePage() {
           <p className="text-muted-foreground mt-1">Gestiona tu información personal y preferencias</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setIsEditing(!isEditing)} className="gap-2">
+          <Button onClick={() => setIsEditing(!isEditing)} className="gap-2">
             <Edit3 className="h-4 w-4" />
             {isEditing ? "Cancelar" : "Editar"}
           </Button>

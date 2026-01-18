@@ -232,7 +232,6 @@ export function AnalysisPage() {
         {/* Period Selector */}
         <div className="relative">
           <Button
-            variant="outline"
             onClick={() => setShowPeriodMenu(!showPeriodMenu)}
             className="w-full justify-between sm:w-48"
           >

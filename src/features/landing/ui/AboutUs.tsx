@@ -26,7 +26,7 @@ export function AboutUs() {
   }, [springPercentage]);
 
   return (
-    <div id="about-us" className="relative flex w-full flex-row items-start justify-around md:mt-20">
+    <div id="about-us" className="flex w-full flex-row items-center justify-center px-5 py-10 gap-8 sm:px-10">
       <motion.div
         className="z-50 hidden w-1/2 lg:block"
         initial={{ opacity: 0, x: -100 }}
@@ -38,19 +38,18 @@ export function AboutUs() {
       </motion.div>
 
       <motion.div
-        className="flex w-full flex-col items-start px-5 py-10 md:pr-10 lg:w-1/2"
+        className="flex w-full flex-col items-center lg:w-1/2 lg:items-start"
         initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.03 }}
       >
         <h2 className="text-primary text-2xl font-semibold">Sobre nosotros</h2>
-        <h1 className="text-foreground text-2xl leading-tight font-bold">
-          Somos empresa dedicada a la revisión y garantía de la calidad del agua
+        <h1 className="text-foreground text-2xl leading-tight font-bold text-center lg:text-left">
+          Empresa dedicada a la revisión de la calidad del agua
         </h1>
-        <p className="text-foreground mt-3 text-base font-medium">
-          Utilizamos tecnología de vanguardia y métodos científicos rigurosos para llevar a cabo pruebas y análisis
-          exhaustivos en muestras de agua.
+        <p className="text-foreground text-base font-medium text-center lg:text-left">
+          Utilizamos tecnología de vanguardia y métodos científicos rigurosos para un análisis exhaustivo
         </p>
 
         <div className="mt-10 flex w-full flex-col items-center gap-10 sm:flex-row sm:justify-center lg:justify-start">
