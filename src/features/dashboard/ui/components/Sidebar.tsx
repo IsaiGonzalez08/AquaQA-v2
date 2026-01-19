@@ -83,9 +83,12 @@ export function AppSidebar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="hover:bg-sidebar-accent flex h-auto items-center gap-3 rounded-lg p-2 transition-colors">
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    <User className="h-5 w-5" />
+                <Avatar className="border-background h-10 w-10 border-4 shadow-lg">
+                  <AvatarFallback className="bg-primary text-black">
+                    {user?.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex min-w-0 flex-1 flex-col text-left">

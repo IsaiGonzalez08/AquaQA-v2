@@ -4,7 +4,9 @@ type User = {
   userId: string;
   email: string;
   name: string;
+  lastname: string;
   role: string;
+  createdAt: string;
 };
 
 type AuthState = {
