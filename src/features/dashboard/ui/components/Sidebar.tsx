@@ -25,17 +25,17 @@ import {
 } from "@/components/dropdown-menu";
 import { useRouter, usePathname } from "next/navigation";
 import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
-import { meUseCase } from "../../application/me.usecase.server";
 import { adminMenuItems, menuItems } from "../data";
-import { UserData } from "../types/dashboard.types";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "shared/store/store";
 
 export function AppSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const { setOpenMobile, isMobile } = useSidebar();
-  const [userData, setUserData] = useState<UserData>();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleMenuClick = () => {
     if (isMobile) {
@@ -43,20 +43,7 @@ export function AppSidebar() {
     }
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await meUseCase();
-        setUserData(response);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  const currentMenuItems = userData?.role === "admin" ? adminMenuItems : menuItems;
+  const currentMenuItems = user?.role === "admin" ? adminMenuItems : menuItems;
 
   const handleLogout = async () => {
     await logoutUsecase();
@@ -93,7 +80,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        {userData && (
+        {user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="hover:bg-sidebar-accent flex h-auto w-full items-center gap-3 rounded-lg p-2 transition-colors">
@@ -103,8 +90,8 @@ export function AppSidebar() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-1 flex-col text-left">
-                  <span className="text-sidebar-foreground text-sm font-semibold">{userData.name}</span>
-                  <span className="text-sidebar-foreground/60 text-xs">{userData.email}</span>
+                  <span className="text-sidebar-foreground text-sm font-semibold">{user.name}</span>
+                  <span className="text-sidebar-foreground/60 text-xs">{user.email}</span>
                 </div>
                 <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
               </button>

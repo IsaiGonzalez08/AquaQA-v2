@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { GaugeCard } from "./components/GaugeCard";
 import { Thermometer, Droplets, Waves, Magnet } from "lucide-react";
-import { UserData, SensorData } from "./types/user.dashboard.types";
+import { SensorData } from "./types/user.dashboard.types";
+import { useSelector } from "react-redux";
+import { RootState } from "shared/store/store";
 
 export function InitPage() {
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [time, setTime] = useState<string | null>(null);
   const [sensorData, setSensorData] = useState<SensorData>({
     temperature: 22.5,
@@ -14,26 +15,13 @@ export function InitPage() {
     turbidity: 15.3,
     magnetism: 45.8,
   });
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     setTime(new Date().toLocaleString("es-MX"))
   }, []);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/api/user/me");
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-
     const interval = setInterval(() => {
       setSensorData({
         temperature: 18 + Math.random() * 12,
@@ -49,7 +37,7 @@ export function InitPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-4xl font-bold">Bienvenido, {userData?.name} 👋</h1>
+        <h1 className="text-4xl font-bold">Bienvenido, {user?.name} 👋</h1>
         <p className="text-muted-foreground mt-2">Monitoreo en tiempo real de la calidad del agua</p>
       </div>
 
