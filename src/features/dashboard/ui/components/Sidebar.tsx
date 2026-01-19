@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { User, Settings, LogOut, ChevronUp } from "lucide-react";
 import {
   Sidebar,
@@ -26,10 +25,10 @@ import {
 import { useRouter, usePathname } from "next/navigation";
 import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
 import { adminMenuItems, menuItems } from "../data";
-import Link from "next/link";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "shared/store/store";
+import Link from "next/link";
+import Image from "next/image";
 
 export function AppSidebar() {
   const router = useRouter();
@@ -83,15 +82,17 @@ export function AppSidebar() {
         {user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="hover:bg-sidebar-accent flex h-auto w-full items-center gap-3 rounded-lg p-2 transition-colors">
+              <button className="hover:bg-sidebar-accent flex h-auto items-center gap-3 rounded-lg p-2 transition-colors">
                 <Avatar className="h-10 w-10">
                   <AvatarFallback className="bg-primary text-primary-foreground">
                     <User className="h-5 w-5" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-1 flex-col text-left">
-                  <span className="text-sidebar-foreground text-sm font-semibold">{user.name}</span>
-                  <span className="text-sidebar-foreground/60 text-xs">{user.email}</span>
+                <div className="flex min-w-0 flex-1 flex-col text-left">
+                  <span className="text-sidebar-foreground truncate text-sm font-semibold">{user.name}</span>
+                  <span title={user.email} className="text-sidebar-foreground/60 truncate text-xs">
+                    {user.email}
+                  </span>
                 </div>
                 <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
               </button>
