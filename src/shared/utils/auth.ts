@@ -7,6 +7,7 @@ export interface SessionPayload {
   name: string;
   lastname: string;
   role: string;
+  createdAt: Date;
 }
 
 const secretKey = new TextEncoder().encode(process.env.JWT_SECRET!);

@@ -1,69 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/card";
-import { Button } from "@/components/button";
 import { Avatar, AvatarFallback } from "@/components/avatar";
-import { User, Mail, Phone, Calendar, MapPin, Edit3 } from "lucide-react";
-
-interface UserData {
-  userId: string;
-  email: string;
-  name: string;
-  role: string;
-}
+import { User, Mail, Calendar } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "shared/store/store";
 
 export function ProfilePage() {
-  const [isEditing, setIsEditing] = useState(false);
-
-  const [userData, setUserData] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/api/user/me");
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-foreground text-3xl font-bold">Mi Perfil</h1>
-          <p className="text-muted-foreground mt-1">Gestiona tu información personal y preferencias</p>
-        </div>
-        <div className="flex gap-2">
-          <Button onClick={() => setIsEditing(!isEditing)} className="gap-2">
-            <Edit3 className="h-4 w-4" />
-            {isEditing ? "Cancelar" : "Editar"}
-          </Button>
-        </div>
+        <h1 className="text-foreground text-3xl font-bold">Mi Perfil</h1>
       </div>
 
       <Card className="overflow-hidden">
-        <div className="from-primary to-secondary h-32"></div>
-        <CardContent className="relative pb-6">
-          <div className="-mt-16 flex flex-col items-center gap-4 sm:-mt-12 sm:flex-row sm:items-end">
+        <CardContent className="relative py-6">
+          <div className="flex flex-col items-center gap-4">
             <Avatar className="border-background h-32 w-32 border-4 shadow-lg">
               <AvatarFallback className="bg-primary text-background text-2xl">
-                {userData?.name
+                {user?.name
                   .split(" ")
                   .map((n) => n[0])
                   .join("")}
               </AvatarFallback>
             </Avatar>
-            <div className="mb-4 flex-1 text-center sm:mb-0 sm:text-left">
-              <h2 className="text-foreground text-2xl font-bold">{userData?.name}</h2>
-              <p className="text-muted-foreground">{userData?.role}</p>
+            <div className="flex-1 text-center">
+              <h2 className="text-foreground text-2xl font-bold">
+                {user?.name} {user?.lastname}
+              </h2>
             </div>
           </div>
         </CardContent>
@@ -83,25 +49,16 @@ export function ProfilePage() {
               <Mail className="text-muted-foreground h-4 w-4" />
               <span className="text-muted-foreground text-sm">Email</span>
             </div>
-            <span className="text-sm font-medium">{userData?.email}</span>
-          </div>
-          <div className="border-border flex items-center justify-between border-b py-2">
-            <div className="flex items-center gap-3">
-              <Phone className="text-muted-foreground h-4 w-4" />
-              <span className="text-muted-foreground text-sm">Teléfono</span>
-            </div>
-          </div>
-          <div className="border-border flex items-center justify-between border-b py-2">
-            <div className="flex items-center gap-3">
-              <MapPin className="text-muted-foreground h-4 w-4" />
-              <span className="text-muted-foreground text-sm">Ubicación</span>
-            </div>
+            <span className="text-sm font-medium">{user?.email}</span>
           </div>
           <div className="flex items-center justify-between py-2">
             <div className="flex items-center gap-3">
               <Calendar className="text-muted-foreground h-4 w-4" />
               <span className="text-muted-foreground text-sm">Miembro desde</span>
             </div>
+            <span className="text-sm font-medium">
+              {new Date(user?.createdAt || "").toLocaleDateString("es-ES")}
+            </span>
           </div>
         </CardContent>
       </Card>

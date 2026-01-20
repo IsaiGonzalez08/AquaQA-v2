@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { User, Settings, LogOut, ChevronUp } from "lucide-react";
 import {
   Sidebar,
@@ -25,9 +24,9 @@ import {
 } from "@/components/dropdown-menu";
 import { useRouter, usePathname } from "next/navigation";
 import { logoutUsecase } from "@/features/auth/application/logout.usecase.client";
-import { meUseCase } from "../../application/me.usecase.server";
 import { adminMenuItems, menuItems } from "../data";
-import { UserData } from "../types/dashboard.types";
+import { useSelector } from "react-redux";
+import { RootState } from "shared/store/store";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -35,7 +34,7 @@ export function AppSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const { setOpenMobile, isMobile } = useSidebar();
-  const [userData, setUserData] = useState<UserData>();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleMenuClick = () => {
     if (isMobile) {
@@ -43,20 +42,7 @@ export function AppSidebar() {
     }
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await meUseCase();
-        setUserData(response);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  const currentMenuItems = userData?.role === "admin" ? adminMenuItems : menuItems;
+  const currentMenuItems = user?.role === "admin" ? adminMenuItems : menuItems;
 
   const handleLogout = async () => {
     await logoutUsecase();
@@ -93,18 +79,23 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-sidebar-border border-t p-2">
-        {userData && (
+        {user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="hover:bg-sidebar-accent flex h-auto w-full items-center gap-3 rounded-lg p-2 transition-colors">
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    <User className="h-5 w-5" />
+              <button className="hover:bg-sidebar-accent flex h-auto items-center gap-3 rounded-lg p-2 transition-colors">
+                <Avatar className="border-background h-10 w-10 border-4 shadow-lg">
+                  <AvatarFallback className="bg-primary text-black">
+                    {user?.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-1 flex-col text-left">
-                  <span className="text-sidebar-foreground text-sm font-semibold">{userData.name}</span>
-                  <span className="text-sidebar-foreground/60 text-xs">{userData.email}</span>
+                <div className="flex min-w-0 flex-1 flex-col text-left">
+                  <span className="text-sidebar-foreground truncate text-sm font-semibold">{user.name}</span>
+                  <span title={user.email} className="text-sidebar-foreground/60 truncate text-xs">
+                    {user.email}
+                  </span>
                 </div>
                 <ChevronUp className="text-sidebar-foreground/60 h-4 w-4" />
               </button>
