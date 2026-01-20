@@ -34,6 +34,7 @@ export async function loginUseCase(input: LoginInput) {
     name: user.name,
     lastname: user.lastname,
     role: user.role,
+    createdAt: user.createdAt,
   };
 
   const { accessToken, refreshToken } = await generateTokens(payload);
