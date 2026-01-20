@@ -12,6 +12,7 @@ import { loginUseCase } from "../application/login.usecase.client";
 import { loginFormSchema, LoginFormData } from "../domain/loginSchema";
 import { AuthHttpError } from "../services/authHttp.service";
 import { NetworkError } from "@/utils/httpErrors";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/components/loading";
@@ -21,6 +22,7 @@ export function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
@@ -113,15 +115,30 @@ export function LoginPage() {
                 <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
                   Contraseña
                 </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Contraseña"
-                  autoComplete="off"
-                  type="password"
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    id="form-rhf-demo-password"
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                    placeholder="Al menos 8 caracteres"
+                    type={showPassword ? "text" : "password"}
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <EyeIcon className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
+                    )}
+                    <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
+                  </Button>
+                </div>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}

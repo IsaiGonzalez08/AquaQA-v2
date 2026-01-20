@@ -28,8 +28,7 @@ export function RegisterPage() {
       name: "",
       lastname: "",
       email: "",
-      password: "",
-      confirmPassword: "",
+      phone: "",
     },
   });
 
@@ -156,83 +155,32 @@ export function RegisterPage() {
           />
         </FieldGroup>
 
-        <FieldGroup>
-          <Controller
-            name="password"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-password" className="text-gray-200">
-                  Contraseña
-                </FieldLabel>
-                <div className="relative">
+        <div className="flex flex-row gap-5">
+          <FieldGroup>
+            <Controller
+              name="phone"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-demo-name" className="text-gray-200">
+                    Teléfono
+                  </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-password"
+                    id="form-rhf-demo-name"
                     aria-invalid={fieldState.invalid}
+                    placeholder="John"
                     autoComplete="off"
-                    placeholder="Al menos 8 caracteres"
-                    type={showPassword ? "text" : "password"}
+                    type="tel"
                     disabled={isLoading}
                   />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <EyeIcon className="h-4 w-4" aria-hidden="true" />
-                    ) : (
-                      <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
-                    )}
-                    <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
-                  </Button>
-                </div>
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-
-        <FieldGroup>
-          <Controller
-            name="confirmPassword"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-demo-confirm-password" className="text-gray-200">
-                  Confirmar Contraseña
-                </FieldLabel>
-                <div className="relative">
-                  <Input
-                    {...field}
-                    id="form-rhf-demo-confirm-password"
-                    aria-invalid={fieldState.invalid}
-                    autoComplete="off"
-                    placeholder="Al menos 8 caracteres"
-                    type={showPassword ? "text" : "password"}
-                    disabled={isLoading}
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <EyeIcon className="h-4 w-4" aria-hidden="true" />
-                    ) : (
-                      <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
-                    )}
-                    <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
-                  </Button>
-                </div>
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
-        </FieldGroup>
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </Field>
+              )}
+            />
+          </FieldGroup>
+          
+        </div>
 
         <span className="my-2 text-sm text-gray-200">
           ¿Ya tienes una cuenta?{" "}
