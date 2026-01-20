@@ -42,6 +42,7 @@ export async function registerUseCase(input: RegisterInput) {
     name: newUser.name,
     lastname: newUser.lastname,
     role: newUser.role,
+    createdAt: newUser.createdAt,
   };
 
   const { accessToken, refreshToken } = await generateTokens(payload);
