@@ -6,6 +6,7 @@ export const registerFormSchema = z
     lastname: z.string().min(2, "Por favor, ingresa al menos 2 caracteres."),
     email: z.email("Por favor, ingresa un correo electrónico válido."),
     phone: z.string().min(10, "Por favor, ingresa al menos 10 caracteres."),
+    useCase: z.string().min(1, "Por favor, selecciona un caso de uso."),
   })
 
 export type RegisterFormData = z.infer<typeof registerFormSchema>;

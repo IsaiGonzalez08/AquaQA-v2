@@ -14,13 +14,20 @@ import Image from "next/image";
 import Loading from "@/components/loading";
 import { NetworkError } from "@/utils/httpErrors";
 import { AuthHttpError } from "../services/authHttp.service";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/select";
 
 export function RegisterPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
@@ -29,6 +36,7 @@ export function RegisterPage() {
       lastname: "",
       email: "",
       phone: "",
+      useCase: "",
     },
   });
 
@@ -162,14 +170,14 @@ export function RegisterPage() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-name" className="text-gray-200">
+                  <FieldLabel htmlFor="form-rhf-demo-phone" className="text-gray-200">
                     Teléfono
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-name"
+                    id="form-rhf-demo-phone"
                     aria-invalid={fieldState.invalid}
-                    placeholder="John"
+                    placeholder="+1234567890"
                     autoComplete="off"
                     type="tel"
                     disabled={isLoading}
@@ -179,7 +187,35 @@ export function RegisterPage() {
               )}
             />
           </FieldGroup>
-          
+
+          <FieldGroup>
+            <Controller
+              name="useCase"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-demo-useCase" className="text-gray-200">
+                    Caso de uso
+                  </FieldLabel>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="apple">Apple</SelectItem>
+                        <SelectItem value="banana">Banana</SelectItem>
+                        <SelectItem value="blueberry">Blueberry</SelectItem>
+                        <SelectItem value="grapes">Grapes</SelectItem>
+                        <SelectItem value="pineapple">Pineapple</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </Field>
+              )}
+            />
+          </FieldGroup>
         </div>
 
         <span className="my-2 text-sm text-gray-200">
