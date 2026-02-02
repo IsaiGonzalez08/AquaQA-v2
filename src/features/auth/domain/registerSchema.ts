@@ -26,6 +26,6 @@ export type RegisterInput = RegisterFormData;
 export type RegisterResponse = {
   user: {
     role: string;
-    email: string;
+    status: string;
   };
 };

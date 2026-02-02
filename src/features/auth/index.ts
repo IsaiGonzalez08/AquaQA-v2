@@ -12,3 +12,7 @@ export {
 } from "./domain/registerSchema";
 export { registerUseCase } from "./application/register.usecase.client";
 export { registerService } from "./services/authHttp.service";
+
+export { PendingPage } from "./ui/PedingPage";
+export { RejectedPage } from "./ui/RejectedPage";
+

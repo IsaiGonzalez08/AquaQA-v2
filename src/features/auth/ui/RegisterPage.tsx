@@ -40,10 +40,21 @@ export function RegisterPage() {
     try {
       const result = await registerUseCase(data);
 
-      const { role } = result.user;
+      const { user } = result;
+      const { role, status } = user;
 
-      if (role === "admin") {
+      if (role === "ADMIN") {
         router.replace("/dashboard/admin");
+        return;
+      }
+
+      if (status === "PENDING") {
+        router.replace("/auth/pending");
+        return;
+      }
+
+      if (status === "REJECTED") {
+        router.replace("/auth/rejected");
         return;
       }
 

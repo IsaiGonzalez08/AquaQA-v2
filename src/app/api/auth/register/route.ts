@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { registerUseCase } from "@/features/auth/application/register.usecase.server";
-import { mapAuthErrorToHttp } from "@/features/auth/application/authErrorMapper";
+import { mapAuthErrorToHttp } from "@/features/auth/domain/authErrorMapper";
 
 export async function POST(req: Request) {
   try {
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Register successful", user }, { status: 201 });
   } catch (error) {
     const { status, body } = mapAuthErrorToHttp(error);
-    
+
     return NextResponse.json(body, { status });
   }
 }

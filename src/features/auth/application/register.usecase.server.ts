@@ -10,10 +10,11 @@ type RegisterInput = {
   password: string;
   name: string;
   lastname: string;
+  problemDescription: string;
 };
 
 export async function registerUseCase(input: RegisterInput) {
-  const { email, password, name, lastname } = input;
+  const { email, password, name, lastname, problemDescription } = input;
 
   if (!email || !password || !name || !lastname) {
     throw new MissingCredentialsError();
@@ -33,6 +34,9 @@ export async function registerUseCase(input: RegisterInput) {
       password: hashedPassword,
       name,
       lastname,
+      role: "USER",
+      status: "PENDING",
+      problemDescription,
     },
   });
 
@@ -52,5 +56,6 @@ export async function registerUseCase(input: RegisterInput) {
   return {
     id: newUser.id,
     role: newUser.role,
+    status: newUser.status,
   };
 }
