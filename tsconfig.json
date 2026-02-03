@@ -26,7 +26,8 @@
       "@/lib/*": ["shared/lib/*"],
       "@/store/*": ["store/*"],
       "@/types/*": ["types/*"],
-      "@/utils/*": ["shared/utils/*"]
+      "@/utils/*": ["shared/utils/*"],
+      "@/server/*": ["server/*"]
     },
     "baseUrl": "src/"
   },

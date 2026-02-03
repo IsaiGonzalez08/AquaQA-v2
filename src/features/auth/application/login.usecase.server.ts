@@ -2,7 +2,7 @@ import { findUserByEmail } from "../services/authRepository";
 import { comparePassword } from "../services/passwordService";
 import { generateTokens } from "../services/tokenService";
 import { setAuthCookies } from "../services/sessionService";
-import { InvalidCredentialsError, MissingCredentialsError } from "../domain/authErrors";
+import { InvalidCredentialsError, MissingCredentialsError, UserNotApprovedError } from "../domain/authErrors";
 
 type LoginInput = {
   email: string;
@@ -24,8 +24,13 @@ export async function loginUseCase(input: LoginInput) {
   }
 
   const isValid = await comparePassword(password, user.password);
+
   if (!isValid) {
     throw new InvalidCredentialsError();
+  }
+
+  if (user.role === "USER" && user.status !== "APPROVED") {
+    throw new UserNotApprovedError();
   }
 
   const payload = {
