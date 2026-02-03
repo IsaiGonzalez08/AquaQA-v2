@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { loginUseCase } from "@/features/auth/application/login.usecase.server";
-import { mapAuthErrorToHttp } from "@/features/auth/application/authErrorMapper";
+import { mapAuthErrorToHttp } from "@/features/auth/domain/authErrorMapper";
 
 export async function POST(req: Request) {
   try {

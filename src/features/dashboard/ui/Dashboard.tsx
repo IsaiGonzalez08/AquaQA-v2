@@ -6,7 +6,6 @@ import { useAuthCheck } from "@/hooks/useAuthCheck";
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   useAuthCheck();
-
   return (
     <SidebarProvider>
       <div className="flex min-h-dvh w-full">

@@ -1,11 +1,14 @@
 export async function meService() {
-  const res = await fetch("/api/user/me");
-
-  const data = await res.json();
+  const res = await fetch("/api/user/me", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
 
   if (!res.ok) {
-    throw new Error(data.error);
+    throw new Error("Error al obtener usuario");
   }
 
-  return { ...data, status: res.status, ok: res.ok };
+  return res.json();
 }
