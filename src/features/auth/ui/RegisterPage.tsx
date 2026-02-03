@@ -40,25 +40,12 @@ export function RegisterPage() {
     try {
       const result = await registerUseCase(data);
 
-      const { user } = result;
-      const { role, status } = user;
-
-      if (role === "ADMIN") {
-        router.replace("/dashboard/admin");
-        return;
-      }
+      const { status } = result.user;
 
       if (status === "PENDING") {
         router.replace("/auth/pending");
         return;
       }
-
-      if (status === "REJECTED") {
-        router.replace("/auth/rejected");
-        return;
-      }
-
-      router.replace("/dashboard/user");
     } catch (e) {
       if (e instanceof NetworkError) {
         setError("No hay conexión a internet. Intenta nuevamente.");

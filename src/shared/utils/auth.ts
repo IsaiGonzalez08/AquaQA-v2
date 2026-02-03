@@ -16,7 +16,7 @@ const refreshSecretKey = new TextEncoder().encode(process.env.JWT_REFRESH_SECRET
 export async function signAccessToken(payload: SessionPayload) {
   return await new SignJWT({ ...payload })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("15m")
+    .setExpirationTime("1m")
     .sign(secretKey);
 }
 
@@ -50,7 +50,7 @@ export async function verifyRefreshToken(token: string): Promise<SessionPayload 
 export async function getCurrentUser(): Promise<SessionPayload | null> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access_token")?.value;
-
+  
   if (!accessToken) return null;
 
   return await verifyAccessToken(accessToken);

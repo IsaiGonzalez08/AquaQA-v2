@@ -36,6 +36,7 @@ export async function GET(request: Request) {
         name: true,
         lastname: true,
         problemDescription: true,
+        status: true,
         createdAt: true,
       },
     }),

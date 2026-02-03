@@ -1,31 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AdminData } from "./types/admin.dashboard.types";
+import { useSelector } from "react-redux";
+import { RootState } from "shared/store/store";
 
 export function InitPage() {
-  const [userData, setUserData] = useState<AdminData | null>(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/api/user/me");
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
+  const user = useSelector((state: RootState) => state.auth.user);
   return (
     <div>
-      <h1 className="text-4xl font-bold">Bienvenido, {userData?.name} 👋</h1>
-      <p className="mt-2 text-gray-400">Aquí está tu resumen de actividad</p>
+      <h1 className="text-4xl font-bold">Bienvenido, {user?.name} 👋</h1>
+      <p className="mt-2 text-gray-400">Admin</p>
     </div>
   );
 }

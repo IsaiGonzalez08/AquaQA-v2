@@ -1,57 +1,36 @@
-import { verifyAccessToken, verifyRefreshToken } from "shared/utils/auth";
+import { verifyAccessToken, verifyRefreshToken, signAccessToken } from "shared/utils/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/dashboard")) {
-    const accessToken = request.cookies.get("access_token")?.value;
-    const refreshToken = request.cookies.get("refresh_token")?.value;
+  const accessToken = request.cookies.get("access_token")?.value;
+  const refreshToken = request.cookies.get("refresh_token")?.value;
 
-    if (!accessToken) {
-      if (refreshToken) {
-        const payload = await verifyRefreshToken(refreshToken);
-
-        if (payload) {
-          return NextResponse.next();
-        }
-      }
-
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-
-    const isValidAccessToken = await verifyAccessToken(accessToken);
-
-    if (!isValidAccessToken) {
-      if (refreshToken) {
-        const payload = await verifyRefreshToken(refreshToken);
-
-        if (payload) {
-          return NextResponse.next();
-        }
-      }
-
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-
-    return NextResponse.next();
+  if (accessToken) {
+    const payload = await verifyAccessToken(accessToken);
+    if (payload) return NextResponse.next();
   }
 
-  if (pathname.startsWith("/auth/login")) {
-    const accessToken = request.cookies.get("access_token")?.value;
-
-    if (accessToken) {
-      const isValid = await verifyAccessToken(accessToken);
-      if (isValid) {
-        return NextResponse.redirect(new URL("/dashboard/user", request.url));
-      }
+  if (refreshToken) {
+    const payload = await verifyRefreshToken(refreshToken);
+    if (payload) {
+      const newAccessToken = await signAccessToken(payload);
+      const response = NextResponse.next();
+      response.cookies.set("access_token", newAccessToken, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+      });
+      return response;
     }
   }
 
-  return NextResponse.next();
+  return NextResponse.redirect(new URL("/auth/login", request.url));
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/auth/login"],
+  matcher: ["/dashboard/:path*"],
 };

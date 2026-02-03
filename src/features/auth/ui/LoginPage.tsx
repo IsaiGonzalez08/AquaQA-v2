@@ -15,8 +15,11 @@ import { NetworkError } from "@/utils/httpErrors";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/components/loading";
+import { useDispatch } from "react-redux";
+import { setUser } from "shared/store/authSlice";
 
 export function LoginPage() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -37,10 +40,21 @@ export function LoginPage() {
     try {
       const result = await loginUseCase({ ...data, rememberMe });
 
-      const { role } = result.user;
+      const { user } = result;
+      const { role, status } = user;
 
-      if (role === "admin") {
+      if (role === "ADMIN") {
         router.replace("/dashboard/admin");
+        return;
+      }
+
+      if (status === "PENDING") {
+        router.replace("/auth/pending");
+        return;
+      }
+
+      if (status === "REJECTED") {
+        router.replace("/auth/rejected");
         return;
       }
 

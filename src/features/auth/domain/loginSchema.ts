@@ -18,5 +18,6 @@ export type LoginResponse = {
   user: {
     role: string;
     email: string;
+    status: string;
   };
 };

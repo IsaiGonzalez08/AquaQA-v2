@@ -42,7 +42,7 @@ export function AppSidebar() {
     }
   };
 
-  const currentMenuItems = user?.role === "admin" ? adminMenuItems : menuItems;
+  const currentMenuItems = user?.role === "ADMIN" ? adminMenuItems : menuItems;
 
   const handleLogout = async () => {
     await logoutUsecase();
