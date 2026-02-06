@@ -1,16 +1,6 @@
-import { MissingCredentialsError, InvalidCredentialsError, UserNotApprovedError } from "./authErrors";
+import { MissingCredentialsError, InvalidCredentialsError } from "./authErrors";
 
 export function mapAuthErrorToHttp(error: unknown) {
-  if (error instanceof UserNotApprovedError) {
-    return {
-      status: 403,
-      body: {
-        error: "PENDING_APPROVAL",
-        message: "Tu solicitud está siendo revisada por un administrador",
-      },
-    };
-  }
-
   if (error instanceof MissingCredentialsError) {
     return {
       status: 400,
