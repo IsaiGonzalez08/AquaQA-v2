@@ -16,7 +16,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/components/loading";
 import { useDispatch } from "react-redux";
-import { setUser } from "shared/store/authSlice";
 
 export function LoginPage() {
   const dispatch = useDispatch();
