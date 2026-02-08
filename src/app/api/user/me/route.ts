@@ -1,25 +1,10 @@
+import { meUseCase } from "@/features/dashboard/application/me.usecase.server";
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "shared/utils/auth";
 
 export async function GET() {
   try {
-    const user = await getCurrentUser();
-
-    if (!user) {
-      return NextResponse.json({ error: "No autenticado" }, { status: 401 });
-    }
-
-    return NextResponse.json(
-      {
-        userId: user.userId,
-        email: user.email,
-        name: user.name,
-        lastname: user.lastname,
-        role: user.role,
-        createdAt: user.createdAt,
-      },
-      { status: 200 }
-    );
+    const user = await meUseCase();
+    return NextResponse.json(user);
   } catch (error) {
     console.error("GET CURRENT USER ERROR:", error);
     return NextResponse.json({ error: "Error al obtener usuario" }, { status: 500 });

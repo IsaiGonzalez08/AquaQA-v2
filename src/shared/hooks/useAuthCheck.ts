@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { meUseCase } from "@/features/dashboard/application/me.usecase.server";
 import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "shared/store/authSlice";
+import { meUseCase } from "@/features/dashboard/application/me.usecase.client";
 
 export function useAuthCheck() {
   const router = useRouter();
