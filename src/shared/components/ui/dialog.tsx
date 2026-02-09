@@ -25,7 +25,7 @@ export function Dialog({ open, onOpenChange, children }: DialogProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/10 backdrop-blur-xs"
         onClick={() => onOpenChange(false)}
       />
       <div className="relative z-50">{children}</div>
@@ -41,7 +41,7 @@ export function DialogContent({ className, children, ...props }: DialogContentPr
   return (
     <div
       className={cn(
-        "relative max-h-[90vh] w-full overflow-y-auto rounded-lg border bg-card p-6 shadow-lg",
+        "relative max-h-[90vh] w-full overflow-y-auto rounded-lg border bg-card p-6 shadow-lg bg-white dark:bg-black",
         className
       )}
       {...props}
