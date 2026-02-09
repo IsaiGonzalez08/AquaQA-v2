@@ -1,19 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { updateRequestStatusUseCase } from "@/features/dashboard/application/updateRequestStatus.usecase.server";
 
 export const runtime = "nodejs";
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const { id } = await context.params;
+
     const body = await request.json();
     const { status, reason } = body;
 
     if (!status || !["APPROVED", "REJECTED"].includes(status)) {
-      return NextResponse.json(
-        { error: "Estado inválido. Debe ser APPROVED o REJECTED" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Estado inválido. Debe ser APPROVED o REJECTED" }, { status: 400 });
     }
 
     await updateRequestStatusUseCase({
