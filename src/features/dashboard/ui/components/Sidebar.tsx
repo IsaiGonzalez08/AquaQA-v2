@@ -86,7 +86,7 @@ export function AppSidebar() {
                 <Avatar className="border-background h-10 w-10 border-4 shadow-lg">
                   <AvatarFallback className="bg-primary text-black">
                     {user?.name
-                      .split(" ")
+                      ?.split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </AvatarFallback>

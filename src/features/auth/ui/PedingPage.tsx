@@ -24,8 +24,8 @@ export function PendingPage() {
           <div className="flex items-start gap-3">
             <Mail className="mt-1 h-5 w-5 shrink-0 text-yellow-500" />
             <div className="flex flex-col gap-2">
-              <p className="text-base font-medium text-gray-100">Estamos revisando tu solicitud de registro</p>
-              <p className="text-sm text-gray-300">
+              <p className="text-base font-medium text-foreground">Estamos revisando tu solicitud de registro</p>
+              <p className="text-sm text-foreground/60">
                 Un agente de soporte se pondrá en contacto contigo por correo electrónico para confirmar tu cuenta y
                 proporcionarte acceso al sistema.
               </p>
@@ -33,8 +33,8 @@ export function PendingPage() {
           </div>
 
           <div className="mt-2 rounded-md bg-yellow-500/5 p-4">
-            <p className="text-sm text-gray-300">
-              <span className="font-semibold text-gray-200">Tiempo estimado:</span> Este proceso puede tomar entre 24 a
+            <p className="text-sm text-foreground/60">
+              <span className="font-semibold text-foreground">Tiempo estimado:</span> Este proceso puede tomar entre 24 a
               48 horas hábiles.
             </p>
           </div>
@@ -42,9 +42,9 @@ export function PendingPage() {
       </div>
 
       <div className="mt-4 flex flex-col items-center gap-2">
-        <p className="text-sm text-gray-400">¿Necesitas ayuda?</p>
+        <p className="text-sm text-foreground">¿Necesitas ayuda?</p>
         <Link href="/auth/login">
-          <Button variant="secondary" className="text-gray-200">
+          <Button variant="secondary" className="text-foreground">
             Volver al inicio de sesión
           </Button>
         </Link>
