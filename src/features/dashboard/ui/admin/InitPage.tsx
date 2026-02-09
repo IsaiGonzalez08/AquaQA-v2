@@ -2,11 +2,10 @@
 
 import { useSelector } from "react-redux";
 import { RootState } from "shared/store/store";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { KPICard } from "./components/KPICard";
 import { StatusBadge } from "./components/StatusBadge";
-import { Request, RequestStats } from "./types/request.types";
-import { getAllRequestsService, getRequestStatsService } from "../../services/requestsHttp.service";
+import { useRequestsContext } from "../../contexts/RequestsContext";
 import { Clock, CheckCircle, XCircle, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/button";
 import Link from "next/link";
@@ -14,31 +13,11 @@ import Loading from "@/components/loading";
 
 export function InitPage() {
   const user = useSelector((state: RootState) => state.auth.user);
-  const [stats, setStats] = useState<RequestStats | null>(null);
-  const [recentRequests, setRecentRequests] = useState<Request[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { allRequests, stats, isLoading, error } = useRequestsContext();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const [statsData, requestsData] = await Promise.all([
-          getRequestStatsService(),
-          getAllRequestsService(1, 5, "PENDING"),
-        ]);
-        setStats(statsData);
-        setRecentRequests(requestsData.data);
-      } catch (err) {
-        setError("Error al cargar los datos");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const recentRequests = useMemo(() => {
+    return allRequests.filter((req) => req.status === "PENDING").slice(0, 5);
+  }, [allRequests]);
 
   const getWaitingTime = (createdAt: string) => {
     const now = new Date();

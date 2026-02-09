@@ -5,7 +5,7 @@ import { Request } from "./types/request.types";
 import { RequestDetailModal } from "./components/RequestDetailModal";
 import { RequestFilters } from "./components/RequestFilters";
 import { RequestsTable } from "./components/RequestsTable";
-import { useRequests } from "../../application/useRequests.hook";
+import { useRequestsContext } from "../../contexts/RequestsContext";
 import { useRequestFilters } from "../../application/useRequestFilters.hook";
 import { useRequestActions } from "../../application/useRequestActions.hook";
 import { useToast } from "@/components/toast";
@@ -18,7 +18,8 @@ export function RequestPage() {
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { allRequests, isLoading, isRefreshing, error, lastFetchTime, updateRequestInCache, refetch } = useRequests();
+  const { allRequests, isLoading, isRefreshing, error, lastFetchTime, updateRequestInCache, refetch } =
+    useRequestsContext();
 
   const {
     currentPage,
