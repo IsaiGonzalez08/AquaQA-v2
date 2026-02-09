@@ -16,7 +16,7 @@ const refreshSecretKey = new TextEncoder().encode(process.env.JWT_REFRESH_SECRET
 export async function signAccessToken(payload: SessionPayload) {
   return await new SignJWT({ ...payload })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("1m")
+    .setExpirationTime("1h")
     .sign(secretKey);
 }
 
