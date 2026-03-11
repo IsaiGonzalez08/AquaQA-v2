@@ -24,15 +24,57 @@ enum UserStatus {
 }
 
 model User {
-  id                 String      @id @default(cuid())
-  email              String      @unique
+  id                 String     @id @default(cuid())
+  email              String     @unique
   password           String
   name               String
   lastname           String
-  role               Role        @default(USER)
-  status             UserStatus  @default(PENDING)
+  role               Role       @default(USER)
+  status             UserStatus @default(PENDING)
   problemDescription String?
-  createdAt          DateTime    @default(now())
-  updatedAt          DateTime    @updatedAt
+  orders             Order[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
 }
 
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  EXPIRED
+  CANCELLED
+}
+
+model Order {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  status OrderStatus @default(PENDING_PAYMENT)
+
+  quoteAmount Decimal @db.Decimal(10, 2)
+  currency    String  @default("USD")
+
+  description  String
+  pdfUrl       String?
+  paymentUrl   String?
+  expiresAt    DateTime
+  advisorName  String?
+  deliveryDays Int?
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  name      String
+  quantity  Int
+  unitPrice Decimal
+}
