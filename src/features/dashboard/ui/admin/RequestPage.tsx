@@ -9,10 +9,11 @@ import { useRequestsContext } from "../../contexts/RequestsContext";
 import { useRequestFilters } from "../../application/useRequestFilters.hook";
 import { useRequestActions } from "../../application/useRequestActions.hook";
 import { useToast } from "@/components/toast";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export function RequestPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const { showToast } = useToast();
 
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
@@ -125,6 +126,9 @@ export function RequestPage() {
         onClose={() => {
           setIsModalOpen(false);
           setSelectedRequest(null);
+          if (searchParams.get("id")) {
+            router.replace("/dashboard/admin/request");
+          }
         }}
         onApprove={handleApprove}
         onReject={handleReject}
